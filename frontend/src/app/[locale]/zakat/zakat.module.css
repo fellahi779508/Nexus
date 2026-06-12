@@ -5,6 +5,7 @@
   max-width: 1800px;
   margin: 0 auto;
   padding: 40px 24px 80px;
+  max-height: 100vh;
 }
 
 /* ─── Page header ──────────────────────────────────────────────────────────── */

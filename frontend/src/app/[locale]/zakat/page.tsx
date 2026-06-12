@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
+import { useTranslations } from "next-intl";
 import {
   Star,
   RefreshCw,
@@ -18,6 +19,7 @@ import {
   Loader2,
 } from "lucide-react";
 import styles from "./zakat.module.css";
+import PasswordGate from "@/components/owner/passwordGate";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -70,19 +72,21 @@ function fmtDate(iso: string | null) {
 }
 
 function fmtDateInput(iso: string) {
-  // Returns YYYY-MM-DD for <input type="date">
   return new Date(iso).toISOString().slice(0, 10);
 }
 
 // ─── Main component ───────────────────────────────────────────────────────────
 
 export default function ZakatPage() {
+  const t = useTranslations("ZakatPage");
+
   const [summary, setSummary] = useState<ZakatSummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [verifying, setVerifying] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [locked, setLocked] = useState(false);
 
   // Setup form state (when no config exists)
   const [setup, setSetup] = useState({
@@ -121,15 +125,14 @@ export default function ZakatPage() {
     } catch (err: unknown) {
       const e = err as { response?: { status?: number } };
       if (e?.response?.status === 404) {
-        // No config — show setup form
         setSummary(null);
       } else {
-        setError("Failed to load Zakat data. Make sure the server is running.");
+        setError(t("errorLoad"));
       }
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     fetchSummary();
@@ -144,7 +147,7 @@ export default function ZakatPage() {
       await axios.get(`${API}/verify`);
       await fetchSummary();
     } catch {
-      setError("Verification failed. Please try again.");
+      setError(t("errorVerify"));
     } finally {
       setVerifying(false);
     }
@@ -157,8 +160,8 @@ export default function ZakatPage() {
     setSetupError(null);
     try {
       if (!setup.nisab || Number(setup.nisab) <= 0)
-        throw new Error("Please enter a valid Nisab amount.");
-      if (!setup.startDate) throw new Error("Please select a start date.");
+        throw new Error(t("validateNisab"));
+      if (!setup.startDate) throw new Error(t("validateStartDate"));
 
       await axios.post(API, {
         nisab: Number(setup.nisab),
@@ -173,7 +176,7 @@ export default function ZakatPage() {
         message?: string;
       };
       setSetupError(
-        e?.response?.data?.message ?? e?.message ?? "Setup failed.",
+        e?.response?.data?.message ?? e?.message ?? t("setupFailed"),
       );
     } finally {
       setSetupLoading(false);
@@ -188,7 +191,7 @@ export default function ZakatPage() {
     setEditError(null);
     try {
       if (!edit.nisab || Number(edit.nisab) <= 0)
-        throw new Error("Nisab must be a positive number.");
+        throw new Error(t("validateNisabPositive"));
 
       await axios.patch(`${API}/${summary.config.id}`, {
         nisab: Number(edit.nisab),
@@ -204,7 +207,7 @@ export default function ZakatPage() {
         message?: string;
       };
       setEditError(
-        e?.response?.data?.message ?? e?.message ?? "Update failed.",
+        e?.response?.data?.message ?? e?.message ?? t("updateFailed"),
       );
     } finally {
       setEditLoading(false);
@@ -215,17 +218,14 @@ export default function ZakatPage() {
 
   const handleDelete = async () => {
     if (!summary) return;
-    if (
-      !window.confirm("Delete this Zakat configuration? This cannot be undone.")
-    )
-      return;
+    if (!window.confirm(t("confirmDelete"))) return;
     setDeleting(true);
     try {
       await axios.delete(`${API}/${summary.config.id}`);
       setSummary(null);
       setSettingsOpen(false);
     } catch {
-      setError("Failed to delete configuration.");
+      setError(t("errorDelete"));
     } finally {
       setDeleting(false);
     }
@@ -242,6 +242,8 @@ export default function ZakatPage() {
         : "pending";
 
   // ─── Render ──────────────────────────────────────────────────────────────────
+  if (!locked)
+    return <PasswordGate ns="settings" onSuccess={() => setLocked(true)} />;
 
   return (
     <div className={styles.root}>
@@ -253,10 +255,8 @@ export default function ZakatPage() {
               <Star size={24} />
             </div>
             <div>
-              <h1 className={styles.pageTitle}>Zakat</h1>
-              <p className={styles.pageSubtitle}>
-                Track your inventory Nisab and annual Zakat obligation
-              </p>
+              <h1 className={styles.pageTitle}>{t("pageTitle")}</h1>
+              <p className={styles.pageSubtitle}>{t("pageSubtitle")}</p>
             </div>
           </div>
 
@@ -273,7 +273,7 @@ export default function ZakatPage() {
               ) : (
                 <RefreshCw size={16} />
               )}
-              {verifying ? "Verifying…" : "Re-verify now"}
+              {verifying ? t("verifying") : t("reVerifyBtn")}
             </button>
           )}
         </div>
@@ -306,12 +306,8 @@ export default function ZakatPage() {
               <div className={styles.setupCtaIcon}>
                 <Info size={28} />
               </div>
-              <h2 className={styles.setupCtaTitle}>Configure your Zakat</h2>
-              <p className={styles.setupCtaDesc}>
-                Set your Nisab threshold and the date you started tracking this
-                cycle. The system will automatically verify your stock value
-                after one Hijri year.
-              </p>
+              <h2 className={styles.setupCtaTitle}>{t("setupCtaTitle")}</h2>
+              <p className={styles.setupCtaDesc}>{t("setupCtaDesc")}</p>
             </div>
 
             {setupError && (
@@ -324,10 +320,8 @@ export default function ZakatPage() {
             <div className={styles.formGrid}>
               <div className={styles.formField}>
                 <label className={styles.label}>
-                  Nisab (DZD){" "}
-                  <span className={styles.labelHint}>
-                    — minimum threshold this year
-                  </span>
+                  {t("labelNisab")}{" "}
+                  <span className={styles.labelHint}>{t("hintNisab")}</span>
                 </label>
                 <input
                   className={styles.input}
@@ -343,10 +337,8 @@ export default function ZakatPage() {
 
               <div className={styles.formField}>
                 <label className={styles.label}>
-                  Start date{" "}
-                  <span className={styles.labelHint}>
-                    — Hijri year begins here
-                  </span>
+                  {t("labelStartDate")}{" "}
+                  <span className={styles.labelHint}>{t("hintStartDate")}</span>
                 </label>
                 <input
                   className={styles.input}
@@ -360,10 +352,8 @@ export default function ZakatPage() {
 
               <div className={styles.formField}>
                 <label className={styles.label}>
-                  Label{" "}
-                  <span className={styles.labelHint}>
-                    — optional, e.g. "1446 AH"
-                  </span>
+                  {t("labelLabel")}{" "}
+                  <span className={styles.labelHint}>{t("hintLabel")}</span>
                 </label>
                 <input
                   className={styles.input}
@@ -378,10 +368,8 @@ export default function ZakatPage() {
 
               <div className={styles.formField}>
                 <label className={styles.label}>
-                  Rate (%){" "}
-                  <span className={styles.labelHint}>
-                    — fixed 2.5% in Islamic law
-                  </span>
+                  {t("labelRate")}{" "}
+                  <span className={styles.labelHint}>{t("hintRate")}</span>
                 </label>
                 <input
                   className={styles.input}
@@ -411,7 +399,7 @@ export default function ZakatPage() {
                   ) : (
                     <CheckCircle2 size={16} />
                   )}
-                  {setupLoading ? "Saving…" : "Save configuration"}
+                  {setupLoading ? t("saving") : t("saveConfigBtn")}
                 </button>
               </div>
             </div>
@@ -443,25 +431,23 @@ export default function ZakatPage() {
               <div className={styles.statusText}>
                 <h3>
                   {statusKind === "satisfied"
-                    ? "Zakat is due"
+                    ? t("statusTitleDue")
                     : statusKind === "notReached"
-                      ? "Nisab not reached"
-                      : "Tracking in progress"}
+                      ? t("statusTitleNotReached")
+                      : t("statusTitlePending")}
                 </h3>
                 <p>
                   {statusKind === "satisfied"
-                    ? `Your inventory has exceeded the Nisab for a full Hijri year. Zakat of ${fmt(
-                        summary.zakatAmount,
-                      )} DZD is payable.`
+                    ? t("statusDescDue", { amount: fmt(summary.zakatAmount) })
                     : statusKind === "notReached"
-                      ? `One year has passed, but your inventory (${fmt(
-                          summary.inventoryValue,
-                        )} DZD) is below the Nisab (${fmt(summary.nisab)} DZD). No Zakat is due.`
-                      : `${summary.daysRemaining} day${
-                          summary.daysRemaining !== 1 ? "s" : ""
-                        } remaining until the one-year mark. Current inventory: ${fmt(
-                          summary.inventoryValue,
-                        )} DZD.`}
+                      ? t("statusDescNotReached", {
+                          value: fmt(summary.inventoryValue),
+                          nisab: fmt(summary.nisab),
+                        })
+                      : t("statusDescPending", {
+                          count: summary.daysRemaining,
+                          value: fmt(summary.inventoryValue),
+                        })}
                 </p>
               </div>
             </div>
@@ -469,7 +455,9 @@ export default function ZakatPage() {
             {/* Stats grid */}
             <div className={styles.statsGrid}>
               <div className={styles.statCard}>
-                <div className={styles.statLabel}>Inventory value</div>
+                <div className={styles.statLabel}>
+                  {t("statLabelInventory")}
+                </div>
                 <div
                   className={`${styles.statValue} ${
                     summary.reachedNisab ? styles.success : styles.warning
@@ -477,17 +465,19 @@ export default function ZakatPage() {
                 >
                   {fmt(summary.inventoryValue)}
                 </div>
-                <div className={styles.statSub}>DZD (stock × sell price)</div>
+                <div className={styles.statSub}>{t("statSubInventory")}</div>
               </div>
 
               <div className={styles.statCard}>
-                <div className={styles.statLabel}>Nisab threshold</div>
+                <div className={styles.statLabel}>{t("statLabelNisab")}</div>
                 <div className={styles.statValue}>{fmt(summary.nisab)}</div>
-                <div className={styles.statSub}>DZD · rate {summary.rate}%</div>
+                <div className={styles.statSub}>
+                  {t("statSubNisab", { rate: summary.rate })}
+                </div>
               </div>
 
               <div className={styles.statCard}>
-                <div className={styles.statLabel}>Zakat amount</div>
+                <div className={styles.statLabel}>{t("statLabelAmount")}</div>
                 <div
                   className={`${styles.statValue} ${
                     summary.zakatDue ? styles.accent : ""
@@ -496,7 +486,9 @@ export default function ZakatPage() {
                   {summary.zakatDue ? fmt(summary.zakatAmount) : "—"}
                 </div>
                 <div className={styles.statSub}>
-                  {summary.zakatDue ? "DZD payable" : "Not yet due"}
+                  {summary.zakatDue
+                    ? t("statSubAmountDue")
+                    : t("statSubAmountNotDue")}
                 </div>
               </div>
             </div>
@@ -504,13 +496,18 @@ export default function ZakatPage() {
             {/* Zakat amount highlight — only when due */}
             {summary.zakatDue && (
               <div className={styles.zakatAmountCard}>
-                <div className={styles.zakatAmountLabel}>Zakat payable</div>
+                <div className={styles.zakatAmountLabel}>
+                  {t("highlightLabel")}
+                </div>
                 <div className={styles.zakatAmountValue}>
                   {fmt(summary.zakatAmount)} DZD
                 </div>
                 <div className={styles.zakatAmountSub}>
-                  {summary.rate}% of {fmt(summary.inventoryValue)} DZD inventory
-                  · Due since {fmtDate(summary.dueDate)}
+                  {t("highlightSub", {
+                    rate: summary.rate,
+                    value: fmt(summary.inventoryValue),
+                    date: fmtDate(summary.dueDate),
+                  })}
                 </div>
               </div>
             )}
@@ -526,7 +523,7 @@ export default function ZakatPage() {
                       size={16}
                       style={{ color: "var(--accent)" }}
                     />
-                    Hijri year progress
+                    {t("progressTitle")}
                   </span>
                 </p>
                 <span className={styles.progressPercent}>
@@ -544,11 +541,16 @@ export default function ZakatPage() {
               </div>
 
               <div className={styles.progressMeta}>
-                <span>Started {fmtDate(summary.startDate)}</span>
+                <span>
+                  {t("progressStarted", { date: fmtDate(summary.startDate) })}
+                </span>
                 <span>
                   {summary.oneYearPassed
-                    ? "One Hijri year completed"
-                    : `${summary.daysElapsed} / 354 days elapsed · ${summary.daysRemaining} days left`}
+                    ? t("progressComplete")
+                    : t("progressMetaPending", {
+                        elapsed: summary.daysElapsed,
+                        remaining: summary.daysRemaining,
+                      })}
                 </span>
               </div>
             </div>
@@ -556,7 +558,7 @@ export default function ZakatPage() {
             {/* Nisab status row */}
             <div className={styles.panel} style={{ marginBottom: 28 }}>
               <div className={styles.configRow}>
-                <span className={styles.configKey}>Nisab met</span>
+                <span className={styles.configKey}>{t("rowNisabMet")}</span>
                 <span
                   className={`${styles.badge} ${
                     summary.reachedNisab ? styles.success : styles.warning
@@ -568,12 +570,16 @@ export default function ZakatPage() {
                     <AlertTriangle size={12} />
                   )}
                   {summary.reachedNisab
-                    ? `Yes — ${fmt(summary.inventoryValue - summary.nisab)} DZD above threshold`
-                    : `No — ${fmt(summary.nisab - summary.inventoryValue)} DZD short`}
+                    ? t("rowNisabMetYes", {
+                        diff: fmt(summary.inventoryValue - summary.nisab),
+                      })
+                    : t("rowNisabMetNo", {
+                        diff: fmt(summary.nisab - summary.inventoryValue),
+                      })}
                 </span>
               </div>
               <div className={styles.configRow}>
-                <span className={styles.configKey}>One year elapsed</span>
+                <span className={styles.configKey}>{t("rowYearElapsed")}</span>
                 <span
                   className={`${styles.badge} ${
                     summary.oneYearPassed ? styles.success : styles.info
@@ -585,12 +591,12 @@ export default function ZakatPage() {
                     <Clock size={12} />
                   )}
                   {summary.oneYearPassed
-                    ? "Yes"
-                    : `In ${summary.daysRemaining} days`}
+                    ? t("yes")
+                    : t("rowInDays", { days: summary.daysRemaining })}
                 </span>
               </div>
               <div className={styles.configRow}>
-                <span className={styles.configKey}>Zakat due</span>
+                <span className={styles.configKey}>{t("rowZakatDue")}</span>
                 <span
                   className={`${styles.badge} ${
                     summary.zakatDue ? styles.success : styles.info
@@ -601,12 +607,12 @@ export default function ZakatPage() {
                   ) : (
                     <Clock size={12} />
                   )}
-                  {summary.zakatDue ? "Yes — payable now" : "Not yet"}
+                  {summary.zakatDue ? t("rowZakatDueYes") : t("notYet")}
                 </span>
               </div>
               {summary.label && (
                 <div className={styles.configRow}>
-                  <span className={styles.configKey}>Cycle label</span>
+                  <span className={styles.configKey}>{t("rowCycleLabel")}</span>
                   <span className={styles.configVal}>{summary.label}</span>
                 </div>
               )}
@@ -622,7 +628,7 @@ export default function ZakatPage() {
                   style={{ display: "flex", alignItems: "center", gap: 10 }}
                 >
                   <Settings2 size={16} style={{ color: "var(--accent)" }} />
-                  Configuration
+                  {t("accordionTitle")}
                 </span>
                 <ChevronDown size={18} />
               </button>
@@ -647,13 +653,14 @@ export default function ZakatPage() {
                       lineHeight: 1.6,
                     }}
                   >
-                    Updating the Nisab or start date will reset the satisfaction
-                    state so the new cycle is evaluated from scratch.
+                    {t("configResetWarning")}
                   </p>
 
                   <div className={styles.formGrid}>
                     <div className={styles.formField}>
-                      <label className={styles.label}>Nisab (DZD)</label>
+                      <label className={styles.label}>
+                        {t("labelNisabEdit")}
+                      </label>
                       <input
                         className={styles.input}
                         type="number"
@@ -666,7 +673,9 @@ export default function ZakatPage() {
                     </div>
 
                     <div className={styles.formField}>
-                      <label className={styles.label}>Start date</label>
+                      <label className={styles.label}>
+                        {t("labelStartDateEdit")}
+                      </label>
                       <input
                         className={styles.input}
                         type="date"
@@ -678,7 +687,9 @@ export default function ZakatPage() {
                     </div>
 
                     <div className={styles.formField}>
-                      <label className={styles.label}>Label</label>
+                      <label className={styles.label}>
+                        {t("labelLabelEdit")}
+                      </label>
                       <input
                         className={styles.input}
                         type="text"
@@ -691,7 +702,9 @@ export default function ZakatPage() {
                     </div>
 
                     <div className={styles.formField}>
-                      <label className={styles.label}>Rate (%)</label>
+                      <label className={styles.label}>
+                        {t("labelRateEdit")}
+                      </label>
                       <input
                         className={styles.input}
                         type="number"
@@ -720,14 +733,14 @@ export default function ZakatPage() {
                         ) : (
                           <Trash2 size={16} />
                         )}
-                        {deleting ? "Deleting…" : "Delete config"}
+                        {deleting ? t("deleting") : t("deleteConfigBtn")}
                       </button>
 
                       <button
                         className={styles.btnSecondary}
                         onClick={() => setSettingsOpen(false)}
                       >
-                        Cancel
+                        {t("cancelBtn")}
                       </button>
 
                       <button
@@ -742,7 +755,7 @@ export default function ZakatPage() {
                         ) : (
                           <TrendingUp size={16} />
                         )}
-                        {editLoading ? "Saving…" : "Save changes"}
+                        {editLoading ? t("saving") : t("saveChangesBtn")}
                       </button>
                     </div>
                   </div>

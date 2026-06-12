@@ -85,18 +85,13 @@ export class ZakatService implements OnApplicationBootstrap {
    */
   async getInventoryValue(date?: string): Promise<number> {
     const stockRepo = this.dataSource.getRepository(Stock);
-    const salesRepo = this.dataSource.getRepository(Sale);
     const stocks = await stockRepo.find({
       where: { quantity: MoreThan(0) },
       relations: ['batch', 'batch.variant'],
     });
-    const sales = await salesRepo.find({ where: { date: ILike(`%${date}%`) } });
     let result = 0;
     for (const stock of stocks) {
       result += stock.quantity * stock.batch.variant.sellingPriceTTC;
-    }
-    for (const sale of sales) {
-      result += sale.total;
     }
     return result;
   }

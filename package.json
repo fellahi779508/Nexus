@@ -32,7 +32,7 @@
     ],
     "win": {
       "target": "msix",
-      "icon": "electron/build/nexus.png",
+      "icon": "electron/build/nexus.ico",
       "publisherName": "Raouf Fellahi"
     },
     "appx": {

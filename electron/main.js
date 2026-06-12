@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { spawn } = require("child_process");
+const { spawn, exec } = require("child_process");
 const { app, BrowserWindow } = require("electron");
 const axios = require("axios");
 const treeKill = require("tree-kill");
@@ -26,6 +26,11 @@ let mainWindow = null;
 // ----------------------------------------------------
 // WINDOW
 // ----------------------------------------------------
+function killPorts() {
+  return new Promise((resolve) => {
+    exec("npx kill-port 3000 3001", () => resolve());
+  });
+}
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1920,
@@ -137,10 +142,22 @@ function startFrontend() {
 // ----------------------------------------------------
 // WAIT FOR FRONTEND (SAFE)
 // ----------------------------------------------------
+async function waitForBackend() {
+  for (let i = 0; i < 60; i++) {
+    try {
+      await axios.get("http://127.0.0.1:3001/category");
+      return;
+    } catch {
+      await new Promise((r) => setTimeout(r, 500));
+    }
+  }
+
+  throw new Error("backend timeout");
+}
 async function waitForFrontend() {
   for (let i = 0; i < 60; i++) {
     try {
-      await axios.get("http://127.0.0.1:3000");
+      await axios.get("http://127.0.0.1:3000/");
       return;
     } catch {
       await new Promise((r) => setTimeout(r, 500));
@@ -154,29 +171,52 @@ async function waitForFrontend() {
 // LOAD APP
 // ----------------------------------------------------
 async function loadApp() {
+  await waitForBackend();
   await waitForFrontend();
-  await mainWindow.loadURL("http://127.0.0.1:3000");
+  await mainWindow.loadURL("http://127.0.0.1:3000/fr");
 }
 
 // ----------------------------------------------------
 // CLEANUP
 // ----------------------------------------------------
 async function cleanup() {
-  const kill = (proc) =>
-    new Promise((res) => {
-      if (!proc?.pid) return res();
-      treeKill(proc.pid, "SIGKILL", () => res());
-    });
+  console.log("🧹 Cleaning up processes...");
 
-  await Promise.all([kill(backendProcess), kill(frontendProcess)]);
+  const killPromises = [];
+
+  const killProc = (proc, name) => {
+    if (proc && proc.pid) {
+      killPromises.push(
+        new Promise((resolve) => {
+          treeKill(proc.pid, "SIGKILL", (err) => {
+            if (err) {
+              console.error(`Failed to kill ${name}:`, err);
+            } else {
+              console.log(`✅ Killed ${name} (PID ${proc.pid})`);
+            }
+            resolve();
+          });
+        }),
+      );
+    }
+  };
+
+  killProc(backendProcess, "backend");
+  killProc(frontendProcess, "frontend");
+
+  killPromises.push(killPorts());
+
+  await Promise.all(killPromises);
+
+  console.log("🧹 Cleanup complete");
 }
-
 // ----------------------------------------------------
 // START
 // ----------------------------------------------------
 app.whenReady().then(async () => {
   try {
     createWindow();
+    await killPorts();
 
     console.log("Starting backend...");
     startBackend(); // fire & forget
