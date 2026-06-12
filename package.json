@@ -31,14 +31,13 @@
       "node_modules/**/*"
     ],
     "win": {
-      "target": "msix",
-      "icon": "electron/build/nexus.ico",
-      "publisherName": "Raouf Fellahi"
+      "target": "nsis",
+      "icon": "electron/build/nexus.ico"
     },
     "appx": {
       "displayName": "Nexus",
       "identityName": "Nexus",
-      "publisher": "Raouf Fellahi",
+      "publisher": "CN=Raouf Fellahi",
       "languages": [
         "en-US",
         "fr-FR",
