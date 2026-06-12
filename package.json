@@ -1,6 +1,6 @@
 {
   "name": "Nexus",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "main": "electron/main.js",
   "description": "Inventory and stock management system",
   "author": "Raouf Fellahi (DuSStQ)",
@@ -24,7 +24,7 @@
   "build": {
     "appId": "com.dusstq.nexus",
     "productName": "Nexus",
-    "copyright": "Copyright © 2026",
+    "copyright": "Copyright © DuSStQ 2026",
     "files": [
       "electron/**/*",
       "package.json",
