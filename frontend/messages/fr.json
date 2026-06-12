@@ -1089,6 +1089,10 @@
       "import": {
         "title": "Importer une sauvegarde",
         "desc": "Restaurez vos données à partir d'un fichier .sqlite précédemment exporté."
+      },
+      "delete": {
+        "title": "Supprimer la base de données",
+        "desc": "Supprimez votre base de données. Cette action est irréversible."
       }
     },
     "gate": {
@@ -1106,7 +1110,10 @@
       "exportError": "Échec de l'exportation. Veuillez réessayer.",
       "importSuccess": "Base de données restaurée avec succès.",
       "importError": "Échec de l'importation. Le fichier est peut-être invalide.",
-      "importInvalidFile": "Veuillez sélectionner un fichier .sqlite valide."
+      "importInvalidFile": "Veuillez sélectionner un fichier .sqlite valide.",
+      "deleteSuccess": "Base de données supprimée avec succès.",
+      "deleteSuccess2": "Veuillez redémarrer l'application !",
+      "deleteError": "Échec de la suppression. Veuillez réessayer."
     }
   },
   "owner": {

@@ -3,6 +3,28 @@
   max-height: 100vh;
   background: var(--background);
   padding: 24px 32px 72px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface);
+}
+
+/* Webkit styles */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface);
+  border-radius: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface);
+  border-radius: 12px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--surface);
 }
 
 .content {
