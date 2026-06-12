@@ -1,0 +1,371 @@
+"use client";
+import { Meta, Sale } from "@/utils/types";
+import { useCallback, useEffect, useState } from "react";
+import styles from "./sales.module.css";
+import { getAllSales } from "@/api/sale-api";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Search,
+  Receipt,
+  TrendingUp,
+  Users,
+  AlertCircle,
+  LayoutDashboard,
+  Package,
+  ShoppingCart,
+} from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+
+export default function Sales() {
+  const t = useTranslations("salesPage");
+  const router = useRouter();
+  const [sales, setSales] = useState<Sale[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [meta, setMeta] = useState<Meta>({
+    total: 0,
+    page: 1,
+    limit: 10,
+    pages: 0,
+  });
+
+  const fetchSales = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    const res = await getAllSales(page, 10, debouncedSearch);
+    if (res.status === 1) {
+      setSales(res.response.data);
+      setMeta(res.response.meta);
+    } else {
+      setError(res.error.message);
+    }
+    setLoading(false);
+  }, [page, debouncedSearch]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+      setPage(1);
+    }, 350);
+    return () => clearTimeout(timer);
+  }, [search]);
+
+  useEffect(() => {
+    fetchSales();
+  }, [page, debouncedSearch]);
+
+  const formatCurrency = (amount: number) =>
+    new Intl.NumberFormat("fr-DZ", {
+      style: "currency",
+      currency: "DZD",
+    }).format(amount);
+
+  const formatDate = (dateStr: string) =>
+    new Date(dateStr).toLocaleString("fr-DZ", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+  const getPaymentBadgeClass = (method: string) => {
+    switch (method?.toLowerCase()) {
+      case "cash":
+      case "espèces":
+        return styles.badgeSuccess;
+      case "card":
+      case "carte":
+        return styles.badgeInfo;
+      case "cheque":
+      case "chèque":
+        return styles.badgeWarning;
+      default:
+        return styles.badgeDefault;
+    }
+  };
+
+  const totalRevenue = sales.reduce((sum, s) => sum + s.total, 0);
+  const totalPaid = sales.reduce((sum, s) => sum + s.paid, 0);
+  const uniqueClients = new Set(
+    sales.filter((s) => s.client).map((s) => s.client!.id),
+  ).size;
+
+  const pageNumbers = Array.from({ length: meta.pages }, (_, i) => i + 1)
+    .filter((p) => p === 1 || p === meta.pages || Math.abs(p - page) <= 1)
+    .reduce<(number | "...")[]>((acc, p, idx, arr) => {
+      if (idx > 0 && p - (arr[idx - 1] as number) > 1) acc.push("...");
+      acc.push(p);
+      return acc;
+    }, []);
+
+  return (
+    <div className={styles.container}>
+      <title>Nexus | Sales</title>
+      {/* Header */}
+      <header className={styles.header}>
+        <div className={styles.titleBlock}>
+          <div className={styles.headerIconWrap}>
+            <LayoutDashboard className={styles.headerIcon} />
+          </div>
+          <div className={styles.titleGroup}>
+            <h1 className={styles.title}>{t("title")}</h1>
+            <span className={styles.titleSub}>
+              {" "}
+              {t("subtitle", { total: meta.total })}
+            </span>
+          </div>
+        </div>
+
+        <div className={styles.quickActions}>
+          <Link
+            href="/sale"
+            className={`${styles.actionButton} ${styles.actionSale}`}
+          >
+            <ShoppingCart size={15} className={styles.btnIcon} />
+            {t("actions.quickSale")}
+          </Link>
+          <Link
+            href={"/sale/detailed"}
+            className={`${styles.actionButton} ${styles.actionPurchase}`}
+          >
+            <Package size={15} className={styles.btnIcon} />
+            {t("actions.detailedSale")}
+          </Link>
+        </div>
+      </header>
+
+      {/* Stats */}
+      <div className={styles.statsRow}>
+        <div className={styles.statCard}>
+          <div className={styles.statIcon} data-type="accent">
+            <Receipt size={16} />
+          </div>
+          <div>
+            <p className={styles.statLabel}>{t("stats.totalSales")}</p>
+            <p className={styles.statValue}>{meta.total}</p>
+          </div>
+        </div>
+        <div className={styles.statCard}>
+          <div className={styles.statIcon} data-type="success">
+            <TrendingUp size={16} />
+          </div>
+          <div>
+            <p className={styles.statLabel}>{t("stats.totalRevenue")}</p>
+            <p className={styles.statValue}>{formatCurrency(totalRevenue)}</p>
+          </div>
+        </div>
+        <div className={styles.statCard}>
+          <div className={styles.statIcon} data-type="warning">
+            <TrendingUp size={16} />
+          </div>
+          <div>
+            <p className={styles.statLabel}>{t("stats.totalPaid")}</p>
+            <p className={styles.statValue}>{formatCurrency(totalPaid)}</p>
+          </div>
+        </div>
+        <div className={styles.statCard}>
+          <div className={styles.statIcon} data-type="info">
+            <Users size={16} />
+          </div>
+          <div>
+            <p className={styles.statLabel}>{t("stats.clients")}</p>
+            <p className={styles.statValue}>{uniqueClients}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Toolbar */}
+      <div className={styles.toolbar}>
+        <div className={styles.searchWrapper}>
+          <Search size={15} className={styles.searchIcon} />
+          <input
+            type="text"
+            className={styles.searchInput}
+            placeholder={t("searchPlaceholder")}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+      </div>
+
+      {/* Table */}
+      <div className={styles.tableWrapper}>
+        {loading ? (
+          <div className={styles.loadingState}>
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className={styles.skeletonRow}>
+                <div className={styles.skeleton} style={{ width: "5%" }} />
+                <div className={styles.skeleton} style={{ width: "12%" }} />
+                <div className={styles.skeleton} style={{ width: "18%" }} />
+                <div className={styles.skeleton} style={{ width: "12%" }} />
+                <div className={styles.skeleton} style={{ width: "12%" }} />
+                <div className={styles.skeleton} style={{ width: "10%" }} />
+                <div className={styles.skeleton} style={{ width: "13%" }} />
+              </div>
+            ))}
+          </div>
+        ) : error ? (
+          <div className={styles.errorState}>
+            <AlertCircle size={32} className={styles.errorIcon} />
+            <p className={styles.errorText}>{error}</p>
+            <button className={styles.retryBtn} onClick={fetchSales}>
+              {t("retry")}
+            </button>
+          </div>
+        ) : sales.length === 0 ? (
+          <div className={styles.emptyState}>
+            <Receipt size={40} className={styles.emptyIcon} />
+            <p className={styles.emptyTitle}>{t("empty.title")}</p>
+            <p className={styles.emptyDesc}>{t("empty.desc")}</p>
+          </div>
+        ) : (
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th className={styles.th}>{t("table.id")}</th>
+                <th className={styles.th}>{t("table.date")}</th>
+                <th className={styles.th}>{t("table.client")}</th>
+                <th className={styles.th}>{t("table.items")}</th>
+                <th className={styles.th}>{t("table.total")}</th>
+                <th className={styles.th}>{t("table.paid")}</th>
+                <th className={styles.th}>{t("table.payment")}</th>
+                <th className={styles.th}>{t("table.balance")}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sales.map((sale) => {
+                const balance = sale.total - sale.paid;
+                return (
+                  <tr
+                    key={sale.id}
+                    className={styles.tr}
+                    onClick={() => router.push(`/sales/${sale.id}`)}
+                  >
+                    <td className={styles.td}>
+                      <span className={styles.idBadge}>#{sale.id}</span>
+                    </td>
+                    <td className={styles.td}>
+                      <span className={styles.dateText}>
+                        {formatDate(sale.date)}
+                      </span>
+                    </td>
+                    <td className={styles.td}>
+                      {sale.client ? (
+                        <div className={styles.clientCell}>
+                          <div className={styles.clientAvatar}>
+                            {sale.client.name.charAt(0).toUpperCase()}
+                          </div>
+                          <div>
+                            <p className={styles.clientName}>
+                              {sale.client.name}
+                            </p>
+                            {sale.client.phone && (
+                              <p className={styles.clientPhone}>
+                                {sale.client.phone}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      ) : (
+                        <span className={styles.noClient}>
+                          {t("table.walkIn")}
+                        </span>
+                      )}
+                    </td>
+                    <td className={styles.td}>
+                      <span className={styles.itemCount}>
+                        {sale.soldItems.length} {t("table.itemsUnit")}
+                      </span>
+                    </td>
+                    <td className={styles.td}>
+                      <span className={styles.amountText}>
+                        {formatCurrency(sale.total)}
+                      </span>
+                    </td>
+                    <td className={styles.td}>
+                      <span className={styles.paidText}>
+                        {formatCurrency(sale.paid)}
+                      </span>
+                    </td>
+                    <td className={styles.td}>
+                      <span
+                        className={`${styles.badge} ${getPaymentBadgeClass(sale.payment_methode)}`}
+                      >
+                        {sale.payment_methode || t("table.unknown")}
+                      </span>
+                    </td>
+                    <td className={styles.td}>
+                      {balance <= 0 ? (
+                        <span
+                          className={`${styles.badge} ${styles.badgeSuccess}`}
+                        >
+                          {t("table.settled")}
+                        </span>
+                      ) : (
+                        <span
+                          className={`${styles.badge} ${styles.badgeDanger}`}
+                        >
+                          {formatCurrency(balance)}
+                        </span>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
+      </div>
+
+      {/* Pagination */}
+      {meta.pages > 1 && (
+        <div className={styles.pagination}>
+          <button
+            className={styles.pageBtn}
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={page === 1}
+          >
+            <ChevronLeft size={16} />
+          </button>
+
+          <div className={styles.pageNumbers}>
+            {pageNumbers.map((p, i) =>
+              p === "..." ? (
+                <span key={`ellipsis-${i}`} className={styles.ellipsis}>
+                  …
+                </span>
+              ) : (
+                <button
+                  key={p}
+                  className={`${styles.pageNumber} ${page === p ? styles.pageActive : ""}`}
+                  onClick={() => setPage(p as number)}
+                >
+                  {p}
+                </button>
+              ),
+            )}
+          </div>
+
+          <button
+            className={styles.pageBtn}
+            onClick={() => setPage((p) => Math.min(meta.pages, p + 1))}
+            disabled={page === meta.pages}
+          >
+            <ChevronRight size={16} />
+          </button>
+
+          <span className={styles.pageInfo}>
+            {t("pageInfo", { page, pages: meta.pages })}
+          </span>
+        </div>
+      )}
+    </div>
+  );
+}

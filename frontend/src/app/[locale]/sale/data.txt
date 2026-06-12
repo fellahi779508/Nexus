@@ -1,0 +1,345 @@
+# Algerian Supermarket Products Dataset Example
+
+## Coca-Cola
+
+### Variants
+
+#### Coca-Cola Original 1L
+
+Batches:
+
+* COC-2026-001
+* COC-2026-002
+* COC-2026-003
+
+#### Coca-Cola Original 2L
+
+Batches:
+
+* COC-2026-004
+* COC-2026-005
+
+#### Coca-Cola Zero 1L
+
+Batches:
+
+* COZ-2026-001
+* COZ-2026-002
+
+---
+
+## Hamoud Boualem
+
+### Variants
+
+#### Selecto Can 33cl
+
+Batches:
+
+* SEL-2026-101
+* SEL-2026-102
+* SEL-2026-103
+
+#### Selecto Bottle 1L
+
+Batches:
+
+* SEL-2026-104
+* SEL-2026-105
+
+#### Hamoud La Blanche 1L
+
+Batches:
+
+* HBL-2026-001
+* HBL-2026-002
+
+---
+
+## Danone
+
+### Variants
+
+#### Danone Nature 110g
+
+Batches:
+
+* DAN-2026-001
+* DAN-2026-002
+
+#### Danone Fraise 110g
+
+Batches:
+
+* DAN-2026-003
+* DAN-2026-004
+
+#### Dan'Up Vanille 500ml
+
+Batches:
+
+* DUP-2026-001
+* DUP-2026-002
+
+---
+
+## Soummam
+
+### Variants
+
+#### Yaourt Nature 90g
+
+Batches:
+
+* SOM-2026-010
+* SOM-2026-011
+
+#### Yaourt Fraise 90g
+
+Batches:
+
+* SOM-2026-012
+* SOM-2026-013
+
+#### Lben 1L
+
+Batches:
+
+* LBN-2026-001
+* LBN-2026-002
+
+---
+
+## Elio
+
+### Variants
+
+#### Huile Elio 1L
+
+Batches:
+
+* ELI-2026-001
+* ELI-2026-002
+* ELI-2026-003
+
+#### Huile Elio 2L
+
+Batches:
+
+* ELI-2026-004
+* ELI-2026-005
+
+---
+
+## Amor Benamor
+
+### Variants
+
+#### Spaghetti No.3 500g
+
+Batches:
+
+* ABM-2026-001
+* ABM-2026-002
+
+#### Coquillettes 500g
+
+Batches:
+
+* ABM-2026-003
+* ABM-2026-004
+
+#### Couscous Moyen 1kg
+
+Batches:
+
+* ABM-2026-005
+* ABM-2026-006
+
+---
+
+## Rouiba
+
+### Variants
+
+#### Orange Juice 1L
+
+Batches:
+
+* ROU-2026-001
+* ROU-2026-002
+
+#### Tropical Juice 1L
+
+Batches:
+
+* ROU-2026-003
+* ROU-2026-004
+
+#### Apple Juice 2L
+
+Batches:
+
+* ROU-2026-005
+* ROU-2026-006
+
+---
+
+## Ifri
+
+### Variants
+
+#### Water 1.5L
+
+Batches:
+
+* IFR-2026-001
+* IFR-2026-002
+* IFR-2026-003
+
+#### Sparkling Water 1L
+
+Batches:
+
+* IFR-2026-004
+* IFR-2026-005
+
+---
+
+## Cevital
+
+### Variants
+
+#### Fleurial Oil 2L
+
+Batches:
+
+* FLR-2026-001
+* FLR-2026-002
+
+#### Fleurial Margarine 500g
+
+Batches:
+
+* FLR-2026-003
+* FLR-2026-004
+
+---
+
+## Bimo
+
+### Variants
+
+#### Bimo Chocolat Biscuit
+
+Batches:
+
+* BIM-2026-001
+* BIM-2026-002
+
+#### Bimo Fraise Biscuit
+
+Batches:
+
+* BIM-2026-003
+* BIM-2026-004
+
+---
+
+## Ooredoo SIM Cards
+
+### Variants
+
+#### Ooredoo 4G SIM
+
+Batches:
+
+* OOR-2026-001
+* OOR-2026-002
+
+#### Ooredoo Internet Card
+
+Batches:
+
+* OOR-2026-003
+* OOR-2026-004
+
+---
+
+# Suggested Database Structure
+
+## Product Table
+
+* id
+* name
+* category
+* brand
+
+## Variant Table
+
+* id
+* productId
+* variantName
+* barcode
+* price
+* size
+
+## Batch Table
+
+* id
+* variantId
+* batchCode
+* quantity
+* productionDate
+* expirationDate
+* supplier
+
+---
+
+# Example JSON Structure
+
+```json
+{
+  "product": "Selecto",
+  "brand": "Hamoud Boualem",
+  "variants": [
+    {
+      "name": "Selecto Can 33cl",
+      "barcode": "6131200001111",
+      "batches": [
+        {
+          "batchCode": "SEL-2026-101",
+          "quantity": 120,
+          "expirationDate": "2027-02-10"
+        },
+        {
+          "batchCode": "SEL-2026-102",
+          "quantity": 90,
+          "expirationDate": "2027-03-15"
+        }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+# Additional Product Ideas
+
+* Mouzaia Water
+* Ramy Juice
+* N'gaous Juice
+* Hodna Milk
+* Tria El Djazair
+* Mama Instant Noodles
+* Jumbo Spices
+* El Mordjene Chocolate Spread
+* Candia Milk
+* Tchina Detergent
+* Isis Cosmetics
+* Venus Soap
+* Le Chat Detergent
+* OMO Laundry Powder
+* Djaafer Tea
+* Sabah Coffee

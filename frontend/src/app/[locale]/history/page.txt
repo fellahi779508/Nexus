@@ -1,0 +1,1206 @@
+"use client";
+
+import { useState, useEffect, useCallback, useRef } from "react";
+import axios from "axios";
+import {
+  Activity,
+  Search,
+  Filter,
+  Download,
+  RefreshCw,
+  ChevronDown,
+  X,
+  Check,
+  AlertTriangle,
+  Package,
+  ShoppingCart,
+  Users,
+  Truck,
+  CreditCard,
+  Layers,
+  Plus,
+  Pencil,
+  Trash2,
+  Clock,
+  Hash,
+  ChevronRight,
+  Info,
+  Calendar,
+  BarChart2,
+  FileText,
+  SlidersHorizontal,
+} from "lucide-react";
+import styles from "./history.module.css";
+
+// ─── Types ───────────────────────────────────────────────────────────────────
+
+type Client = {
+  id: number;
+  name: string;
+  address: string;
+  phone: string;
+  email: string;
+};
+
+type Supplier = {
+  id: number;
+  name: string;
+  address: string;
+  phone: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type Stock = {
+  id: number;
+  quantity: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type Batch = {
+  id: number;
+  nLot?: string;
+  fabricationDate?: string;
+  expirationDate?: string;
+  supplier: Supplier | null;
+  stockQTYStatus: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type Sale = {
+  id: number;
+  total: number;
+  paid: number;
+  remise: boolean;
+  timbre: number;
+  remiseAmount: number;
+  payment_methode: string;
+  date: string;
+  client: Client | null;
+};
+
+type Credit = {
+  id: number;
+  amount: number;
+  date: string;
+};
+
+type Log = {
+  id: number;
+  timestamp: string;
+  entityType: string;
+  action: string;
+  reason: string;
+  quantity: number;
+  sale: Sale | null;
+  client: Client | null;
+  supplier: Supplier | null;
+  batch: Batch | null;
+  stock: Stock | null;
+  credit: Credit | null;
+};
+
+type ApiResponse = {
+  data: Log[];
+  meta: { total: number; page: number; limit: number; pages: number };
+};
+
+// ─── Constants ───────────────────────────────────────────────────────────────
+
+const ENTITY_TYPES = ["sale", "stock", "batch", "credit", "supplier", "client"];
+const ACTION_TYPES = ["create", "update", "delete", "payment", "adjustment"];
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+
+function getActionClass(action: string): string {
+  const a = action.toLowerCase();
+  if (a.includes("creat") || a.includes("add")) return "create";
+  if (a.includes("updat") || a.includes("edit") || a.includes("modif"))
+    return "update";
+  if (a.includes("delet") || a.includes("remov")) return "delete";
+  if (a.includes("pay") || a.includes("credit")) return "warning";
+  return "neutral";
+}
+
+function getEntityIcon(type: string) {
+  switch (type.toLowerCase()) {
+    case "sale":
+      return <ShoppingCart size={14} />;
+    case "stock":
+      return <Package size={14} />;
+    case "batch":
+      return <Layers size={14} />;
+    case "credit":
+      return <CreditCard size={14} />;
+    case "supplier":
+      return <Truck size={14} />;
+    case "client":
+      return <Users size={14} />;
+    default:
+      return <FileText size={14} />;
+  }
+}
+
+function getActionIcon(action: string) {
+  const cls = getActionClass(action);
+  if (cls === "create") return <Plus size={13} />;
+  if (cls === "update") return <Pencil size={13} />;
+  if (cls === "delete") return <Trash2 size={13} />;
+  return <Activity size={13} />;
+}
+
+function getEntityBadgeClass(type: string): string {
+  const map: Record<string, string> = {
+    sale: "sale",
+    stock: "stock",
+    batch: "batch",
+    credit: "credit",
+    supplier: "supplier",
+    client: "client",
+  };
+  return map[type.toLowerCase()] ?? "default";
+}
+
+function buildDescription(log: Log): string {
+  const entity = log.entityType;
+  const action = log.action;
+  const a = action.toLowerCase();
+
+  if (a.includes("creat") || a.includes("add")) {
+    if (entity === "sale")
+      return `New sale recorded${log.sale?.client ? ` for ${log.sale.client.name}` : ""}`;
+    if (entity === "stock")
+      return `Stock entry created${log.quantity ? ` — qty: ${log.quantity}` : ""}`;
+    if (entity === "batch")
+      return `New batch added${log.batch?.nLot ? ` (Lot: ${log.batch.nLot})` : ""}`;
+    if (entity === "credit")
+      return `Credit issued${log.credit?.amount ? ` — ${log.credit.amount.toFixed(2)} DZD` : ""}`;
+    if (entity === "supplier")
+      return `Supplier registered${log.supplier ? `: ${log.supplier.name}` : ""}`;
+    if (entity === "client")
+      return `Client account created${log.client ? `: ${log.client.name}` : ""}`;
+  }
+  if (a.includes("updat") || a.includes("edit")) {
+    if (entity === "stock")
+      return `Stock updated${log.quantity ? ` — new qty: ${log.quantity}` : ""}`;
+    if (entity === "batch")
+      return `Batch modified${log.batch?.nLot ? ` (Lot: ${log.batch.nLot})` : ""}`;
+    if (entity === "supplier")
+      return `Supplier info updated${log.supplier ? `: ${log.supplier.name}` : ""}`;
+    if (entity === "client")
+      return `Client info updated${log.client ? `: ${log.client.name}` : ""}`;
+  }
+  if (a.includes("delet") || a.includes("remov")) {
+    if (entity === "sale") return `Sale deleted`;
+    if (entity === "stock") return `Stock entry removed`;
+    if (entity === "batch") return `Batch deleted`;
+    if (entity === "credit") return `Credit removed`;
+  }
+  return `${entity.charAt(0).toUpperCase() + entity.slice(1)} — ${action}`;
+}
+
+function formatTimestamp(ts: string): string {
+  try {
+    const d = new Date(ts);
+    return d.toLocaleTimeString("en-GB", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+  } catch {
+    return ts;
+  }
+}
+
+function formatDate(ts: string): string {
+  try {
+    const d = new Date(ts);
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+
+    if (d.toDateString() === today.toDateString()) return "Today";
+    if (d.toDateString() === yesterday.toDateString()) return "Yesterday";
+    return d.toLocaleDateString("en-GB", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  } catch {
+    return ts;
+  }
+}
+
+function groupByDate(logs: Log[]): Array<{ date: string; logs: Log[] }> {
+  const map: Record<string, Log[]> = {};
+  for (const log of logs) {
+    const d = new Date(log.timestamp).toDateString();
+    if (!map[d]) map[d] = [];
+    map[d].push(log);
+  }
+  return Object.entries(map).map(([date, logs]) => ({
+    date: formatDate(logs[0].timestamp),
+    logs,
+  }));
+}
+
+// ─── Sub-components ───────────────────────────────────────────────────────────
+
+function FilterDropdown({
+  label,
+  options,
+  selected,
+  onToggle,
+  onClear,
+  icon,
+}: {
+  label: string;
+  options: string[];
+  selected: string[];
+  onToggle: (val: string) => void;
+  onClear: () => void;
+  icon?: React.ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node))
+        setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  return (
+    <div className={styles.filterGroup} ref={ref}>
+      <button
+        className={`${styles.filterTrigger} ${selected.length > 0 ? styles.hasValue : ""}`}
+        onClick={() => setOpen((v) => !v)}
+      >
+        {icon}
+        {label}
+        {selected.length > 0 && (
+          <span className={styles.filterBadge}>{selected.length}</span>
+        )}
+        <ChevronDown size={13} />
+      </button>
+      {open && (
+        <div className={styles.dropdown}>
+          <div className={styles.dropdownHeader}>{label}</div>
+          {options.map((opt) => {
+            const isSelected = selected.includes(opt);
+            return (
+              <div
+                key={opt}
+                className={`${styles.dropdownItem} ${isSelected ? styles.selected : ""}`}
+                onClick={() => onToggle(opt)}
+              >
+                {getEntityIcon(opt)}
+                {opt.charAt(0).toUpperCase() + opt.slice(1)}
+                {isSelected && (
+                  <span className={styles.dropdownCheck}>
+                    <Check size={13} />
+                  </span>
+                )}
+              </div>
+            );
+          })}
+          {selected.length > 0 && (
+            <div className={styles.dropdownFooter}>
+              <button
+                className={styles.dropdownClear}
+                onClick={() => {
+                  onClear();
+                  setOpen(false);
+                }}
+              >
+                Clear selection
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function SkeletonRows() {
+  return (
+    <>
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div key={i} className={styles.logEntry}>
+          <div className={styles.logDotCol} style={{ paddingTop: 18 }}>
+            <div
+              className={styles.skeleton}
+              style={{ width: 30, height: 30, borderRadius: "50%" }}
+            />
+          </div>
+          <div className={styles.skeletonCard}>
+            <div
+              className={styles.skeletonLine}
+              style={{ width: `${55 + (i % 3) * 15}%` }}
+            />
+            <div
+              className={styles.skeletonLine}
+              style={{ width: `${30 + (i % 4) * 10}%`, height: 10 }}
+            />
+          </div>
+        </div>
+      ))}
+    </>
+  );
+}
+
+function ExpandedDetails({ log }: { log: Log }) {
+  return (
+    <div className={styles.expandedPanel}>
+      {/* Reason */}
+      {log.reason && (
+        <div className={styles.reasonBox}>
+          <span className={styles.reasonBoxIcon}>
+            <AlertTriangle size={14} />
+          </span>
+          <span className={styles.reasonBoxText}>
+            <strong>Reason:</strong> {log.reason}
+          </span>
+        </div>
+      )}
+
+      {/* Core fields */}
+      <div className={styles.expandedSection}>
+        <div className={styles.expandedSectionTitle}>Log Details</div>
+        <div className={styles.expandedField}>
+          <span className={styles.expandedFieldLabel}>Log ID</span>
+          <span className={`${styles.expandedFieldValue} ${styles.mono}`}>
+            #{log.id}
+          </span>
+        </div>
+        <div className={styles.expandedField}>
+          <span className={styles.expandedFieldLabel}>Entity</span>
+          <span className={styles.expandedFieldValue}>{log.entityType}</span>
+        </div>
+        <div className={styles.expandedField}>
+          <span className={styles.expandedFieldLabel}>Action</span>
+          <span className={styles.expandedFieldValue}>{log.action}</span>
+        </div>
+        {log.quantity != null && (
+          <div className={styles.expandedField}>
+            <span className={styles.expandedFieldLabel}>Quantity</span>
+            <span className={styles.expandedFieldValue}>{log.quantity}</span>
+          </div>
+        )}
+        <div className={styles.expandedField}>
+          <span className={styles.expandedFieldLabel}>Full Timestamp</span>
+          <span className={`${styles.expandedFieldValue} ${styles.mono}`}>
+            {new Date(log.timestamp).toLocaleString("en-GB")}
+          </span>
+        </div>
+      </div>
+
+      {/* Sale */}
+      {log.sale && (
+        <div className={styles.expandedSection}>
+          <div className={styles.expandedSectionTitle}>Sale</div>
+          <div className={styles.expandedField}>
+            <span className={styles.expandedFieldLabel}>Sale ID</span>
+            <span className={`${styles.expandedFieldValue} ${styles.mono}`}>
+              #{log.sale.id}
+            </span>
+          </div>
+          <div className={styles.expandedField}>
+            <span className={styles.expandedFieldLabel}>Total</span>
+            <span className={styles.expandedFieldValue}>
+              {log.sale.total?.toFixed(2)} DZD
+            </span>
+          </div>
+          <div className={styles.expandedField}>
+            <span className={styles.expandedFieldLabel}>Paid</span>
+            <span className={styles.expandedFieldValue}>
+              {log.sale.paid?.toFixed(2)} DZD
+            </span>
+          </div>
+          <div className={styles.expandedField}>
+            <span className={styles.expandedFieldLabel}>Method</span>
+            <span className={styles.expandedFieldValue}>
+              {log.sale.payment_methode}
+            </span>
+          </div>
+          {log.sale.remise && (
+            <div className={styles.expandedField}>
+              <span className={styles.expandedFieldLabel}>Discount</span>
+              <span className={styles.expandedFieldValue}>
+                {log.sale.remiseAmount?.toFixed(2)} DZD
+              </span>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Client */}
+      {log.client && (
+        <div className={styles.expandedSection}>
+          <div className={styles.expandedSectionTitle}>Client</div>
+          <div className={styles.expandedField}>
+            <span className={styles.expandedFieldLabel}>Name</span>
+            <span className={styles.expandedFieldValue}>{log.client.name}</span>
+          </div>
+          {log.client.phone && (
+            <div className={styles.expandedField}>
+              <span className={styles.expandedFieldLabel}>Phone</span>
+              <span className={styles.expandedFieldValue}>
+                {log.client.phone}
+              </span>
+            </div>
+          )}
+          {log.client.address && (
+            <div className={styles.expandedField}>
+              <span className={styles.expandedFieldLabel}>Address</span>
+              <span className={styles.expandedFieldValue}>
+                {log.client.address}
+              </span>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Supplier */}
+      {log.supplier && (
+        <div className={styles.expandedSection}>
+          <div className={styles.expandedSectionTitle}>Supplier</div>
+          <div className={styles.expandedField}>
+            <span className={styles.expandedFieldLabel}>Name</span>
+            <span className={styles.expandedFieldValue}>
+              {log.supplier.name}
+            </span>
+          </div>
+          {log.supplier.phone && (
+            <div className={styles.expandedField}>
+              <span className={styles.expandedFieldLabel}>Phone</span>
+              <span className={styles.expandedFieldValue}>
+                {log.supplier.phone}
+              </span>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Batch */}
+      {log.batch && (
+        <div className={styles.expandedSection}>
+          <div className={styles.expandedSectionTitle}>Batch</div>
+          {log.batch.nLot && (
+            <div className={styles.expandedField}>
+              <span className={styles.expandedFieldLabel}>Lot No.</span>
+              <span className={`${styles.expandedFieldValue} ${styles.mono}`}>
+                {log.batch.nLot}
+              </span>
+            </div>
+          )}
+          {log.batch.expirationDate && (
+            <div className={styles.expandedField}>
+              <span className={styles.expandedFieldLabel}>Expires</span>
+              <span className={styles.expandedFieldValue}>
+                {new Date(log.batch.expirationDate).toLocaleDateString("en-GB")}
+              </span>
+            </div>
+          )}
+          <div className={styles.expandedField}>
+            <span className={styles.expandedFieldLabel}>Status</span>
+            <span className={styles.expandedFieldValue}>
+              {log.batch.status}
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* Stock */}
+      {log.stock && (
+        <div className={styles.expandedSection}>
+          <div className={styles.expandedSectionTitle}>Stock</div>
+          <div className={styles.expandedField}>
+            <span className={styles.expandedFieldLabel}>Stock ID</span>
+            <span className={`${styles.expandedFieldValue} ${styles.mono}`}>
+              #{log.stock.id}
+            </span>
+          </div>
+          <div className={styles.expandedField}>
+            <span className={styles.expandedFieldLabel}>Quantity</span>
+            <span className={styles.expandedFieldValue}>
+              {log.stock.quantity}
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* Credit */}
+      {log.credit && (
+        <div className={styles.expandedSection}>
+          <div className={styles.expandedSectionTitle}>Credit</div>
+          <div className={styles.expandedField}>
+            <span className={styles.expandedFieldLabel}>Amount</span>
+            <span className={styles.expandedFieldValue}>
+              {log.credit.amount?.toFixed(2)} DZD
+            </span>
+          </div>
+          <div className={styles.expandedField}>
+            <span className={styles.expandedFieldLabel}>Date</span>
+            <span className={styles.expandedFieldValue}>
+              {new Date(log.credit.date).toLocaleDateString("en-GB")}
+            </span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Main Page ────────────────────────────────────────────────────────────────
+
+export default function LogsPage() {
+  // Data
+  const [logs, setLogs] = useState<Log[]>([]);
+  const [meta, setMeta] = useState({ total: 0, page: 1, limit: 20, pages: 1 });
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Filters
+  const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [selectedEntities, setSelectedEntities] = useState<string[]>([]);
+  const [selectedActions, setSelectedActions] = useState<string[]>([]);
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
+  const [sortOrder, setSortOrder] = useState<"desc" | "asc">("desc");
+  const [limit, setLimit] = useState(20);
+
+  // UI
+  const [expandedIds, setExpandedIds] = useState<Set<number>>(new Set());
+  const [showFilters, setShowFilters] = useState(false);
+
+  // ─── Debounce search ───────────────────────────────────────────────────────
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedSearch(search), 350);
+    return () => clearTimeout(t);
+  }, [search]);
+
+  // ─── Fetch ─────────────────────────────────────────────────────────────────
+  const fetchLogs = useCallback(
+    async (page: number, isRefresh = false) => {
+      if (isRefresh) setRefreshing(true);
+      else setLoading(true);
+      setError(null);
+
+      try {
+        const params: Record<string, string | number> = {
+          page,
+          limit,
+        };
+        if (debouncedSearch) params.search = debouncedSearch;
+
+        const { data } = await axios.get<ApiResponse>(
+          "http://localhost:3001/logs",
+          { params },
+        );
+
+        // Client-side filter by entity/action/date (backend only supports search by entityType)
+        let filtered = data.data;
+
+        if (selectedEntities.length > 0) {
+          filtered = filtered.filter((l) =>
+            selectedEntities.includes(l.entityType.toLowerCase()),
+          );
+        }
+
+        if (selectedActions.length > 0) {
+          filtered = filtered.filter((l) =>
+            selectedActions.some((a) => l.action.toLowerCase().includes(a)),
+          );
+        }
+
+        if (dateFrom) {
+          filtered = filtered.filter(
+            (l) => new Date(l.timestamp) >= new Date(dateFrom),
+          );
+        }
+        if (dateTo) {
+          filtered = filtered.filter(
+            (l) => new Date(l.timestamp) <= new Date(dateTo + "T23:59:59"),
+          );
+        }
+
+        if (sortOrder === "asc") {
+          filtered.sort(
+            (a, b) =>
+              new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime(),
+          );
+        } else {
+          filtered.sort(
+            (a, b) =>
+              new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+          );
+        }
+
+        setLogs(filtered);
+        setMeta(data.meta);
+      } catch (e) {
+        setError(
+          "Failed to load activity logs. Check that your backend is running.",
+        );
+      } finally {
+        setLoading(false);
+        setRefreshing(false);
+      }
+    },
+    [
+      debouncedSearch,
+      selectedEntities,
+      selectedActions,
+      dateFrom,
+      dateTo,
+      sortOrder,
+      limit,
+    ],
+  );
+
+  useEffect(() => {
+    fetchLogs(1);
+  }, [fetchLogs]);
+
+  // ─── Helpers ───────────────────────────────────────────────────────────────
+  const toggleEntity = (val: string) => {
+    setSelectedEntities((prev) =>
+      prev.includes(val) ? prev.filter((v) => v !== val) : [...prev, val],
+    );
+  };
+
+  const toggleAction = (val: string) => {
+    setSelectedActions((prev) =>
+      prev.includes(val) ? prev.filter((v) => v !== val) : [...prev, val],
+    );
+  };
+
+  const toggleExpand = (id: number) => {
+    setExpandedIds((prev) => {
+      const s = new Set(prev);
+      if (s.has(id)) s.delete(id);
+      else s.add(id);
+      return s;
+    });
+  };
+
+  const clearAllFilters = () => {
+    setSearch("");
+    setSelectedEntities([]);
+    setSelectedActions([]);
+    setDateFrom("");
+    setDateTo("");
+  };
+
+  const activeFilterCount =
+    selectedEntities.length +
+    selectedActions.length +
+    (dateFrom ? 1 : 0) +
+    (dateTo ? 1 : 0);
+
+  const grouped = groupByDate(logs);
+
+  // ─── Stats ─────────────────────────────────────────────────────────────────
+  const todayCount = logs.filter(
+    (l) => new Date(l.timestamp).toDateString() === new Date().toDateString(),
+  ).length;
+  const createCount = logs.filter((l) =>
+    l.action.toLowerCase().includes("creat"),
+  ).length;
+  const deleteCount = logs.filter((l) =>
+    l.action.toLowerCase().includes("delet"),
+  ).length;
+
+  // ─── Pagination buttons ────────────────────────────────────────────────────
+  const renderPageButtons = () => {
+    const { page, pages } = meta;
+    const btns: React.ReactNode[] = [];
+    const maxVisible = 5;
+
+    const addBtn = (p: number) =>
+      btns.push(
+        <button
+          key={p}
+          className={`${styles.pageBtn} ${p === page ? styles.active : ""}`}
+          onClick={() => fetchLogs(p)}
+        >
+          {p}
+        </button>,
+      );
+
+    if (pages <= maxVisible + 2) {
+      for (let p = 1; p <= pages; p++) addBtn(p);
+    } else {
+      addBtn(1);
+      if (page > 3)
+        btns.push(
+          <span key="s1" className={styles.pageDots}>
+            …
+          </span>,
+        );
+      const start = Math.max(2, page - 1);
+      const end = Math.min(pages - 1, page + 1);
+      for (let p = start; p <= end; p++) addBtn(p);
+      if (page < pages - 2)
+        btns.push(
+          <span key="s2" className={styles.pageDots}>
+            …
+          </span>,
+        );
+      addBtn(pages);
+    }
+
+    return btns;
+  };
+
+  // ─── Render ────────────────────────────────────────────────────────────────
+  return (
+    <div className={styles.page}>
+      {/* ── Header ── */}
+      <div className={styles.header}>
+        <div className={styles.headerTop}>
+          <div className={styles.headerMeta}>
+            <div className={styles.breadcrumb}>
+              <span>Dashboard</span>
+              <span className={styles.breadcrumbSep}>/</span>
+              <span>Activity Logs</span>
+            </div>
+            <h1 className={styles.pageTitle}>
+              <span className={styles.pageTitleIcon}>
+                <Activity size={16} />
+              </span>
+              Activity Logs
+            </h1>
+            <p className={styles.pageSubtitle}>
+              Full audit trail of every system event
+            </p>
+          </div>
+
+          <div className={styles.headerActions}>
+            {refreshing ? (
+              <span className={styles.refreshing}>
+                <RefreshCw size={13} />
+                Refreshing…
+              </span>
+            ) : null}
+            <button
+              className={styles.btnIcon}
+              title="Refresh"
+              onClick={() => fetchLogs(meta.page, true)}
+            >
+              <RefreshCw size={15} />
+            </button>
+            <button
+              className={`${styles.btnIcon} ${showFilters ? styles.active : ""}`}
+              title="Toggle filters"
+              onClick={() => setShowFilters((v) => !v)}
+            >
+              <SlidersHorizontal size={15} />
+            </button>
+            <button className={styles.btnSecondary}>
+              <Download size={14} />
+              Export CSV
+            </button>
+          </div>
+        </div>
+
+        {/* Stats strip */}
+        <div className={styles.statsStrip}>
+          <div className={styles.statItem}>
+            <div className={styles.statLabel}>Total Logs</div>
+            <div className={`${styles.statValue} ${styles.accentColor}`}>
+              {meta.total.toLocaleString()}
+            </div>
+            <div className={styles.statDelta}>All time</div>
+          </div>
+          <div className={styles.statItem}>
+            <div className={styles.statLabel}>Today</div>
+            <div className={`${styles.statValue} ${styles.successColor}`}>
+              {todayCount}
+            </div>
+            <div className={styles.statDelta}>Current page sample</div>
+          </div>
+          <div className={styles.statItem}>
+            <div className={styles.statLabel}>Creates</div>
+            <div className={`${styles.statValue} ${styles.successColor}`}>
+              {createCount}
+            </div>
+            <div className={styles.statDelta}>This page</div>
+          </div>
+          <div className={styles.statItem}>
+            <div className={styles.statLabel}>Deletes</div>
+            <div className={`${styles.statValue} ${styles.dangerColor}`}>
+              {deleteCount}
+            </div>
+            <div className={styles.statDelta}>This page</div>
+          </div>
+          <div className={styles.statItem}>
+            <div className={styles.statLabel}>Entities</div>
+            <div className={styles.statValue}>
+              {new Set(logs.map((l) => l.entityType)).size}
+            </div>
+            <div className={styles.statDelta}>Types active</div>
+          </div>
+          <div className={styles.statItem}>
+            <div className={styles.statLabel}>Page</div>
+            <div className={styles.statValue}>
+              {meta.page} / {meta.pages}
+            </div>
+            <div className={styles.statDelta}>of {meta.total} total</div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Toolbar ── */}
+      <div className={styles.toolbar}>
+        {/* Search */}
+        <div className={styles.searchWrapper}>
+          <span className={styles.searchIcon}>
+            <Search size={14} />
+          </span>
+          <input
+            className={styles.searchInput}
+            placeholder="Search by entity type…"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          {search && (
+            <button
+              className={styles.searchClear}
+              onClick={() => setSearch("")}
+            >
+              <X size={13} />
+            </button>
+          )}
+        </div>
+
+        {/* Filters */}
+        {showFilters && (
+          <div className={styles.filtersRow}>
+            <FilterDropdown
+              label="Entity"
+              options={ENTITY_TYPES}
+              selected={selectedEntities}
+              onToggle={toggleEntity}
+              onClear={() => setSelectedEntities([])}
+              icon={<Package size={13} />}
+            />
+
+            <FilterDropdown
+              label="Action"
+              options={ACTION_TYPES}
+              selected={selectedActions}
+              onToggle={toggleAction}
+              onClear={() => setSelectedActions([])}
+              icon={<Activity size={13} />}
+            />
+
+            {/* Date range */}
+            <div
+              className={`${styles.dateInputGroup} ${dateFrom || dateTo ? styles.hasValue : ""}`}
+            >
+              <Calendar
+                size={13}
+                style={{ color: "var(--foreground-muted)" }}
+              />
+              <input
+                type="date"
+                className={styles.dateInput}
+                value={dateFrom}
+                onChange={(e) => setDateFrom(e.target.value)}
+              />
+              <span className={styles.dateSep}>→</span>
+              <input
+                type="date"
+                className={styles.dateInput}
+                value={dateTo}
+                onChange={(e) => setDateTo(e.target.value)}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Sort */}
+        <div className={styles.sortRow}>
+          <BarChart2 size={13} />
+          <select
+            className={styles.sortSelect}
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value as "desc" | "asc")}
+          >
+            <option value="desc">Newest first</option>
+            <option value="asc">Oldest first</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Active filters chips */}
+      {activeFilterCount > 0 && (
+        <div className={styles.activeFilters}>
+          {selectedEntities.map((e) => (
+            <span key={e} className={styles.filterChip}>
+              Entity: {e}
+              <button
+                className={styles.filterChipRemove}
+                onClick={() => toggleEntity(e)}
+              >
+                <X size={11} />
+              </button>
+            </span>
+          ))}
+          {selectedActions.map((a) => (
+            <span key={a} className={styles.filterChip}>
+              Action: {a}
+              <button
+                className={styles.filterChipRemove}
+                onClick={() => toggleAction(a)}
+              >
+                <X size={11} />
+              </button>
+            </span>
+          ))}
+          {dateFrom && (
+            <span className={styles.filterChip}>
+              From: {dateFrom}
+              <button
+                className={styles.filterChipRemove}
+                onClick={() => setDateFrom("")}
+              >
+                <X size={11} />
+              </button>
+            </span>
+          )}
+          {dateTo && (
+            <span className={styles.filterChip}>
+              To: {dateTo}
+              <button
+                className={styles.filterChipRemove}
+                onClick={() => setDateTo("")}
+              >
+                <X size={11} />
+              </button>
+            </span>
+          )}
+          <button className={styles.clearAllBtn} onClick={clearAllFilters}>
+            Clear all
+          </button>
+        </div>
+      )}
+
+      {/* ── Content ── */}
+      <div className={styles.content}>
+        {/* Result bar */}
+        <div className={styles.resultBar}>
+          <span className={styles.resultCount}>
+            Showing <strong>{logs.length}</strong> of{" "}
+            <strong>{meta.total}</strong> logs
+          </span>
+          <div className={styles.perPageSelect}>
+            Rows per page
+            <select
+              value={limit}
+              onChange={(e) => {
+                setLimit(Number(e.target.value));
+              }}
+            >
+              {[10, 20, 50, 100].map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Error */}
+        {error && (
+          <div className={styles.errorBanner}>
+            <AlertTriangle size={15} color="var(--danger)" />
+            <span className={styles.errorBannerText}>{error}</span>
+            <button
+              className={styles.retryBtn}
+              onClick={() => fetchLogs(meta.page)}
+            >
+              Retry
+            </button>
+          </div>
+        )}
+
+        {/* Timeline */}
+        <div className={styles.timelineList}>
+          <div className={styles.timelineRail} />
+
+          {loading ? (
+            <SkeletonRows />
+          ) : logs.length === 0 ? (
+            <div className={styles.emptyState}>
+              <div className={styles.emptyIcon}>
+                <Activity size={24} />
+              </div>
+              <p className={styles.emptyTitle}>No logs found</p>
+              <p className={styles.emptyDesc}>
+                Try adjusting your search or filters.
+              </p>
+              {activeFilterCount > 0 && (
+                <button
+                  className={styles.btnSecondary}
+                  onClick={clearAllFilters}
+                >
+                  <X size={13} />
+                  Clear filters
+                </button>
+              )}
+            </div>
+          ) : (
+            grouped.map((group, gi) => (
+              <div key={gi}>
+                {/* Date label */}
+                <div className={styles.dateDivider}>
+                  <div className={styles.dateDividerLine} />
+                  <span className={styles.dateDividerLabel}>
+                    <Clock
+                      size={11}
+                      style={{ display: "inline", marginRight: 4 }}
+                    />
+                    {group.date}
+                  </span>
+                  <div className={styles.dateDividerLine} />
+                </div>
+
+                {group.logs.map((log) => {
+                  const actionCls = getActionClass(log.action);
+                  const isExpanded = expandedIds.has(log.id);
+                  const description = buildDescription(log);
+                  const entityBadgeCls = getEntityBadgeClass(log.entityType);
+
+                  return (
+                    <div key={log.id} className={styles.logEntry}>
+                      <div className={styles.logDotCol}>
+                        <div
+                          className={`${styles.logDot} ${styles[actionCls]}`}
+                        >
+                          {getActionIcon(log.action)}
+                        </div>
+                      </div>
+
+                      <div
+                        className={`${styles.logCard} ${isExpanded ? styles.expanded : ""}`}
+                        onClick={() => toggleExpand(log.id)}
+                      >
+                        <div className={styles.logCardMain}>
+                          <div className={styles.logCardLeft}>
+                            <div className={styles.logCardTop}>
+                              <span
+                                className={`${styles.entityBadge} ${styles[entityBadgeCls]}`}
+                              >
+                                {getEntityIcon(log.entityType)}
+                                {log.entityType}
+                              </span>
+                              <span
+                                className={`${styles.actionTag} ${styles[actionCls] || styles.default}`}
+                              >
+                                {getActionIcon(log.action)}
+                                {log.action}
+                              </span>
+                            </div>
+                            <p className={styles.logDescription}>
+                              {description}
+                            </p>
+                            <div className={styles.logMeta}>
+                              <span className={styles.logMetaItem}>
+                                <Clock size={11} />
+                                {formatTimestamp(log.timestamp)}
+                              </span>
+                              {log.quantity != null && (
+                                <span className={styles.logMetaItem}>
+                                  <Hash size={11} />
+                                  qty: {log.quantity}
+                                </span>
+                              )}
+                              {log.sale && (
+                                <span className={styles.logMetaItem}>
+                                  <ShoppingCart size={11} />
+                                  Sale #{log.sale.id}
+                                </span>
+                              )}
+                              {log.client && (
+                                <span className={styles.logMetaItem}>
+                                  <Users size={11} />
+                                  {log.client.name}
+                                </span>
+                              )}
+                              {log.supplier && (
+                                <span className={styles.logMetaItem}>
+                                  <Truck size={11} />
+                                  {log.supplier.name}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className={styles.logCardRight}>
+                            <span className={styles.logTimestamp}>
+                              {formatTimestamp(log.timestamp)}
+                            </span>
+                            <span className={styles.logId}>#{log.id}</span>
+                            <ChevronDown
+                              size={14}
+                              className={`${styles.expandChevron} ${isExpanded ? styles.open : ""}`}
+                            />
+                          </div>
+                        </div>
+
+                        {isExpanded && <ExpandedDetails log={log} />}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* Pagination */}
+        {!loading && meta.pages > 1 && (
+          <div className={styles.pagination}>
+            <span className={styles.paginationInfo}>
+              Page {meta.page} of {meta.pages} ({meta.total} total)
+            </span>
+            <div className={styles.paginationButtons}>
+              <button
+                className={styles.pageBtn}
+                onClick={() => fetchLogs(meta.page - 1)}
+                disabled={meta.page === 1}
+              >
+                <ChevronDown size={14} style={{ transform: "rotate(90deg)" }} />
+              </button>
+              {renderPageButtons()}
+              <button
+                className={styles.pageBtn}
+                onClick={() => fetchLogs(meta.page + 1)}
+                disabled={meta.page === meta.pages}
+              >
+                <ChevronDown
+                  size={14}
+                  style={{ transform: "rotate(-90deg)" }}
+                />
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

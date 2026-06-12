@@ -1,0 +1,182 @@
+[
+  {
+    "name": "Ahmed Benali",
+    "address": "15 Rue Didouche Mourad, Alger Centre",
+    "phone": "0550 12 34 56",
+    "email": "ahmed.benali@gmail.com"
+  },
+  {
+    "name": "Fatima Zohra Kaci",
+    "address": "23 Boulevard Krim Belkacem, Oran",
+    "phone": "0551 23 45 67",
+    "email": "fatima.kaci@yahoo.fr"
+  },
+  {
+    "name": "Karim Amrani",
+    "address": "Rue des Frères Arfaoui, Tizi Ouzou",
+    "phone": "0552 34 56 78",
+    "email": "karim.amrani@hotmail.com"
+  },
+  {
+    "name": "Samira Bouchareb",
+    "address": "7 Place du 1er Novembre, Constantine",
+    "phone": "0553 45 67 89",
+    "email": "samira.bouchareb@gmail.com"
+  },
+  {
+    "name": "Mohamed Cherif Bouzid",
+    "address": "Boulevard Souidani Boudjemaa, Alger",
+    "phone": "0554 56 78 90",
+    "email": "mc.bouzid@yahoo.fr"
+  },
+  {
+    "name": "Nadia Mellal",
+    "address": "RN5, Sétif",
+    "phone": "0555 67 89 01",
+    "email": "nadia.mellal@gmail.com"
+  },
+  {
+    "name": "Rachid Haddad",
+    "address": "Cité des Pins, Hydra, Alger",
+    "phone": "0556 78 90 12",
+    "email": "rachid.haddad@hotmail.com"
+  },
+  {
+    "name": "Amel Touati",
+    "address": "Route de l'Hôpital, Beni Messous, Alger",
+    "phone": "0557 89 01 23",
+    "email": "amel.touati@gmail.com"
+  },
+  {
+    "name": "Yazid Chellali",
+    "address": "28 Rue Larbi Ben M'hidi, Blida",
+    "phone": "0558 90 12 34",
+    "email": "yazid.chellali@yahoo.fr"
+  },
+  {
+    "name": "Soraya Hamdi",
+    "address": "11 Boulevard Zighoud Youcef, Annaba",
+    "phone": "0559 01 23 45",
+    "email": "soraya.hamdi@gmail.com"
+  },
+  {
+    "name": "Lounès Idir",
+    "address": "Zone Industrielle, Bouira",
+    "phone": "0560 12 34 56",
+    "email": "lounes.idir@hotmail.com"
+  },
+  {
+    "name": "Djamila Ould Kaci",
+    "address": "Cité 200 Logements, Chéraga, Alger",
+    "phone": "0561 23 45 67",
+    "email": "djamilakaci@gmail.com"
+  },
+  {
+    "name": "Farid Belkacem",
+    "address": "04 Rue des Frères Ziata, Béjaïa",
+    "phone": "0562 34 56 78",
+    "email": "farid.belkacem@yahoo.fr"
+  },
+  {
+    "name": "Nassima Aït Ahmed",
+    "address": "17 Rue Mohamed Khemisti, Mostaganem",
+    "phone": "0563 45 67 89",
+    "email": "nassima.aitahmed@gmail.com"
+  },
+  {
+    "name": "Hakim Bensalem",
+    "address": "Campus Hasnaoua, Tizi Ouzou",
+    "phone": "0564 56 78 90",
+    "email": "hakim.bensalem@hotmail.com"
+  },
+  {
+    "name": "Malika Boukrif",
+    "address": "Route des 4 Chemins, El Mohammadia, Alger",
+    "phone": "0565 67 89 01",
+    "email": "malika.boukrif@gmail.com"
+  },
+  {
+    "name": "Sofiane Merabet",
+    "address": "15 Rue Ben M'hidi, Skikda",
+    "phone": "0566 78 90 12",
+    "email": "sofiane.merabet@yahoo.fr"
+  },
+  {
+    "name": "Leila Mansouri",
+    "address": "Cité 500 Logements, Batna",
+    "phone": "0567 89 01 23",
+    "email": "leila.mansouri@gmail.com"
+  },
+  {
+    "name": "Mourad Saadi",
+    "address": "RN 44, Biskra",
+    "phone": "0568 90 12 34",
+    "email": "mourad.saadi@hotmail.com"
+  },
+  {
+    "name": "Nabila Chikhi",
+    "address": "Quartier Bellevue, Tlemcen",
+    "phone": "0569 01 23 45",
+    "email": "nabila.chikhi@gmail.com"
+  },
+  {
+    "name": "Rabah Ziani",
+    "address": "Lotissement El Bina, Djelfa",
+    "phone": "0570 12 34 56",
+    "email": "rabah.ziani@yahoo.fr"
+  },
+  {
+    "name": "Houria Boudjemaa",
+    "address": "Route de l'Université, Médéa",
+    "phone": "0571 23 45 67",
+    "email": "houria.boudjemaa@gmail.com"
+  },
+  {
+    "name": "Redouane Cherif",
+    "address": "Cité des Martyrs, Chlef",
+    "phone": "0572 34 56 78",
+    "email": "redouane.cherif@hotmail.com"
+  },
+  {
+    "name": "Naima Bouziane",
+    "address": "Boulevard de l'Indépendance, Jijel",
+    "phone": "0573 45 67 89",
+    "email": "naima.bouziane@gmail.com"
+  },
+  {
+    "name": "Larbi Chaouch",
+    "address": "Quartier El Djorf, Mascara",
+    "phone": "0574 56 78 90",
+    "email": "larbi.chaouch@yahoo.fr"
+  },
+  {
+    "name": "Zineb Hamzaoui",
+    "address": "Rue 1er Novembre, Béchar",
+    "phone": "0575 67 89 01",
+    "email": "zineb.hamzaoui@gmail.com"
+  },
+  {
+    "name": "Noureddine Gacem",
+    "address": "Cité El Badr, Tebessa",
+    "phone": "0576 78 90 12",
+    "email": "noureddine.gacem@hotmail.com"
+  },
+  {
+    "name": "Salima Ouali",
+    "address": "Route de Constantine, Guelma",
+    "phone": "0577 89 01 23",
+    "email": "salima.ouali@gmail.com"
+  },
+  {
+    "name": "Azzedine Bouaicha",
+    "address": "Place de la République, Souk Ahras",
+    "phone": "0578 90 12 34",
+    "email": "azzedine.bouaicha@yahoo.fr"
+  },
+  {
+    "name": "Wahiba Khelifi",
+    "address": "Cité 140 Logements, Mila",
+    "phone": "0579 01 23 45",
+    "email": "wahiba.khelifi@gmail.com"
+  }
+]

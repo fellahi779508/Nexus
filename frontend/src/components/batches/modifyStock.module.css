@@ -1,0 +1,233 @@
+/* ── Overlay ────────────────────────────────────────────────────────────── */
+.overlay {
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.45);
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 999;
+	padding: 16px;
+	animation: overlayIn 0.2s ease;
+}
+
+@keyframes overlayIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+/* ── Card ───────────────────────────────────────────────────────────────── */
+.container {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: 18px;
+	padding: 28px 24px 20px;
+	width: 100%;
+	max-width: 800px;
+	display: flex;
+	flex-direction: column;
+	box-shadow:
+		0 20px 60px rgba(0, 0, 0, 0.12),
+		0 4px 16px rgba(0, 0, 0, 0.06);
+	animation: cardIn 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+	position: relative;
+	height: auto;
+}
+
+@keyframes cardIn {
+	from {
+		transform: translateY(14px) scale(0.98);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0) scale(1);
+		opacity: 1;
+	}
+}
+
+/* ── Close Button ───────────────────────────────────────────────────────── */
+.closeBtn {
+	position: absolute;
+	top: 14px;
+	right: 14px;
+	width: 28px;
+	height: 28px;
+	border-radius: 8px;
+	border: 1px solid var(--border);
+	background: var(--background-secondary);
+	color: var(--foreground-muted);
+	font-size: 14px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition:
+		background 0.15s,
+		color 0.15s;
+}
+
+.closeBtn:hover {
+	background: var(--border);
+	color: var(--foreground);
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+.header {
+	margin-bottom: 20px;
+	padding-right: 36px;
+	flex-shrink: 0;
+}
+
+.title {
+	font-family: "Georgia", "Times New Roman", serif;
+	font-size: 20px;
+	font-weight: 700;
+	color: var(--foreground);
+	margin: 0 0 4px;
+	letter-spacing: -0.3px;
+}
+
+.subtitle {
+	font-size: 12px;
+	color: var(--foreground-muted);
+	margin: 0;
+}
+
+/* ── Form body ───────────────────────────────────────────────────────────── */
+.formBody {
+	flex: 1;
+}
+
+/* ── Field ───────────────────────────────────────────────────────────────── */
+.field {
+	margin-bottom: 0;
+}
+
+/* ── Label ───────────────────────────────────────────────────────────────── */
+.label {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 10px;
+	font-weight: 600;
+	color: var(--foreground-muted);
+	margin-bottom: 6px;
+	text-transform: uppercase;
+	letter-spacing: 0.6px;
+}
+
+/* ── Input ───────────────────────────────────────────────────────────────── */
+.input {
+	width: 100%;
+	padding: 10px 13px;
+	border: 1.5px solid var(--border);
+	border-radius: 10px;
+	font-size: 14px;
+	color: var(--foreground);
+	background: var(--background);
+	outline: none;
+	transition:
+		border-color 0.15s,
+		box-shadow 0.15s,
+		background 0.15s;
+	box-sizing: border-box;
+	font-family: inherit;
+}
+
+.input::placeholder {
+	color: var(--foreground-muted);
+	opacity: 0.6;
+}
+
+.input:focus {
+	border-color: var(--accent);
+	background: var(--surface);
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+/* remove number arrows */
+.input[type="number"]::-webkit-inner-spin-button,
+.input[type="number"]::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+.footer {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+	margin-top: 24px;
+	padding-top: 16px;
+	border-top: 1px solid var(--border);
+	flex-shrink: 0;
+}
+
+.btnSecondary {
+	padding: 9px 18px;
+	border: 1.5px solid var(--border);
+	border-radius: 10px;
+	background: transparent;
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--foreground-muted);
+	cursor: pointer;
+	transition:
+		border-color 0.15s,
+		color 0.15s,
+		background 0.15s;
+	font-family: inherit;
+}
+
+.btnSecondary:hover {
+	border-color: var(--foreground-muted);
+	color: var(--foreground);
+	background: var(--surface-hover);
+}
+
+.btnPrimary {
+	padding: 9px 22px;
+	border: none;
+	border-radius: 10px;
+	background: var(--accent);
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--accent-foreground);
+	cursor: pointer;
+	transition:
+		opacity 0.15s,
+		transform 0.1s,
+		box-shadow 0.15s;
+	font-family: inherit;
+}
+
+.btnPrimary:hover {
+	opacity: 0.88;
+	box-shadow: 0 4px 16px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.btnPrimary:active {
+	transform: scale(0.97);
+}
+
+.btnPrimary:disabled {
+	opacity: 0.4;
+	cursor: not-allowed;
+	box-shadow: none;
+}
+
+/* ── RTL ─────────────────────────────────────────────────────────────────── */
+[dir="rtl"] .closeBtn {
+	right: auto;
+	left: 14px;
+}
+
+[dir="rtl"] .header {
+	padding-right: 0;
+	padding-left: 36px;
+}

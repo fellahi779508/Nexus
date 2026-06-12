@@ -1,0 +1,551 @@
+import { Batch } from 'src/batch/entities/batch.entity';
+import { Product } from 'src/product/entities/product.entity';
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+
+@Entity()
+export class ProductVariant {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  name: string;
+
+  @Column({ nullable: true })
+  PPA: string;
+
+  @Column({ default: 0 })
+  purchasePrice: number;
+
+  @Column({ default: 0 })
+  sellingPriceHT: number;
+
+  @Column({ default: 9 })
+  vatRate: number;
+
+  @Column({ default: 0 })
+  sellingPriceTTC: number;
+
+  @Column({ default: 0 })
+  profit: number;
+
+  @Column({ default: 0 })
+  profitRate: number;
+  @Column({ default: 0 })
+  profitTTC: number;
+
+  @Column({ default: 0, nullable: true })
+  promotionPrice: number;
+
+  @Column({ default: 0, nullable: true })
+  promotionRate: number;
+
+  @Column({ unique: true })
+  barcode: string;
+
+  @Column({ nullable: true })
+  size: string;
+
+  @Column({ nullable: true })
+  color: string;
+
+  @Column({ nullable: true })
+  weight: number;
+
+  @Column({ nullable: true })
+  height: number;
+
+  @Column({ nullable: true })
+  flavor: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @ManyToOne(() => Product, (product) => product.variants, {
+    onDelete: 'CASCADE',
+  })
+  product: Product;
+
+  @OneToMany(() => Batch, (batches) => batches.variant, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
+  batches: Batch[];
+  @BeforeInsert()
+  @BeforeUpdate()
+  updateProfit() {
+    this.profitTTC = this.sellingPriceTTC - this.purchasePrice;
+  }
+}
+ -----------------------------------------------------------
+
+ import { Log } from 'src/logs/entities/log.entity';
+import { Package } from 'src/package/entities/package.entity';
+import { ProductVariant } from 'src/product_variant/entities/product_variant.entity';
+import { PurchasedItem } from 'src/purchased-item/entities/purchased-item.entity';
+import { SoldItem } from 'src/sold-item/entities/sold-item.entity';
+import { StockPayment } from 'src/stock-payment/entities/stock-payment.entity';
+import { Stock } from 'src/stock/entities/stock.entity';
+import { Supplier } from 'src/supplier/entities/supplier.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+  BeforeInsert,
+  BeforeUpdate,
+} from 'typeorm';
+
+@Entity()
+export class Batch {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  createdAt: string;
+
+  @Column()
+  updatedAt: string;
+
+  @Column({ nullable: true })
+  fabricationDate: string;
+
+  @Column({ nullable: true })
+  expirationDate: string;
+
+  @Column({ nullable: true })
+  alertPeriodPerDay: number;
+
+  @Column({ nullable: true })
+  alertPeriodPerStock: number;
+
+  @Column({ nullable: true })
+  nLot: string;
+
+  @Column({ default: true })
+  primary: boolean;
+
+  @Column({ nullable: true })
+  status: string;
+
+  @Column({ nullable: true })
+  stockQTYStatus: string;
+
+  @ManyToOne(() => ProductVariant, (variant) => variant.batches, {
+    onDelete: 'CASCADE',
+  })
+  variant: ProductVariant;
+
+  @OneToOne(() => Stock, (stock) => stock.batch, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'stock_id' })
+  stock: Stock;
+
+  @ManyToOne(() => Supplier, (supplier) => supplier.batches, {
+    onDelete: 'SET NULL',
+  })
+  supplier: Supplier;
+
+  @OneToMany(() => Log, (log) => log.batch, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
+  logs: Log[];
+
+  @OneToMany(() => SoldItem, (soldItem) => soldItem.batch, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
+  soldItems: SoldItem[];
+  @OneToMany(() => PurchasedItem, (purchasedItem) => purchasedItem.batch, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
+  purchasedItems: PurchasedItem[];
+
+  @OneToOne(() => Package, (pack) => pack.batch, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
+  pack: Package;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  verifyStockQTYStatus() {
+    if (
+      this.alertPeriodPerStock === null ||
+      this.alertPeriodPerStock === undefined
+    ) {
+      this.stockQTYStatus = 'ok';
+      return;
+    }
+
+    // If stock relation is not loaded, we can't verify quantity status
+    if (!this.stock) {
+      this.stockQTYStatus = 'ok';
+      return;
+    }
+
+    const currentStockQTY = this.stock.quantity;
+
+    if (currentStockQTY <= this.alertPeriodPerStock && currentStockQTY > 0) {
+      this.stockQTYStatus = 'low';
+
+      return;
+    }
+    if (currentStockQTY === 0) {
+      this.stockQTYStatus = 'empty';
+      return;
+    }
+    this.stockQTYStatus = 'ok';
+    this.updatedAt = new Date().toISOString();
+  }
+}
+ --------------------------------------------------
+ import { Batch } from 'src/batch/entities/batch.entity';
+import { Log } from 'src/logs/entities/log.entity';
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+
+@Entity()
+export class Stock {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  quantity: number;
+
+  @Column()
+  createdAt: string;
+
+  @Column()
+  updatedAt: string;
+
+  @OneToOne(() => Batch, (batch) => batch.stock, {
+    nullable: true,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'batch_id' })
+  batch: Batch;
+
+  @OneToMany(() => Log, (log) => log.stock)
+  logs: Log[];
+  @BeforeInsert()
+  @BeforeUpdate()
+  updateStock() {
+    if (!this.quantity) {
+      this.quantity = 0;
+    }
+    if (this.quantity <= 0) {
+      this.quantity = 0;
+    }
+    return;
+  }
+  @BeforeUpdate()
+  updateStockUpdatedAt() {
+    this.updatedAt = new Date().toISOString();
+    return;
+  }
+}
+-----------------------------------------------
+import { Client } from 'src/client/entities/client.entity';
+import { Credit } from 'src/credit/entities/credit.entity';
+import { Log } from 'src/logs/entities/log.entity';
+import { SoldItem } from 'src/sold-item/entities/sold-item.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+
+@Entity()
+export class Sale {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  total: number;
+
+  @Column()
+  paid: number;
+  @Column({ default: false })
+  isDetailed: boolean;
+
+  @Column()
+  date: string;
+
+  @Column({ default: false })
+  remise: boolean;
+  @Column({ default: 0 })
+  remiseAmount: number;
+
+  @OneToMany(() => Log, (log) => log.sale)
+  logs: Log[];
+
+  @OneToOne(() => Credit, (credit) => credit.sale, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
+  credit: Credit;
+
+  @ManyToOne(() => Client, (client) => client.sales, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
+  client: Client;
+
+  @OneToMany(() => SoldItem, (soldItem) => soldItem.sale, {
+    nullable: true,
+  })
+  soldItems: SoldItem[];
+}
+------------------------------------------------
+import { Batch } from 'src/batch/entities/batch.entity';
+import { Credit } from 'src/credit/entities/credit.entity';
+import { PurchasedItem } from 'src/purchased-item/entities/purchased-item.entity';
+import { Supplier } from 'src/supplier/entities/supplier.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+} from 'typeorm';
+
+@Entity()
+export class StockPayment {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  amount: number;
+
+  @Column()
+  total: number;
+
+  @Column()
+  remaining: number;
+
+  @Column()
+  date: string;
+
+  @Column()
+  paymentMethod: string;
+  @Column({ nullable: true })
+  timbre: number;
+
+  @ManyToOne(() => Supplier, (supplier) => supplier.stockPayments)
+  supplier: Supplier;
+  @OneToMany(
+    () => PurchasedItem,
+    (purchasedItem) => purchasedItem.stockPayment,
+    {
+      onDelete: 'CASCADE',
+    },
+  )
+  purchasedItems: PurchasedItem[];
+
+  @OneToOne(() => Credit, (credit) => credit.stockPayment, {
+    nullable: true,
+    onDelete: 'CASCADE',
+  })
+  credit: Credit;
+}
+--------------------------------------------------------
+import { Log } from 'src/logs/entities/log.entity';
+import { Sale } from 'src/sale/entities/sale.entity';
+import { StockPayment } from 'src/stock-payment/entities/stock-payment.entity';
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+
+@Entity()
+export class Credit {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  amount: number;
+  @Column()
+  date: string;
+
+  @OneToMany(() => Log, (log) => log.credit, {
+    cascade: true,
+    nullable: true,
+  })
+  logs: Log[];
+
+  @OneToOne(() => Sale, (sale) => sale.credit, {
+    nullable: true,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'sale_id' })
+  sale: Sale;
+
+  @OneToOne(() => StockPayment, (stockPayment) => stockPayment.credit, {
+    nullable: true,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'purchase_id' })
+  stockPayment: StockPayment;
+  @BeforeInsert()
+  setDate() {
+    this.date = new Date().toISOString();
+  }
+}
+----------------------------------------------
+import { Log } from 'src/logs/entities/log.entity';
+import { Sale } from 'src/sale/entities/sale.entity';
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+
+@Entity()
+export class Client {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  name: string;
+
+  @Column({ nullable: true })
+  address: string;
+
+  @Column({ nullable: true })
+  phone: string;
+
+  @Column({ nullable: true })
+  email: string;
+
+  @Column()
+  createdAt: string;
+  @Column()
+  updatedAt: string;
+
+  @OneToMany(() => Log, (log) => log.client, { nullable: true })
+  logs: Log[];
+
+  @OneToMany(() => Sale, (sale) => sale.client, {
+    nullable: true,
+    onDelete: 'SET NULL',
+  })
+  sales: Sale[];
+  @BeforeInsert()
+  @BeforeUpdate()
+  setTimestamps() {
+    const now = new Date().toISOString();
+    if (!this.createdAt) {
+      this.createdAt = now;
+    }
+    this.updatedAt = now;
+  }
+}
+-----------------------------------------------------
+import { Batch } from 'src/batch/entities/batch.entity';
+import { Log } from 'src/logs/entities/log.entity';
+import { StockPayment } from 'src/stock-payment/entities/stock-payment.entity';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+
+@Entity()
+export class Supplier {
+  @PrimaryColumn()
+  id: number;
+
+  @Column()
+  name: string;
+
+  @Column({ nullable: true })
+  address: string;
+
+  @Column({ nullable: true })
+  phone: string;
+
+  @Column({ nullable: true })
+  email: string;
+
+  @Column()
+  createdAt: string;
+
+  @Column()
+  updatedAt: string;
+
+  @OneToMany(() => Batch, (batches) => batches.supplier, {
+    onDelete: 'SET NULL',
+  })
+  batches: Batch[];
+
+  @OneToMany(() => StockPayment, (stockPayment) => stockPayment.supplier)
+  stockPayments: StockPayment[];
+
+  @OneToMany(() => Log, (log) => log.supplier)
+  logs: Log[];
+}
+-------------------------------------------------------------
+import { Batch } from 'src/batch/entities/batch.entity';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+
+@Entity()
+export class Package {
+  @PrimaryGeneratedColumn()
+  id: number;
+  @Column()
+  type: string;
+  @Column()
+  quantity: number;
+  @Column()
+  total: number;
+
+  //remise
+  @Column({ nullable: true })
+  discount: number;
+  @Column({ nullable: true })
+  discountRate: number;
+  @OneToOne(() => Batch, (batch) => batch.pack, { nullable: true })
+  batch: Batch;
+}
+-------------------------------------------------------------
+these are the current relations that exist on the system 

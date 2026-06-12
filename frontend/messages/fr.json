@@ -1,0 +1,1245 @@
+{
+  "dashboard": {
+    "title": "Tableau de Bord",
+    "subtitle": "Gestionnaire de Stock · Aperçu",
+    "loading": "RÉCUPÉRATION DES DONNÉES…",
+    "dateBanner": {
+      "live": "EN DIRECT"
+    },
+    "actions": {
+      "quickSale": "Vente Rapide",
+      "quickPurchase": "Achat Rapide"
+    },
+    "metrics": {
+      "profit": "Bénéfice du Jour",
+      "costs": "Coûts Totaux",
+      "credit": "Crédit",
+      "losses": "Pertes Totales",
+      "salesVolume": "Volume des Ventes",
+      "purchases": "Achats"
+    },
+    "sections": {
+      "latestSales": "Dernières Ventes",
+      "latestPurchases": "Derniers Achats",
+      "damagedExpired": "Endommagés & Expirés"
+    },
+    "labels": {
+      "sale": "VENTE",
+      "purchaseOrder": "BC",
+      "total": "Total",
+      "paid": "Payé",
+      "amount": "Montant",
+      "remaining": "Restant",
+      "qty": "Qté",
+      "lost": "Perdu",
+      "batch": "Lot",
+      "stock": "Stock",
+      "lossReason": {
+        "damaged": "ENDOMMAGÉ",
+        "expired": "EXPIRÉ"
+      }
+    },
+    "empty": {
+      "noSales": "— aucune vente aujourd'hui —",
+      "noPurchases": "— aucun achat aujourd'hui —",
+      "noLosses": "— aucune perte aujourd'hui —"
+    },
+    "error": {
+      "default": "Échec du chargement des données du tableau de bord",
+      "retry": "RÉESSAYER"
+    }
+  },
+  "sidebar": {
+    "appName": "Nexus",
+    "appTagline": "Suite de Gestion",
+    "sectionMain": "Opérations",
+    "sectionLogs": "Registres",
+    "products": "Produits",
+    "stock": "Stock",
+    "clients": "Clients",
+    "suppliers": "Fournisseurs",
+    "sales": "Ventes",
+    "purchases": "Achats",
+    "history": "Historique",
+    "logs": "Journaux d'Activité",
+    "settings": "Paramètres",
+    "settingsDescription": "Configuration du système",
+    "dashboard": "Tableau de Bord",
+    "categories": "Catégories",
+    "alert": {
+      "title": "Alerte",
+      "message": "Vérifiez votre stock régulièrement."
+    }
+  },
+  "products": {
+    "title": "Produits",
+    "total": "{count} au total",
+    "addProduct": "Ajouter un Produit",
+    "searchPlaceholder": "Rechercher par nom ou catégorie…",
+    "loading": "Chargement des produits…",
+    "errorLoad": "Échec du chargement des produits.",
+    "emptyTitle": "Aucun produit trouvé",
+    "emptySubtitle": "Commencez par ajouter votre premier produit.",
+    "emptySearchSubtitle": "Aucun résultat pour \"{query}\"",
+    "pageInfo": "Page {page} sur {pages}",
+    "productId": "#{id}",
+    "refresh": "Actualiser",
+    "noCategory": "Aucune catégorie"
+  },
+  "productOptions": {
+    "eyebrow": "Actions sur le produit",
+    "title": "Que souhaitez-vous faire ?",
+    "close": "Fermer",
+    "viewDetails": {
+      "title": "Voir les Détails",
+      "desc": "Consulter les détails du produit"
+    },
+    "updateProduct": {
+      "title": "Modifier le Produit",
+      "desc": "Modifier les informations du produit"
+    },
+    "deleteProduct": {
+      "title": "Supprimer le Produit",
+      "desc": "Supprimer le produit du système",
+      "error": "Échec de la suppression du produit"
+    },
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce produit ? Cette action est irréversible."
+  },
+  "categories": {
+    "title": "Catégories",
+    "total": "{count, plural, =0 {Aucune catégorie} one {1 catégorie} other {{count} catégories}}",
+    "addCategory": "Ajouter une Catégorie",
+    "searchPlaceholder": "Rechercher des catégories...",
+    "loading": "Chargement des catégories...",
+    "errorLoad": "Échec du chargement des catégories. Veuillez réessayer.",
+    "emptyTitle": "Aucune catégorie trouvée",
+    "emptySubtitle": "Commencez par créer votre première catégorie.",
+    "emptySearchSubtitle": "Aucune catégorie ne correspond à \"{query}\". Essayez une autre recherche.",
+    "pageInfo": "Page {page} sur {pages}",
+    "refresh": "Actualiser"
+  },
+  "pageInfo": "Page {page} sur {pages}",
+  "addCategory": {
+    "title": "Ajouter une Catégorie",
+    "subtitle": "Ajoutez une nouvelle catégorie pour organiser vos produits",
+    "sectionLabel": "Informations Principales",
+    "nameLabel": "Nom de la Catégorie",
+    "namePlaceholder": "Entrez le nom de la catégorie",
+    "btnClose": "Fermer",
+    "btnCreate": "Créer la Catégorie",
+    "successCreate": "Catégorie créée avec succès",
+    "errorCreate": "Échec de la création de la catégorie",
+    "errorNameRequired": "Le nom de la catégorie est requis",
+    "updateTitle": "Modifier la Catégorie",
+    "updateSubtitle": "Modifier les détails de la catégorie",
+    "updateBtn": "Modifier la Catégorie",
+    "successUpdate": "Catégorie modifiée avec succès",
+    "errorUpdate": "Échec de la modification de la catégorie"
+  },
+  "updateProduct": {
+    "title": "Modifier le Produit",
+    "subtitle": "Modifier les informations du produit",
+    "toast": {
+      "success": "Produit modifié avec succès",
+      "error": "Échec de la modification du produit"
+    }
+  },
+  "productDetails": {
+    "eyebrow": "Détails du produit",
+    "created": "Créé",
+    "updated": "Modifié",
+    "fetchError": "Échec du chargement du produit",
+    "breadcrumb": {
+      "products": "Produits",
+      "product": "Produit"
+    },
+    "variants": {
+      "title": "Variantes",
+      "empty": "Aucune variante trouvée pour ce produit",
+      "batches": "lots",
+      "size": "Taille",
+      "color": "Couleur",
+      "flavor": "Saveur",
+      "weight": "Poids",
+      "height": "Hauteur"
+    },
+    "refresh": "Actualiser",
+    "searchPlaceholder": "Rechercher par nom ou code-barres...",
+    "addButton": "Ajouter une Variante"
+  },
+  "categoryOptions": {
+    "eyebrow": "Actions sur la catégorie",
+    "title": "Que souhaitez-vous faire ?",
+    "close": "Fermer",
+    "viewProducts": {
+      "title": "Voir les Produits",
+      "desc": "Parcourir tous les produits de cette catégorie"
+    },
+    "updateCategory": {
+      "title": "Modifier la Catégorie",
+      "desc": "Modifier le nom ou les détails de cette catégorie"
+    },
+    "deleteCategory": {
+      "title": "Supprimer la Catégorie",
+      "desc": "Supprimer définitivement cette catégorie et tous ses produits"
+    },
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette catégorie ? Cette action est irréversible."
+  },
+  "addProduct": {
+    "step1": {
+      "title": "Nouveau Produit",
+      "subtitle": "Étape 1 sur 2 — Informations de base",
+      "name": "Nom du produit",
+      "productNamePlaceholder": "ex. Écouteurs Sans Fil",
+      "category": "Catégorie",
+      "categoryPlaceholder": "Rechercher et sélectionner une catégorie…"
+    },
+    "step2": {
+      "title": "Ajouter une Variante",
+      "updateTitle": "Modifier la Variante",
+      "subtitle": "Étape 2 sur 2 — Détails de la variante",
+      "updateSubtitle": "Modifier les détails de la variante",
+      "primaryLabel": "Détails Principaux",
+      "name": "Nom de la variante",
+      "namePlaceholder": "ex. Rouge / L",
+      "barcode": "Code-barres",
+      "barcodePlaceholder": "123456789",
+      "secondaryLabel": "Détails Secondaires",
+      "quantity": "Quantité (stock)",
+      "quantityPlaceholder": "ex. 100",
+      "alertPeriodPerDay": "Période d'alerte (jours)",
+      "alertPeriodPerDayPlaceholder": "ex. 7",
+      "alertPeriodPerStock": "Période d'alerte (stock)",
+      "alertPeriodPerStockPlaceholder": "ex. 20",
+      "fabricationDate": "Date de fabrication",
+      "fabricationDatePlaceholder": "Sélectionnez une date",
+      "expirationDate": "Date d'expiration",
+      "expirationDatePlaceholder": "Sélectionnez une date",
+      "nLot": "N° Lot",
+      "nLotPlaceholder": "ex. 123456",
+      "PPA": "PPA",
+      "PPAPlaceholder": "ex. 200",
+      "purchasePrice": "Prix d'achat",
+      "pricingLabel": "Tarification",
+      "purchasePricePlaceholder": "ex. 50",
+      "sellingPriceHT": "Prix de vente HT",
+      "sellingPriceHTPlaceholder": "ex. 80",
+      "vatRate": "Taux de TVA (%)",
+      "vatRatePlaceholder": "ex. 19",
+      "sellingPriceTTC": "Prix de vente TTC",
+      "sellingPriceTTCPlaceholder": "ex. 95",
+      "profit": "Bénéfice",
+      "profitPlaceholder": "ex. 100",
+      "profitRate": "Taux de bénéfice (%)",
+      "profitRatePlaceholder": "ex. 20",
+      "discount": "Remise",
+      "discountPlaceholder": "ex. 80",
+      "discountLabel": "Remise",
+      "discountRate": "Taux de remise (%)",
+      "discountRatePlaceholder": "ex. 10",
+      "attributes": "Attributs",
+      "size": "Taille",
+      "sizePlaceholder": "ex. XL",
+      "color": "Couleur",
+      "colorPlaceholder": "ex. Rouge",
+      "flavor": "Saveur",
+      "flavorPlaceholder": "ex. Vanille",
+      "weight": "Poids (g)",
+      "weightPlaceholder": "ex. 500",
+      "height": "Hauteur (cm)",
+      "heightPlaceholder": "ex. 30",
+      "supplier": "Fournisseur",
+      "supplierPlaceholder": "ex. Mohammed"
+    },
+    "actions": {
+      "cancel": "Annuler",
+      "next": "Suivant",
+      "saving": "Enregistrement…",
+      "createProduct": "Créer le produit",
+      "creating": "Création…",
+      "close": "Fermer",
+      "update": "Modifier"
+    },
+    "toast": {
+      "productCreated": "Produit créé avec succès",
+      "variantCreated": "Variante créée — le produit est prêt !",
+      "unknownError": "Une erreur est survenue, veuillez réessayer",
+      "variantUpdated": "Variante modifiée avec succès",
+      "fieldsRequired": {
+        "name": "Le nom du produit est requis",
+        "category": "La catégorie est requise",
+        "variantName": "Le nom de la variante est requis",
+        "variantBarcode": "Le code-barres de la variante est requis",
+        "variantPurchasePrice": "Le prix d'achat de la variante est requis",
+        "variantQuantity": "La quantité de la variante est requise",
+        "variantSellingPriceHT": "Le prix de vente HT de la variante est requis"
+      }
+    },
+    "optional": "optionnel"
+  },
+  "calculator": {
+    "title": "Calculatrice",
+    "subtitle": "Entrez une valeur ou une expression",
+    "cancel": "Annuler",
+    "done": "Terminé",
+    "close": "Fermer"
+  },
+  "addSupplier": {
+    "title": "Ajouter un Fournisseur",
+    "subtitle": "Ajoutez un nouveau fournisseur pour gérer vos achats",
+    "sectionLabel": "Informations Principales",
+    "nameLabel": "Nom du Fournisseur",
+    "namePlaceholder": "Entrez le nom du fournisseur",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Entrez l'email",
+    "phoneLabel": "Téléphone",
+    "phonePlaceholder": "Entrez le téléphone",
+    "addressLabel": "Adresse",
+    "addressPlaceholder": "Entrez l'adresse",
+    "btnClose": "Fermer",
+    "btnCreate": "Créer le Fournisseur",
+    "successCreate": "Fournisseur créé avec succès",
+    "errorCreate": "Échec de la création du fournisseur",
+    "errorNameRequired": "Le nom du fournisseur est requis",
+    "updateTitle": "Modifier le Fournisseur",
+    "updateSubtitle": "Modifier les détails du fournisseur",
+    "updateBtn": "Modifier le Fournisseur",
+    "successUpdate": "Fournisseur modifié avec succès",
+    "errorUpdate": "Échec de la modification du fournisseur"
+  },
+  "suppliers": {
+    "title": "Fournisseurs",
+    "total": "{count, plural, =0 {Aucun fournisseur} one {1 fournisseur} other {{count} fournisseurs}}",
+    "addSupplier": "Ajouter un Fournisseur",
+    "searchPlaceholder": "Rechercher des fournisseurs...",
+    "loading": "Chargement des fournisseurs...",
+    "errorLoad": "Échec du chargement des fournisseurs. Veuillez réessayer.",
+    "emptyTitle": "Aucun fournisseur trouvé",
+    "emptySubtitle": "Commencez par créer votre premier fournisseur.",
+    "emptySearchSubtitle": "Aucun fournisseur ne correspond à \"{query}\". Essayez une autre recherche.",
+    "pageInfo": "Page {page} sur {pages}",
+    "refresh": "Actualiser",
+    "supplierId": "ID Fournisseur : {id}"
+  },
+  "supplierOptions": {
+    "eyebrow": "Fournisseur",
+    "title": "Que souhaitez-vous faire ?",
+    "close": "Fermer",
+    "viewDetails": {
+      "title": "Voir les détails",
+      "desc": "Consulter les détails du fournisseur"
+    },
+    "updateSupplier": {
+      "title": "Modifier le fournisseur",
+      "desc": "Modifier les détails du fournisseur"
+    },
+    "deleteSupplier": {
+      "title": "Supprimer le fournisseur",
+      "desc": "Supprimer le fournisseur du système"
+    },
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce fournisseur ? Cette action est irréversible."
+  },
+  "variantOptions": {
+    "eyebrow": "Variante",
+    "title": "Que souhaitez-vous faire ?",
+    "close": "Fermer",
+    "viewDetails": {
+      "title": "Voir les détails",
+      "desc": "Consulter les détails de la variante"
+    },
+    "updateVariant": {
+      "title": "Modifier la variante",
+      "desc": "Modifier les détails de la variante"
+    },
+    "deleteVariant": {
+      "title": "Supprimer la variante",
+      "desc": "Supprimer la variante du système"
+    },
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette variante ? Cette action est irréversible."
+  },
+  "stock": {
+    "title": "Stock",
+    "total": "{count} entrées",
+    "searchPlaceholder": "Rechercher par nom de variante ou code-barres…",
+    "refresh": "Actualiser",
+    "loading": "Chargement du stock…",
+    "errorLoad": "Échec du chargement du stock",
+    "emptyTitle": "Aucune entrée de stock trouvée",
+    "emptySubtitle": "Le stock apparaîtra ici une fois les lots ajoutés",
+    "emptySearchSubtitle": "Aucun résultat pour \"{query}\"",
+    "pageInfo": "Page {page} sur {pages}",
+    "batchStatus": {
+      "all": "Tous",
+      "expiring": "Expire bientôt",
+      "expired": "Expiré",
+      "low": "Bas",
+      "empty": "Vide"
+    },
+    "col": {
+      "variant": "Variante",
+      "quantity": "Qté",
+      "purchasePrice": "Achat",
+      "sellingPriceTTC": "Prix TTC",
+      "vatRate": "TVA",
+      "supplier": "Fournisseur",
+      "fabricationDate": "Date fab.",
+      "expirationDate": "Date exp.",
+      "alert": "Alerte Expiration",
+      "profit": "Bénéfice",
+      "profitRate": "Bénéfice %",
+      "promotion": "Promo",
+      "barcode": "Code-barres",
+      "lot": "Lot #",
+      "alertStock": "Alerte Stock"
+    }
+  },
+  "variantDetails": {
+    "loading": "Chargement de la variante…",
+    "errorLoad": "Échec du chargement de la variante",
+    "pageInfo": "Page {page} sur {pages}",
+    "breadcrumb": {
+      "products": "Produits",
+      "product": "Produit",
+      "stock": "Stock"
+    },
+    "refresh": "Actualiser",
+    "hero": {
+      "eyebrow": "Détails de la variante",
+      "size": "Taille :",
+      "color": "Couleur :",
+      "flavor": "Saveur :",
+      "purchasePrice": "Achat",
+      "sellingHT": "Vente HT",
+      "sellingTTC": "Vente TTC",
+      "vat": "TVA",
+      "profit": "Bénéfice",
+      "profitRate": "Taux de bénéfice",
+      "promotion": "Prix promo",
+      "promotionRate": "Taux promo",
+      "PPA": "PPA"
+    },
+    "batches": {
+      "title": "Lots",
+      "add": "Ajouter un lot",
+      "searchPlaceholder": "Rechercher par numéro de lot…",
+      "empty": "Aucun lot trouvé",
+      "emptySearch": "Aucun lot ne correspond à votre recherche",
+      "actions": {
+        "remove": "Retirer",
+        "edit": "Modifier"
+      }
+    },
+    "col": {
+      "nLot": "Lot #",
+      "status": "Statut",
+      "quantity": "Qté",
+      "qtyStatus": "Statut Qté",
+      "fabricationDate": "Date fab.",
+      "expirationDate": "Date exp.",
+      "alertDay": "Alerte (jours)",
+      "alertStock": "Alerte (stock)",
+      "supplier": "Fournisseur",
+      "actions": "Actions"
+    },
+    "status": {
+      "ok": "OK",
+      "expiring": "Expire bientôt",
+      "expired": "Expiré"
+    },
+    "qtyStatus": {
+      "ok": "OK",
+      "low": "Bas",
+      "empty": "Vide"
+    }
+  },
+  "addBatch": {
+    "title": "Ajouter un Lot",
+    "subtitle": "Créer un nouveau lot pour cette variante",
+    "updateTitle": "Modifier le Lot",
+    "updateSubtitle": "Modifier les informations du lot",
+    "btnClose": "Annuler",
+    "btnCreate": "Créer",
+    "updateBtn": "Modifier",
+    "successCreate": "Lot créé avec succès !",
+    "errorCreate": "Échec de la création du lot.",
+    "successUpdate": "Lot modifié avec succès !",
+    "errorUpdate": "Échec de la modification du lot.",
+    "quantityRequired": "La quantité est requise et doit être supérieure à 0.",
+    "variantRequired": "Variante invalide.",
+    "dateOrderError": "La date de fabrication ne peut pas être postérieure à la date d'expiration.",
+    "batchInfo": "Informations du Lot",
+    "nLotLabel": "Numéro de Lot",
+    "nLotPlaceholder": "ex. LOT-001",
+    "quantityLabel": "Quantité *",
+    "fabricationDateLabel": "Date de Fabrication",
+    "expirationDateLabel": "Date d'Expiration",
+    "supplierIdLabel": "Fournisseur",
+    "alertPeriodPerDayLabel": "Alerte (jours avant expiration)",
+    "alertPeriodPerStockLabel": "Seuil d'Alerte Stock",
+    "alertPeriodPerDayPlaceholder": "Jours avant expiration",
+    "alertPeriodPerStockPlaceholder": "Seuil de stock",
+    "supplierSection": "Fournisseur et Alertes",
+    "primary": "Principal (ce lot sera vendu en premier)",
+    "primaryPlaceHolder": "Définir comme lot principal"
+  },
+  "batchOptions": {
+    "eyebrow": "Actions sur le Lot",
+    "title": "Gérer le Lot",
+    "edit": {
+      "title": "Modifier les Informations",
+      "desc": "Mettre à jour les détails et métadonnées du lot"
+    },
+    "add": {
+      "title": "Ajouter au Stock",
+      "desc": "Augmenter la quantité du lot"
+    },
+    "remove": {
+      "title": "Retirer du Stock",
+      "desc": "Diminuer la quantité du lot"
+    },
+    "delete": {
+      "title": "Supprimer le Lot",
+      "desc": "Supprimer définitivement ce lot"
+    },
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce lot ?"
+  },
+  "stockAdjustment": {
+    "title": "Ajuster le Stock",
+    "subtitle": "Mettre à jour la quantité et préciser un motif",
+    "close": "Fermer",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "confirming": "Enregistrement…",
+    "fields": {
+      "quantity": "Quantité",
+      "quantityPlaceholder": "ex. 10",
+      "reason": "Motif",
+      "reasonPlaceholder": "Sélectionnez un motif…"
+    },
+    "validation": {
+      "quantity": "Veuillez entrer une quantité valide",
+      "reason": "Veuillez sélectionner un motif"
+    },
+    "reasons": {
+      "refill": "Réapprovisionnement",
+      "return": "Retour client",
+      "damage": "Marchandise endommagée",
+      "loss": "Perte / Démarque",
+      "correction": "Correction d'inventaire",
+      "transfer": "Transfert"
+    },
+    "toast": {
+      "success": "Stock ajusté avec succès !",
+      "error": "Échec de l'ajustement du stock."
+    }
+  },
+  "Dashboard": {
+    "title": "Stock Manager POS",
+    "quickSale": "Vente Rapide",
+    "quickPurchase": "Achat Rapide",
+    "todaySales": "Ventes du Jour",
+    "todayPurchases": "Achats du Jour",
+    "profit": "Bénéfice",
+    "costs": "Coûts",
+    "salesCount": "Ventes",
+    "purchaseCount": "Achats",
+    "lowStockAlert": "Alerte stock bas",
+    "expiringAlert": "Lots expirant bientôt",
+    "recentTransactions": "Transactions récentes",
+    "transactionId": "ID",
+    "type": "Type",
+    "customerOrSupplier": "Client / Fournisseur",
+    "amount": "Montant",
+    "time": "Heure",
+    "sale": "Vente",
+    "purchase": "Achat",
+    "searchProduct": "Rechercher un produit...",
+    "cart": "Panier",
+    "emptyCart": "Le panier est vide",
+    "total": "Total",
+    "completeSale": "Finaliser la vente",
+    "completePurchase": "Finaliser l'achat",
+    "cancel": "Annuler",
+    "purchaseMockMessage": "La sélection du fournisseur et les lignes de produits seront ajoutées ici."
+  },
+  "posOverlay": {
+    "quickSale": "Vente Rapide",
+    "quickPurchase": "Achat Rapide",
+    "searchPlaceholder": "Rechercher par nom...",
+    "barcodePlaceholder": "Scanner ou saisir le code-barres...",
+    "scan": "Scanner",
+    "loading": "Chargement...",
+    "fetchError": "Échec du chargement des produits.",
+    "noProducts": "Aucun produit trouvé.",
+    "loadMore": "Charger plus",
+    "selectProduct": "Sélectionnez un produit pour commencer",
+    "currentTransaction": "Transaction en cours",
+    "noItems": "Aucun article ajouté.",
+    "total": "Total",
+    "cancel": "Annuler",
+    "proceed": "Procéder",
+    "options": {
+      "printReceipt": "Imprimer le reçu",
+      "sendInvoice": "Envoyer la facture",
+      "applyLoyalty": "Appliquer les points de fidélité",
+      "printOrder": "Imprimer le bon de commande",
+      "updateStock": "Mettre à jour le stock automatiquement",
+      "notifySupplier": "Notifier le fournisseur"
+    }
+  },
+  "Clients": {
+    "title": "Clients",
+    "total": "{count} clients",
+    "addClient": "Ajouter un Client",
+    "searchPlaceholder": "Rechercher des clients...",
+    "refresh": "Actualiser",
+    "errorLoad": "Échec du chargement des clients. Veuillez réessayer.",
+    "loading": "Chargement des clients...",
+    "emptyTitle": "Aucun client trouvé",
+    "emptySubtitle": "Commencez par ajouter votre premier client.",
+    "emptySearchSubtitle": "Aucun client ne correspond à \"{query}\".",
+    "pageInfo": "Page {page} sur {pages}"
+  },
+  "addClient": {
+    "title": "Ajouter un Client",
+    "subtitle": "Remplissez les détails pour créer un nouveau client.",
+    "updateTitle": "Modifier le Client",
+    "updateSubtitle": "Modifiez les informations du client ci-dessous.",
+    "sectionLabel": "Informations du Client",
+    "nameLabel": "Nom Complet",
+    "namePlaceholder": "Entrez le nom complet",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Entrez l'adresse email",
+    "phoneLabel": "Téléphone",
+    "phonePlaceholder": "Entrez le numéro de téléphone",
+    "addressLabel": "Adresse",
+    "addressPlaceholder": "Entrez l'adresse",
+    "btnClose": "Annuler",
+    "btnCreate": "Créer le Client",
+    "updateBtn": "Enregistrer les Modifications",
+    "successCreate": "Client créé avec succès.",
+    "errorCreate": "Échec de la création du client. Veuillez réessayer.",
+    "successUpdate": "Client modifié avec succès.",
+    "errorUpdate": "Échec de la modification du client. Veuillez réessayer.",
+    "errorNameRequired": "Le nom est requis."
+  },
+  "clientOptions": {
+    "close": "Fermer",
+    "eyebrow": "Options du Client",
+    "title": "Que souhaitez-vous faire ?",
+    "viewDetails": {
+      "title": "Voir les Détails",
+      "desc": "Consulter le profil complet et l'historique de ce client."
+    },
+    "updateClient": {
+      "title": "Modifier le Client",
+      "desc": "Mettre à jour les informations de ce client."
+    },
+    "deleteClient": {
+      "title": "Supprimer le Client"
+    },
+    "deleteCLient": {
+      "desc": "Supprimer définitivement ce client du système."
+    },
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce client ?"
+  },
+  "creditModal": {
+    "title": "Paiement à Crédit",
+    "sectionLabel": "Paramètres de Crédit",
+    "activateLabel": "Activer le Crédit",
+    "paidLabel": "Montant Payé",
+    "paidPlaceholder": "Entrez le montant payé",
+    "clientLabel": "Sélectionner le Client",
+    "clientListPlaceholder": "Rechercher un client..."
+  },
+  "currency": "DZD",
+  "sale": {
+    "title": "Vente",
+    "searchPlaceholder": "Rechercher par nom, code-barres...",
+    "pageInfo": "Page {page} sur {pages}",
+    "cartTitle": "Panier",
+    "numpadTitle": "Pavé Numérique",
+    "optionsTitle": "Options",
+    "cancelBtn": "Annuler",
+    "proceedBtn": "Procéder",
+    "updateBtn": "Modifier",
+    "qte": "Qté",
+    "qteUnit": "Qté par Unité",
+    "price": "Prix",
+    "apply": "Appliquer",
+    "creditRequired": "Le client est requis lorsque le crédit est activé.",
+    "successSale": "Vente créée avec succès.",
+    "successSaleUpdate": "Vente modifiée avec succès.",
+    "errorSale": "Échec de la création de la vente.",
+    "errorSaleUpdate": "Échec de la modification de la vente.",
+    "totalAmount": "Montant Total",
+    "totalPaid": "Total Payé",
+    "ttc": "Total TTC",
+    "timbre": "Timbre",
+    "remise": "Montant Total (Remise)",
+    "remiseAlert": "La remise ne peut pas être supérieure au montant total.",
+    "paymentTitle": "Type de Paiement",
+    "paymentRequiredAlert": "Veuillez choisir un mode de paiement",
+    "payment": {
+      "cash": "Espèces",
+      "card": "Carte bancaire",
+      "bank": "Virement bancaire",
+      "ccp": "CCP / BaridiMob"
+    },
+    "currency": "DZD",
+    "transactionOptions": {
+      "print": "Imprimer",
+      "credit": "Crédit",
+      "discount": "Remise",
+      "history": "Historique",
+      "timbre": "Timbre"
+    },
+    "variantsTable": {
+      "productName": "Nom du Produit",
+      "nLot": "N° Lot",
+      "fabricationDate": "Date de Fabrication",
+      "expirationDate": "Date d'Expiration",
+      "barcode": "Code-barres",
+      "stockQty": "Qté en Stock",
+      "purchasePrice": "Prix d'Achat",
+      "tva": "TVA",
+      "id": "ID",
+      "discountPrice": "Prix Remisé",
+      "sellingPrice": "Prix de Vente"
+    },
+    "cartTable": {
+      "productName": "Nom du Produit",
+      "barcode": "Code-barres",
+      "quantity": "Quantité",
+      "fabricationDate": "Date de Fabrication",
+      "expirationDate": "Date d'Expiration",
+      "sellingPrice": "Prix de Vente",
+      "id": "ID",
+      "total": "Total",
+      "remove": "Retirer",
+      "unit": "Unité",
+      "QteUnit": "Quantité par Unité",
+      "optionUnit": "Pièce",
+      "optionCarton": "Emballage (Carton, Boîte, etc.)"
+    },
+    "emptyCart": "Aucun article dans le panier."
+  },
+  "remiseModal": {
+    "title": "Remise",
+    "sectionLabel": "Paramètres de Remise",
+    "activateLabel": "Activer la Remise",
+    "remiseLabel": "Montant de la Remise",
+    "remisePlaceholder": "Entrez le montant de la remise"
+  },
+  "historyModal": {
+    "title": {
+      "sale": "Historique des ventes",
+      "purchase": "Historique des achats"
+    },
+    "subtitle": {
+      "sale": "Sélectionnez une vente à charger",
+      "purchase": "Sélectionnez un achat à charger"
+    },
+    "close": "Fermer",
+    "cancel": "Annuler",
+    "load": "Charger",
+    "loading": "Chargement des ventes…",
+    "errorLoad": "Échec du chargement des ventes",
+    "empty": {
+      "sale": "Aucune vente enregistrée aujourd'hui",
+      "purchase": "Aucun achat enregistré aujourd'hui"
+    },
+    "items": "articles",
+    "paid": "Payé",
+    "remise": "Remise"
+  },
+  "purchase": {
+    "title": "Tableau de Bord des Achats",
+    "searchPlaceholder": "Rechercher des variantes...",
+    "variantsTable": {
+      "productName": "Nom du Produit",
+      "barcode": "Code-barres",
+      "stockQty": "Qté en Stock",
+      "purchasePrice": "Prix d'Achat",
+      "tva": "TVA",
+      "discountPrice": "Prix Remisé",
+      "sellingPrice": "Prix de Vente",
+      "actions": "Modifier",
+      "editVariant": "Modifier le produit",
+      "addBatch": "Ajouter un Lot",
+      "editBatch": "Modifier le Lot",
+      "fabricationDate": "Date de Fabrication",
+      "expirationDate": "Date d'Expiration",
+      "nLot": "N° Lot",
+      "id": "ID"
+    },
+    "currency": "DZD",
+    "pageInfo": "Page {page} sur {pages}",
+    "cartTitle": "Articles Achetés",
+    "cartTable": {
+      "productName": "Nom du Produit",
+      "barcode": "Code-barres",
+      "quantity": "Quantité",
+      "unit": "Unité",
+      "QteUnit": "Qté/Unité",
+      "sellingPrice": "Prix",
+      "total": "Total",
+      "remove": "Retirer",
+      "optionUnit": "Pièce",
+      "optionCarton": "Emballage",
+      "id": "ID"
+    },
+    "emptyCart": "Le panier est vide",
+    "totalAmount": "Montant Total",
+    "remise": "Remise",
+    "totalPaid": "Total Payé",
+    "paymentTitle": "Type de Paiement",
+    "paymentRequiredAlert": "Veuillez choisir un mode de paiement",
+    "payment": {
+      "cash": "Espèces",
+      "card": "Carte bancaire",
+      "bank": "Virement bancaire",
+      "ccp": "CCP / BaridiMob"
+    },
+    "numpadTitle": "Pavé Numérique",
+    "qte": "Quantité",
+    "qteUnit": "Qté Unité",
+    "price": "Prix",
+    "apply": "Appliquer",
+    "supplierTitle": "Fournisseur",
+    "optionsTitle": "Options",
+    "transactionOptions": {
+      "print": "Imprimer",
+      "credit": "Crédit",
+      "discount": "Remise",
+      "history": "Historique",
+      "timbre": "Timbre"
+    },
+    "cancelBtn": "Annuler",
+    "proceedBtn": "Procéder à l'Achat",
+    "updateBtn": "Modifier l'Achat",
+    "remiseAlert": "La remise ne peut pas être supérieure au montant total.",
+    "creditRequired": "Veuillez sélectionner un fournisseur pour les achats à crédit.",
+    "successPurchase": "Achat effectué avec succès !",
+    "errorPurchase": "Échec de l'achat.",
+    "successPurchaseUpdate": "Achat modifié avec succès !",
+    "errorPurchaseUpdate": "Échec de la modification de l'achat."
+  },
+  "TimbreModal": {
+    "title": "Timbre",
+    "sectionLabel": "Timbre",
+    "paidLabel": "Montant du Timbre",
+    "paidPlaceholder": "Entrez le montant du timbre"
+  },
+  "salesPage": {
+    "actions": {
+      "quickSale": "Vente Rapide",
+      "detailedSale": "Vente Détaillée"
+    },
+    "title": "Ventes",
+    "subtitle": "{total} transactions au total",
+    "searchPlaceholder": "Rechercher par client...",
+    "retry": "Réessayer",
+    "pageInfo": "Page {page} sur {pages}",
+    "stats": {
+      "totalSales": "Total des Ventes",
+      "totalRevenue": "Revenu (page)",
+      "totalPaid": "Encaissé (page)",
+      "clients": "Clients (page)"
+    },
+    "table": {
+      "id": "ID",
+      "date": "Date",
+      "client": "Client",
+      "items": "Articles",
+      "itemsUnit": "article(s)",
+      "total": "Total",
+      "paid": "Payé",
+      "payment": "Paiement",
+      "balance": "Solde",
+      "walkIn": "Passager",
+      "settled": "Réglé",
+      "unknown": "—"
+    },
+    "empty": {
+      "title": "Aucune vente trouvée",
+      "desc": "Essayez d'ajuster votre recherche ou ajoutez une nouvelle vente."
+    }
+  },
+  "printModal": {
+    "type": "Choisissez le Type de Papier"
+  },
+  "purchasesPage": {
+    "title": "Achats",
+    "subtitle": "{total} achats au total",
+    "searchPlaceholder": "Rechercher par fournisseur...",
+    "retry": "Réessayer",
+    "pageInfo": "Page {page} sur {pages}",
+    "actions": {
+      "purchase": "Effectuer un Achat"
+    },
+    "stats": {
+      "totalPurchases": "Total des Achats",
+      "totalRevenue": "Coût (page)",
+      "totalPaid": "Payé (page)",
+      "suppliers": "Fournisseurs (page)"
+    },
+    "table": {
+      "id": "ID",
+      "date": "Date",
+      "supplier": "Fournisseur",
+      "items": "Articles",
+      "itemsUnit": "article(s)",
+      "total": "Total",
+      "paid": "Payé",
+      "payment": "Paiement",
+      "balance": "Solde",
+      "walkIn": "Passager",
+      "settled": "Réglé",
+      "unknown": "—"
+    },
+    "empty": {
+      "title": "Aucun achat trouvé",
+      "desc": "Essayez d'ajuster votre recherche ou ajoutez un nouvel achat."
+    }
+  },
+  "DetailedSale": {
+    "back": "Retour",
+    "title": "Vente #{id}",
+    "delete": "Supprimer la vente",
+    "print": "Imprimer",
+    "printFormat": "Format d'impression",
+    "a4": "A4",
+    "ticket": "Ticket",
+    "loading": "Chargement des détails de la vente…",
+    "errorFetch": "Échec du chargement des détails de la vente. Veuillez réessayer.",
+    "notFound": "Vente introuvable.",
+    "saleSummary": "Résumé de la Vente",
+    "date": "Date",
+    "total": "Total",
+    "paid": "Payé",
+    "remaining": "Restant",
+    "fullyPaid": "Entièrement payé",
+    "partiallyPaid": "Partiellement payé",
+    "unpaid": "Non payé",
+    "paymentMethod": "Mode de paiement",
+    "remise": "Remise",
+    "yes": "Oui",
+    "remiseAmount": "Montant de la remise",
+    "timbre": "Timbre fiscal",
+    "client": "Informations du Client",
+    "clientName": "Nom",
+    "clientAddress": "Adresse",
+    "clientPhone": "Téléphone",
+    "clientEmail": "Email",
+    "noClient": "Cette vente a été enregistrée sans client.",
+    "soldItems": "Articles Vendus",
+    "noItems": "Aucun article trouvé dans cette vente.",
+    "item": "Produit",
+    "lot": "Lot",
+    "quantity": "Qté (× unités)",
+    "unitPrice": "Prix unitaire",
+    "totalPrice": "Total ligne",
+    "unknownItem": "Produit inconnu",
+    "thankYou": "Merci pour votre achat !",
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette vente ?",
+    "currency": "DZD"
+  },
+  "DetailedPurchase": {
+    "back": "Retour",
+    "title": "Achat #{id}",
+    "delete": "Supprimer l'achat",
+    "print": "Imprimer",
+    "printFormat": "Format d'impression",
+    "a4": "A4",
+    "ticket": "Ticket",
+    "loading": "Chargement des détails de l'achat…",
+    "errorFetch": "Échec du chargement des détails de l'achat. Veuillez réessayer.",
+    "notFound": "Achat introuvable.",
+    "purchaseSummary": "Résumé de l'Achat",
+    "date": "Date",
+    "total": "Total",
+    "paid": "Payé",
+    "remaining": "Restant",
+    "fullyPaid": "Entièrement payé",
+    "partiallyPaid": "Partiellement payé",
+    "unpaid": "Non payé",
+    "paymentMethod": "Mode de paiement",
+    "remise": "Remise",
+    "yes": "Oui",
+    "remiseAmount": "Montant de la remise",
+    "timbre": "Timbre fiscal",
+    "supplier": "Informations du Fournisseur",
+    "supplierName": "Nom",
+    "supplierAddress": "Adresse",
+    "supplierPhone": "Téléphone",
+    "supplierEmail": "Email",
+    "noSupplier": "Cet achat a été enregistré sans fournisseur.",
+    "purchasedItems": "Articles Achetés",
+    "noItems": "Aucun article trouvé dans cet achat.",
+    "item": "Produit",
+    "lot": "Lot",
+    "quantity": "Qté (× unités)",
+    "unitPrice": "Prix unitaire",
+    "totalPrice": "Total ligne",
+    "unknownItem": "Produit inconnu",
+    "thankYou": "Merci pour votre confiance !",
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer cet achat ?",
+    "currency": "DZD"
+  },
+  "DetailedClient": {
+    "back": "Retour",
+    "title": "Client #{id}",
+    "clientSince": "Client depuis le {date}",
+    "deleteClient": "Supprimer le client",
+    "loading": "Chargement des détails du client…",
+    "errorFetch": "Échec du chargement des détails du client. Veuillez réessayer.",
+    "notFound": "Client introuvable.",
+    "clientInfo": "Informations du Client",
+    "name": "Nom",
+    "address": "Adresse",
+    "phone": "Téléphone",
+    "email": "Email",
+    "creditManagement": "Gestion du Crédit",
+    "totalOutstanding": "Total dû",
+    "amount": "Montant",
+    "recordPayment": "Enregistrer un Paiement",
+    "markAllAsPaid": "Tout Marquer Comme Payé",
+    "sales": "Ventes",
+    "noSales": "Aucune vente enregistrée pour ce client.",
+    "saleId": "ID Vente",
+    "date": "Date",
+    "total": "Total",
+    "paid": "Payé",
+    "remaining": "Restant",
+    "status": "Statut",
+    "fullyPaid": "Entièrement payé",
+    "partiallyPaid": "Partiellement payé",
+    "unpaid": "Non payé",
+    "markAllAsPaidSuccess": "Tous les crédits ont été marqués comme payés avec succès.",
+    "markAllAsPaidError": "Échec du marquage de tous les crédits comme payés.",
+    "currency": "DZD",
+    "recordPaymentSuccess": "Paiement enregistré avec succès.",
+    "recordPaymentError": "Échec de l'enregistrement du paiement."
+  },
+  "DetailedSupplier": {
+    "back": "Retour",
+    "title": "Fournisseur #{id}",
+    "supplierSince": "Fournisseur depuis le {date}",
+    "deleteClient": "Supprimer le fournisseur",
+    "loading": "Chargement des détails du fournisseur…",
+    "errorFetch": "Échec du chargement des détails du fournisseur. Veuillez réessayer.",
+    "notFound": "Fournisseur introuvable.",
+    "supplierInfo": "Informations du Fournisseur",
+    "name": "Nom",
+    "address": "Adresse",
+    "phone": "Téléphone",
+    "email": "Email",
+    "creditManagement": "Gestion du Crédit",
+    "totalOutstanding": "Total dû",
+    "amount": "Montant",
+    "recordPayment": "Enregistrer un Paiement",
+    "markAllAsPaid": "Tout Marquer Comme Payé",
+    "purchases": "Achats",
+    "noPurchases": "Aucun achat enregistré pour ce fournisseur.",
+    "purchaseId": "ID Achat",
+    "date": "Date",
+    "total": "Total",
+    "paid": "Payé",
+    "remaining": "Restant",
+    "status": "Statut",
+    "fullyPaid": "Entièrement payé",
+    "partiallyPaid": "Partiellement payé",
+    "unpaid": "Non payé",
+    "markAllAsPaidSuccess": "Tous les crédits ont été marqués comme payés avec succès.",
+    "markAllAsPaidError": "Échec du marquage de tous les crédits comme payés.",
+    "currency": "DZD",
+    "recordPaymentSuccess": "Paiement enregistré avec succès.",
+    "recordPaymentError": "Échec de l'enregistrement du paiement."
+  },
+  "settings": {
+    "eyebrow": "Configuration",
+    "title": "Paramètres",
+    "desc": "Gérez votre profil d'entreprise, la langue, l'apparence et la sauvegarde des données.",
+    "owner": {
+      "sectionTitle": "Profil de l'Entreprise",
+      "sectionDesc": "Définissez l'identité de votre entreprise, les coordonnées et les numéros d'enregistrement légaux."
+    },
+    "language": {
+      "title": "Langue",
+      "desc": "Choisissez la langue d'affichage pour toute l'application."
+    },
+    "theme": {
+      "title": "Apparence",
+      "desc": "Sélectionnez un thème de couleurs adapté à votre environnement de travail.",
+      "light": "Clair",
+      "dim": "Tamisé",
+      "dark": "Sombre"
+    },
+    "data": {
+      "title": "Données et Sauvegarde",
+      "desc": "Exportez ou restaurez votre base de données. Mot de passe administrateur requis.",
+      "unlocked": "Accès autorisé — les actions de sauvegarde sont disponibles.",
+      "lock": "Verrouiller l'accès à la sauvegarde",
+      "export": {
+        "title": "Exporter la base de données",
+        "desc": "Téléchargez un instantané SQLite complet de toutes vos données."
+      },
+      "import": {
+        "title": "Importer une sauvegarde",
+        "desc": "Restaurez vos données à partir d'un fichier .sqlite précédemment exporté."
+      }
+    },
+    "gate": {
+      "title": "Accès administrateur requis",
+      "desc": "Entrez votre mot de passe administrateur pour accéder aux actions de sauvegarde et de restauration.",
+      "placeholder": "Mot de passe administrateur",
+      "submit": "Déverrouiller la sauvegarde",
+      "wrongPassword": "Mot de passe incorrect. Veuillez réessayer.",
+      "verifyError": "Échec de la vérification. Vérifiez votre connexion."
+    },
+    "toast": {
+      "langChanged": "Langue mise à jour.",
+      "themeChanged": "Apparence mise à jour.",
+      "exportSuccess": "Base de données exportée avec succès.",
+      "exportError": "Échec de l'exportation. Veuillez réessayer.",
+      "importSuccess": "Base de données restaurée avec succès.",
+      "importError": "Échec de l'importation. Le fichier est peut-être invalide.",
+      "importInvalidFile": "Veuillez sélectionner un fichier .sqlite valide."
+    }
+  },
+  "owner": {
+    "gate": {
+      "title": "Vérification d'identité requise",
+      "desc": "Entrez votre mot de passe administrateur pour accéder et modifier le profil de l'entreprise.",
+      "placeholder": "Mot de passe administrateur",
+      "submit": "Déverrouiller",
+      "wrongPassword": "Mot de passe incorrect. Veuillez réessayer.",
+      "verifyError": "Échec de la vérification. Vérifiez votre connexion."
+    },
+    "avatar": {
+      "title": "Logo de l'entreprise",
+      "hint": "PNG, JPG ou WEBP — affiché sur les factures et documents.",
+      "upload": "Changer l'image",
+      "remove": "Supprimer"
+    },
+    "fields": {
+      "name": "Nom de l'entreprise",
+      "password": "Mot de passe administrateur",
+      "passwordEditNote": "Laissez vide pour conserver votre mot de passe actuel.",
+      "description": "Description",
+      "address": "Adresse",
+      "phone": "Téléphone",
+      "fax": "Fax",
+      "email": "Email",
+      "website": "Site web",
+      "capital": "Capital social",
+      "RC": "RC",
+      "NIS": "NIS",
+      "NIF": "NIF",
+      "IF": "IF",
+      "NA": "NA"
+    },
+    "placeholders": {
+      "name": "ex. Dupont Supplies SARL",
+      "password": "Choisissez un mot de passe sécurisé",
+      "passwordEdit": "Laissez vide pour conserver",
+      "description": "Brève description de votre activité…",
+      "address": "Adresse postale complète",
+      "phone": "+213 XX XX XX XX",
+      "fax": "+213 XX XX XX XX",
+      "email": "contact@entreprise.com",
+      "website": "https://entreprise.com",
+      "capital": "ex. 1 000 000 DZD",
+      "RC": "Numéro de registre de commerce",
+      "NIS": "Numéro d'identification statistique",
+      "NIF": "Numéro d'identification fiscale",
+      "IF": "Taxe professionnelle",
+      "NA": "Numéro d'activité"
+    },
+    "validation": {
+      "required": "Ce champ est obligatoire.",
+      "invalidEmail": "Saisissez une adresse email valide."
+    },
+    "mode": {
+      "create": "Nouveau profil",
+      "edit": "Modification du profil"
+    },
+    "actions": {
+      "create": "Créer le profil",
+      "save": "Enregistrer les modifications"
+    },
+    "toast": {
+      "created": "Profil de l'entreprise créé.",
+      "updated": "Profil mis à jour avec succès.",
+      "saveError": "Échec de l'enregistrement. Veuillez réessayer.",
+      "loadError": "Impossible de charger les données du profil.",
+      "invalidImage": "Veuillez télécharger un fichier image valide."
+    }
+  },
+  "logs": {
+    "title": "Journaux d'activité",
+    "subtitle": "Trace complète des événements système",
+    "refreshing": "Actualisation...",
+    "refreshTooltip": "Actualiser",
+    "clearHistoryBtn": "Effacer l'historique",
+    "clearHistoryConfirm": "Êtes-vous sûr de vouloir effacer tout l'historique ?",
+    "clearHistorySuccess": "Historique effacé. Actualisez la page.",
+    "clearHistoryError": "Échec de l'effacement de l'historique.",
+    "searchPlaceholder": "Rechercher par entité, action ou détails...",
+    "retry": "Réessayer",
+    "rowsPerPage": "Lignes par page",
+    "details": "Détails",
+    "stats": {
+      "totalLogs": "Total des journaux",
+      "today": "Aujourd'hui",
+      "creates": "Créations",
+      "deletes": "Suppressions",
+      "entities": "Entités",
+      "page": "Page"
+    },
+    "filters": {
+      "title": "Filtres",
+      "entity": "Entité",
+      "action": "Action",
+      "dateRange": "Période",
+      "clearAll": "Effacer tous les filtres"
+    },
+    "sort": {
+      "label": "Trier par date",
+      "newestFirst": "Plus récent en premier",
+      "oldestFirst": "Plus ancien en premier"
+    },
+    "empty": {
+      "title": "Aucun journal trouvé",
+      "description": "Essayez de modifier votre recherche ou vos filtres."
+    },
+    "pagination": {
+      "info": "Page {page} sur {pages} ({total} enregistrements au total)"
+    },
+    "entities": {
+      "sale": "Vente",
+      "stock": "Stock",
+      "batch": "Lot",
+      "credit": "Crédit",
+      "supplier": "Fournisseur",
+      "client": "Client",
+
+      "product": "Produit",
+      "stockPayment": "Achat"
+    },
+    "actions": {
+      "create": "Créer",
+      "update": "Mettre à jour",
+      "delete": "Supprimer",
+      "payment": "Paiement",
+      "adjustment": "Ajustement",
+      "add": "Ajouter",
+      "new purchase": "Nouvelle commande",
+      "remove": "Retirer"
+    },
+    "errors": {
+      "fetchFailed": "Échec du chargement des journaux. Vérifiez que le backend est en cours d'exécution."
+    }
+  }
+}

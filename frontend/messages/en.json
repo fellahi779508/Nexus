@@ -1,0 +1,1257 @@
+{
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Stock Manager · Overview",
+    "loading": "FETCHING DATA…",
+    "dateBanner": {
+      "live": "LIVE"
+    },
+    "actions": {
+      "quickSale": "Quick Sale",
+      "quickPurchase": "Quick Purchase"
+    },
+    "metrics": {
+      "profit": "Today's Profit",
+      "costs": "Total Costs",
+      "credit": "Credit",
+      "losses": "Total Losses",
+      "salesVolume": "Sales Volume",
+      "purchases": "Purchases"
+    },
+    "sections": {
+      "latestSales": "Latest Sales",
+      "latestPurchases": "Latest Purchases",
+      "damagedExpired": "Damaged & Expired"
+    },
+    "labels": {
+      "sale": "SALE",
+      "purchaseOrder": "PO",
+      "total": "Total",
+      "paid": "Paid",
+      "amount": "Amount",
+      "remaining": "Remaining",
+      "qty": "Qty",
+      "lost": "Lost",
+      "batch": "Batch",
+      "stock": "Stock",
+      "lossReason": {
+        "damaged": "DAMAGED",
+        "expired": "EXPIRED"
+      }
+    },
+    "empty": {
+      "noSales": "— no sales today —",
+      "noPurchases": "— no purchases today —",
+      "noLosses": "— no losses today —"
+    },
+    "error": {
+      "default": "Failed to load dashboard data",
+      "retry": "RETRY"
+    }
+  },
+  "sidebar": {
+    "appName": "Nexus",
+    "appTagline": "Management Suite",
+    "sectionMain": "Operations",
+    "sectionLogs": "Records",
+    "products": "Products",
+    "stock": "Stock",
+    "clients": "Clients",
+    "suppliers": "Suppliers",
+    "sales": "Sales",
+    "purchases": "Purchases",
+    "history": "History",
+    "logs": "Activity Logs",
+    "settings": "Settings",
+    "settingsDescription": "System configuration",
+    "dashboard": "Dashboard",
+    "categories": "Categories",
+    "alert": {
+      "title": "Alert",
+      "message": "Please check your stock regularly."
+    }
+  },
+  "products": {
+    "title": "Products",
+    "total": "{count} total",
+    "addProduct": "Add Product",
+    "searchPlaceholder": "Search by name or category…",
+    "loading": "Loading products…",
+    "errorLoad": "Failed to load products.",
+    "emptyTitle": "No products found",
+    "emptySubtitle": "Start by adding your first product.",
+    "emptySearchSubtitle": "No results for \"{query}\"",
+    "pageInfo": "Page {page} of {pages}",
+    "productId": "#{id}",
+    "refresh": "Refresh",
+    "noCategory": "No category"
+  },
+  "productOptions": {
+    "eyebrow": "Product actions",
+    "title": "What would you like to do?",
+    "close": "Close",
+    "viewDetails": {
+      "title": "View Details",
+      "desc": "View product details"
+    },
+    "updateProduct": {
+      "title": "Update Product",
+      "desc": "Update product information"
+    },
+    "deleteProduct": {
+      "title": "Delete Product",
+      "desc": "Delete product from the system",
+      "error": "Failed to delete product"
+    },
+    "confirmDelete": "Are you sure you want to delete this product? This action cannot be undone."
+  },
+  "categories": {
+    "title": "Categories",
+    "total": "{count, plural, =0 {No categories} one {1 category} other {{count} categories}}",
+    "addCategory": "Add Category",
+    "searchPlaceholder": "Search categories...",
+    "loading": "Loading categories...",
+    "errorLoad": "Failed to load categories. Please try again.",
+    "emptyTitle": "No categories found",
+    "emptySubtitle": "Get started by creating your first category.",
+    "emptySearchSubtitle": "No categories matched \"{query}\". Try a different search.",
+    "pageInfo": "Page {page} of {pages}",
+    "refresh": "Refresh"
+  },
+  "pageInfo": "Page {page} of {pages}",
+  "addCategory": {
+    "title": "Add Category",
+    "subtitle": "Add a new category to organize your products",
+    "sectionLabel": "Primary Information",
+    "nameLabel": "Category Name",
+    "namePlaceholder": "Enter category name",
+    "btnClose": "Close",
+    "btnCreate": "Create Category",
+    "successCreate": "Category created successfully",
+    "errorCreate": "Failed to create category",
+    "errorNameRequired": "Category name is required",
+    "updateTitle": "Update Category",
+    "updateSubtitle": "Update category details",
+    "updateBtn": "Update Category",
+    "successUpdate": "Category updated successfully",
+    "errorUpdate": "Failed to update category"
+  },
+  "updateProduct": {
+    "title": "Update Product",
+    "subtitle": "Update product information",
+    "toast": {
+      "success": "Product updated successfully",
+      "error": "Failed to update product"
+    }
+  },
+  "productDetails": {
+    "eyebrow": "Product details",
+    "created": "Created",
+    "updated": "Updated",
+    "fetchError": "Failed to load product",
+    "breadcrumb": {
+      "products": "Products",
+      "product": "Product"
+    },
+    "variants": {
+      "title": "Variants",
+      "empty": "No variants found for this product",
+      "batches": "batches",
+      "size": "Size",
+      "color": "Color",
+      "flavor": "Flavor",
+      "weight": "Weight",
+      "height": "Height"
+    },
+    "refresh": "Refresh",
+    "searchPlaceholder": "Search by name or barcode...",
+    "addButton": "Add Variant"
+  },
+  "categoryOptions": {
+    "eyebrow": "Category actions",
+    "title": "What would you like to do?",
+    "close": "Close",
+    "viewProducts": {
+      "title": "View Products",
+      "desc": "Browse all products inside this category"
+    },
+    "updateCategory": {
+      "title": "Update Category",
+      "desc": "Edit the name or details of this category"
+    },
+    "deleteCategory": {
+      "title": "Delete Category",
+      "desc": "Permanently remove this category and all its products"
+    },
+    "confirmDelete": "Are you sure you want to delete this category? This action cannot be undone."
+  },
+  "addProduct": {
+    "step1": {
+      "title": "New Product",
+      "subtitle": "Step 1 of 2 — Basic information",
+      "name": "Product name",
+      "productNamePlaceholder": "e.g. Wireless Headphones",
+      "category": "Category",
+      "categoryPlaceholder": "Search & select a category…"
+    },
+    "step2": {
+      "title": "Add Variant",
+      "updateTitle": "Update Variant",
+      "subtitle": "Step 2 of 2 — Variant details",
+      "updateSubtitle": "Update variant details",
+      "primaryLabel": "Primary Details",
+      "name": "Variant name",
+      "namePlaceholder": "e.g. Red / L",
+      "barcode": "Barcode",
+      "barcodePlaceholder": "123456789",
+      "secondaryLabel": "Secondary Details",
+      "quantity": "Quantity (stock)",
+      "quantityPlaceholder": "e.g. 100",
+      "alertPeriodPerDay": "Alert period (days)",
+      "alertPeriodPerDayPlaceholder": "e.g. 7",
+      "alertPeriodPerStock": "Alert period (stock)",
+      "alertPeriodPerStockPlaceholder": "e.g. 20",
+      "fabricationDate": "Fabrication date",
+      "fabricationDatePlaceholder": "Select a date",
+      "expirationDate": "Expiration date",
+      "expirationDatePlaceholder": "Select a date",
+      "nLot": "N° Lot",
+      "nLotPlaceholder": "e.g. 123456",
+      "PPA": "PPA",
+      "PPAPlaceholder": "e.g. 200",
+      "purchasePrice": "Purchase price",
+      "pricingLabel": "Pricing",
+      "purchasePricePlaceholder": "e.g. 50",
+      "sellingPriceHT": "Selling price HT",
+      "sellingPriceHTPlaceholder": "e.g. 80",
+      "vatRate": "VAT rate (%)",
+      "vatRatePlaceholder": "e.g. 19",
+      "sellingPriceTTC": "Selling price TTC",
+      "sellingPriceTTCPlaceholder": "e.g. 95",
+      "profit": "Profit",
+      "profitPlaceholder": "e.g. 100",
+      "profitRate": "Profit Rate (%)",
+      "profitRatePlaceholder": "e.g. 20",
+      "discount": "Discount ",
+      "discountPlaceholder": "e.g. 80",
+      "discountLabel": "Discount",
+      "discountRate": "Discount Rate (%)",
+      "discountRatePlaceholder": "e.g. 10",
+      "attributes": "Attributes",
+      "size": "Size",
+      "sizePlaceholder": "e.g. XL",
+      "color": "Color",
+      "colorPlaceholder": "e.g. Red",
+      "flavor": "Flavor",
+      "flavorPlaceholder": "e.g. Vanilla",
+      "weight": "Weight (g)",
+      "weightPlaceholder": "e.g. 500",
+      "height": "Height (cm)",
+      "heightPlaceholder": "e.g. 30",
+      "supplier": "Supplier",
+      "supplierPlaceholder": "e.g. Mohammed"
+    },
+
+    "actions": {
+      "cancel": "Cancel",
+      "next": "Next",
+      "saving": "Saving…",
+      "createProduct": "Create product",
+      "creating": "Creating…",
+      "close": "Close",
+      "update": "Update"
+    },
+    "toast": {
+      "productCreated": "Product created successfully",
+      "variantCreated": "Variant created — product is ready!",
+      "unknownError": "Something went wrong, please try again",
+      "variantUpdated": "Variant updated successfully",
+      "fieldsRequired": {
+        "name": "Product name is required",
+        "category": "Category is required",
+        "variantName": "Variant name is required",
+        "variantBarcode": "Variant barcode is required",
+        "variantPurchasePrice": "Variant purchase price is required",
+        "variantQuantity": "Variant quantity is required",
+        "variantSellingPriceHT": "Variant selling price HT (before taxes) is required"
+      }
+    },
+    "optional": "optional"
+  },
+  "calculator": {
+    "title": "Calculator",
+    "subtitle": "Enter a value or expression",
+    "cancel": "Cancel",
+    "done": "Done",
+    "close": "Close"
+  },
+
+  "addSupplier": {
+    "title": "Add Supplier",
+    "subtitle": "Add a new supplier to manage your purchases",
+    "sectionLabel": "Primary Information",
+    "nameLabel": "Supplier Name",
+    "namePlaceholder": "Enter supplier name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Enter email",
+    "phoneLabel": "Phone",
+    "phonePlaceholder": "Enter phone",
+    "addressLabel": "Address",
+    "addressPlaceholder": "Enter address",
+    "btnClose": "Close",
+    "btnCreate": "Create Supplier",
+    "successCreate": "Supplier created successfully",
+    "errorCreate": "Failed to create supplier",
+    "errorNameRequired": "Supplier name is required",
+    "updateTitle": "Update Supplier",
+    "updateSubtitle": "Update supplier details",
+    "updateBtn": "Update Supplier",
+    "successUpdate": "Supplier updated successfully",
+    "errorUpdate": "Failed to update supplier"
+  },
+  "suppliers": {
+    "title": "Suppliers",
+    "total": "{count, plural, =0 {No suppliers} one {1 supplier} other {{count} suppliers}}",
+    "addSupplier": "Add Supplier",
+    "searchPlaceholder": "Search suppliers...",
+    "loading": "Loading suppliers...",
+    "errorLoad": "Failed to load suppliers. Please try again.",
+    "emptyTitle": "No suppliers found",
+    "emptySubtitle": "Get started by creating your first supplier.",
+    "emptySearchSubtitle": "No suppliers matched \"{query}\". Try a different search.",
+    "pageInfo": "Page {page} of {pages}",
+    "refresh": "Refresh",
+    "supplierId": "Supplier ID: {id}"
+  },
+  "supplierOptions": {
+    "eyebrow": "Supplier",
+    "title": "What would you like to do?",
+    "close": "Close",
+    "viewDetails": {
+      "title": "View details",
+      "desc": "View supplier details"
+    },
+    "updateSupplier": {
+      "title": "Update supplier",
+      "desc": "Update supplier details"
+    },
+    "deleteSupplier": {
+      "title": "Delete supplier",
+      "desc": "Delete supplier from the system"
+    },
+    "confirmDelete": "Are you sure you want to delete this supplier? This action cannot be undone."
+  },
+  "variantOptions": {
+    "eyebrow": "Variant",
+    "title": "What would you like to do?",
+    "close": "Close",
+    "viewDetails": {
+      "title": "View details",
+      "desc": "View variant details"
+    },
+    "updateVariant": {
+      "title": "Update variant",
+      "desc": "Update variant details"
+    },
+    "deleteVariant": {
+      "title": "Delete variant",
+      "desc": "Delete variant from the system"
+    },
+    "confirmDelete": "Are you sure you want to delete this variant? This action cannot be undone."
+  },
+  "stock": {
+    "title": "Stock",
+    "total": "{count} entries",
+    "searchPlaceholder": "Search by variant name or barcode…",
+    "refresh": "Refresh",
+    "loading": "Loading stock…",
+    "errorLoad": "Failed to load stock",
+    "emptyTitle": "No stock entries found",
+    "emptySubtitle": "Stock will appear here once batches are added",
+    "emptySearchSubtitle": "No results for \"{query}\"",
+    "pageInfo": "Page {page} of {pages}",
+    "batchStatus": {
+      "all": "All",
+      "expiring": "Expiring",
+      "expired": "Expired",
+      "low": "Low",
+      "empty": "Empty"
+    },
+    "col": {
+      "variant": "Variant",
+      "quantity": "Qty",
+      "purchasePrice": "Purchase",
+      "sellingPriceTTC": "Price TTC",
+      "vatRate": "VAT",
+      "supplier": "Supplier",
+      "fabricationDate": "Fab. date",
+      "expirationDate": "Exp. date",
+      "alert": "Alert Expiration",
+      "profit": "Profit",
+      "profitRate": "Profit %",
+      "promotion": "Promo",
+      "barcode": "Barcode",
+      "lot": "Lot #",
+      "alertStock": "Alert Stock"
+    }
+  },
+  "variantDetails": {
+    "loading": "Loading variant…",
+    "errorLoad": "Failed to load variant",
+    "pageInfo": "Page {page} of {pages}",
+    "breadcrumb": {
+      "products": "Products",
+      "product": "Product",
+      "stock": "Stock"
+    },
+    "refresh": "Refresh",
+    "hero": {
+      "eyebrow": "Variant details",
+      "size": "Size:",
+      "color": "Color:",
+      "flavor": "Flavor:",
+      "purchasePrice": "Purchase",
+      "sellingHT": "Selling HT",
+      "sellingTTC": "Selling TTC",
+      "vat": "VAT",
+      "profit": "Profit",
+      "profitRate": "Profit rate",
+      "promotion": "Promo price",
+      "promotionRate": "Promo rate",
+      "PPA": "PPA"
+    },
+    "batches": {
+      "title": "Batches",
+      "add": "Add batch",
+      "searchPlaceholder": "Search by lot number…",
+      "empty": "No batches found",
+      "emptySearch": "No batches match your search",
+      "actions": {
+        "remove": "Remove",
+        "edit": "Edit"
+      }
+    },
+    "col": {
+      "nLot": "Lot #",
+      "status": "Status",
+      "quantity": "Qty",
+      "qtyStatus": "Qty status",
+      "fabricationDate": "Fab. date",
+      "expirationDate": "Exp. date",
+      "alertDay": "Alert (days)",
+      "alertStock": "Alert (stock)",
+      "supplier": "Supplier",
+      "actions": "Actions"
+    },
+    "status": {
+      "ok": "OK",
+      "expiring": "Expiring",
+      "expired": "Expired"
+    },
+    "qtyStatus": {
+      "ok": "OK",
+      "low": "Low",
+      "empty": "Empty"
+    }
+  },
+  "addBatch": {
+    "title": "Add Batch",
+    "subtitle": "Create a new batch for this variant",
+    "updateTitle": "Update Batch",
+    "updateSubtitle": "Modify batch information",
+    "btnClose": "Cancel",
+    "btnCreate": "Create",
+    "updateBtn": "Update",
+    "successCreate": "Batch created successfully!",
+    "errorCreate": "Failed to create batch.",
+    "successUpdate": "Batch updated successfully!",
+    "errorUpdate": "Failed to update batch.",
+    "quantityRequired": "Quantity is required and must be greater than 0.",
+    "variantRequired": "Invalid variant.",
+    "dateOrderError": "Fabrication date cannot be after expiration date.",
+    "batchInfo": "Batch Information",
+    "nLotLabel": "Batch Number",
+    "nLotPlaceholder": "e.g., BATCH-001",
+    "quantityLabel": "Quantity *",
+    "fabricationDateLabel": "Fabrication Date",
+    "expirationDateLabel": "Expiration Date",
+    "supplierIdLabel": "Supplier ",
+    "alertPeriodPerDayLabel": "Alert (days before expiry)",
+    "alertPeriodPerStockLabel": "Stock Alert Threshold",
+    "alertPeriodPerDayPlaceholder": "Days before expiry",
+    "alertPeriodPerStockPlaceholder": "Stock threshold",
+    "supplierSection": "Supplier & Alerts",
+    "primary": "Primary (this batch will be sold first)",
+    "primaryPlaceHolder": "Set as primary batch"
+  },
+  "batchOptions": {
+    "eyebrow": "Batch Actions",
+    "title": "Manage Batch",
+    "edit": {
+      "title": "Edit Informations",
+      "desc": "Update batch details and metadata"
+    },
+    "add": {
+      "title": "Add to Stock",
+      "desc": "Increase batch quantity"
+    },
+    "remove": {
+      "title": "Remove from Stock",
+      "desc": "Decrease batch quantity"
+    },
+    "delete": {
+      "title": "Delete Batch",
+      "desc": "Permanently remove this batch"
+    },
+    "confirmDelete": "Are you sure you want to delete this batch?"
+  },
+  "stockAdjustment": {
+    "title": "Adjust Stock",
+    "subtitle": "Update the quantity and specify a reason",
+    "close": "Close",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "confirming": "Saving…",
+    "fields": {
+      "quantity": "Quantity",
+      "quantityPlaceholder": "e.g. 10 ",
+      "reason": "Reason",
+      "reasonPlaceholder": "Select a reason…"
+    },
+    "validation": {
+      "quantity": "Please enter a valid quantity",
+      "reason": "Please select a reason"
+    },
+    "reasons": {
+      "refill": "Refill",
+      "return": "Customer return",
+      "damage": "Damaged goods",
+      "loss": "Loss / Shrinkage",
+      "correction": "Inventory correction",
+      "transfer": "Transfer"
+    },
+    "toast": {
+      "success": "Stock adjusted successfully!",
+      "error": "Failed to adjust stock."
+    }
+  },
+  "Dashboard": {
+    "title": "Stock Manager POS",
+    "quickSale": "Quick Sale",
+    "quickPurchase": "Quick Purchase",
+    "todaySales": "Today's Sales",
+    "todayPurchases": "Today's Purchases",
+    "profit": "Profit",
+    "costs": "Costs",
+    "salesCount": "Sales",
+    "purchaseCount": "Purchases",
+    "lowStockAlert": "Low stock alert",
+    "expiringAlert": "Expiring batches",
+    "recentTransactions": "Recent transactions",
+    "transactionId": "ID",
+    "type": "Type",
+    "customerOrSupplier": "Customer / Supplier",
+    "amount": "Amount",
+    "time": "Time",
+    "sale": "Sale",
+    "purchase": "Purchase",
+    "searchProduct": "Search product...",
+    "cart": "Shopping cart",
+    "emptyCart": "Cart is empty",
+    "total": "Total",
+    "completeSale": "Complete sale",
+    "completePurchase": "Complete purchase",
+    "cancel": "Cancel",
+    "purchaseMockMessage": "Supplier selection and product lines will be added here."
+  },
+  "posOverlay": {
+    "quickSale": "Quick Sale",
+    "quickPurchase": "Quick Purchase",
+    "searchPlaceholder": "Search by name...",
+    "barcodePlaceholder": "Scan or type barcode...",
+    "scan": "Scan",
+    "loading": "Loading...",
+    "fetchError": "Failed to load products.",
+    "noProducts": "No products found.",
+    "loadMore": "Load more",
+    "selectProduct": "Select a product to begin",
+    "currentTransaction": "Current transaction",
+    "noItems": "No items added yet.",
+    "total": "Total",
+    "cancel": "Cancel",
+    "proceed": "Proceed",
+    "options": {
+      "printReceipt": "Print receipt",
+      "sendInvoice": "Send invoice",
+      "applyLoyalty": "Apply loyalty points",
+      "printOrder": "Print purchase order",
+      "updateStock": "Update stock automatically",
+      "notifySupplier": "Notify supplier"
+    }
+  },
+  "Clients": {
+    "title": "Clients",
+    "total": "{count} clients",
+    "addClient": "Add Client",
+    "searchPlaceholder": "Search clients...",
+    "refresh": "Refresh",
+    "errorLoad": "Failed to load clients. Please try again.",
+    "loading": "Loading clients...",
+    "emptyTitle": "No clients found",
+    "emptySubtitle": "Start by adding your first client.",
+    "emptySearchSubtitle": "No clients match \"{query}\".",
+    "pageInfo": "Page {page} of {pages}"
+  },
+  "addClient": {
+    "title": "Add Client",
+    "subtitle": "Fill in the details to create a new client.",
+    "updateTitle": "Update Client",
+    "updateSubtitle": "Edit the client's information below.",
+    "sectionLabel": "Client Information",
+    "nameLabel": "Full Name",
+    "namePlaceholder": "Enter full name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Enter email address",
+    "phoneLabel": "Phone",
+    "phonePlaceholder": "Enter phone number",
+    "addressLabel": "Address",
+    "addressPlaceholder": "Enter address",
+    "btnClose": "Cancel",
+    "btnCreate": "Create Client",
+    "updateBtn": "Save Changes",
+    "successCreate": "Client created successfully.",
+    "errorCreate": "Failed to create client. Please try again.",
+    "successUpdate": "Client updated successfully.",
+    "errorUpdate": "Failed to update client. Please try again.",
+    "errorNameRequired": "Name is required."
+  },
+  "clientOptions": {
+    "close": "Close",
+    "eyebrow": "Client Options",
+    "title": "What would you like to do?",
+    "viewDetails": {
+      "title": "View Details",
+      "desc": "See the full profile and history of this client."
+    },
+    "updateClient": {
+      "title": "Edit Client",
+      "desc": "Update this client's information."
+    },
+    "deleteClient": {
+      "title": "Delete Client"
+    },
+    "deleteCLient": {
+      "desc": "Permanently remove this client from the system."
+    },
+    "confirmDelete": "Are you sure you want to delete this client?"
+  },
+  "creditModal": {
+    "title": "Credit Payment",
+    "sectionLabel": "Credit Settings",
+    "activateLabel": "Enable Credit",
+    "paidLabel": "Amount Paid",
+    "paidPlaceholder": "Enter amount paid",
+    "clientLabel": "Select Client",
+    "clientListPlaceholder": "Search for a client..."
+  },
+  "currency": "DZD",
+  "sale": {
+    "title": "Sale",
+    "searchPlaceholder": "Search by name, barcode...",
+    "pageInfo": "Page {page} of {pages}",
+    "cartTitle": "Cart",
+    "numpadTitle": "NumPad",
+    "optionsTitle": "Options",
+    "cancelBtn": "Cancel",
+    "proceedBtn": "Proceed",
+    "updateBtn": "Update",
+    "qte": "Qty",
+    "qteUnit": "Qte per Unit",
+    "price": "Price",
+    "apply": "Apply",
+    "creditRequired": "Client is required when credit is activated.",
+    "successSale": "Sale created successfully.",
+    "successSaleUpdate": "Sale updated successfully.",
+    "errorSale": "Failed to create sale.",
+    "errorSaleUpdate": "Failed to update sale.",
+    "totalAmount": "Total Amount",
+    "totalPaid": "Total Paid",
+    "ttc": "Total TTC",
+    "timbre": "Timbre",
+    "remise": "Total Amount (Discount)",
+    "remiseAlert": "Discount cannot be greater than total amount.",
+    "paymentTitle": "Type of Payment",
+    "paymentRequiredAlert": "Please choose a payment methode",
+    "payment": {
+      "cash": "Cash",
+      "card": "Credit card",
+      "bank": "Bank transfer",
+      "ccp": "CCP / BaridiMob"
+    },
+    "currency": "DZD",
+    "transactionOptions": {
+      "print": "Print",
+      "credit": "Credit",
+      "discount": "Discount",
+      "history": "History",
+      "timbre": "Timbre"
+    },
+    "variantsTable": {
+      "productName": "Product Name",
+      "nLot": "Lot No.",
+      "fabricationDate": "Fabrication Date",
+      "expirationDate": "Expiration Date",
+      "barcode": "Barcode",
+      "stockQty": "Stock Qty",
+      "purchasePrice": "Purchase Price",
+      "tva": "VAT",
+      "id": "ID",
+      "discountPrice": "Discount Price",
+      "sellingPrice": "Selling Price"
+    },
+    "cartTable": {
+      "productName": "Product Name",
+      "barcode": "Barcode",
+      "quantity": "Quantity",
+      "fabricationDate": "Fabrication Date",
+      "expirationDate": "Expiration Date",
+      "sellingPrice": "Selling Price",
+      "id": "ID",
+      "total": "Total",
+      "remove": "Remove",
+      "unit": "Unit",
+      "QteUnit": "Quantity per Unit",
+      "optionUnit": "Piece",
+      "optionCarton": "Package (Carton,Box,...ect)"
+    },
+    "emptyCart": "No items in cart."
+  },
+  "remiseModal": {
+    "title": "Discount",
+    "sectionLabel": "Discount Settings",
+    "activateLabel": "Enable Discount",
+    "remiseLabel": "Discount Amount",
+    "remisePlaceholder": "Enter discount amount"
+  },
+  "historyModal": {
+    "title": {
+      "sale": "Sales history",
+      "purchase": "Purchase history"
+    },
+    "subtitle": {
+      "sale": "Select a sale to load it",
+      "purchase": "Select a purchase to load it"
+    },
+    "close": "Close",
+    "cancel": "Cancel",
+    "load": "Load",
+    "loading": "Loading sales…",
+    "errorLoad": "Failed to load sales",
+    "empty": {
+      "sale": "No sales recorded today",
+      "purchase": "No purchases recorded today"
+    },
+    "items": "items",
+    "paid": "Paid",
+    "remise": "Discount"
+  },
+  "purchase": {
+    "title": "Purchases Dashboard",
+    "searchPlaceholder": "Search variants...",
+    "variantsTable": {
+      "productName": "Product Name",
+      "barcode": "Barcode",
+      "stockQty": "Stock Qty",
+      "purchasePrice": "Purchase Price",
+      "tva": "TVA",
+      "discountPrice": "Discount Price",
+      "sellingPrice": "Selling Price",
+      "actions": "Edit",
+      "editVariant": "Edit product",
+      "addBatch": "Add Batch",
+      "editBatch": "Edit Batch",
+      "fabricationDate": "Fabrication Date",
+      "expirationDate": "Expiration Date",
+      "nLot": "N° Lot",
+      "id": "ID"
+    },
+    "currency": "DZD",
+    "pageInfo": "Page {page} of {pages}",
+    "cartTitle": "Purchased Items",
+    "cartTable": {
+      "productName": "Product Name",
+      "barcode": "Barcode",
+      "quantity": "Quantity",
+      "unit": "Unit",
+      "QteUnit": "Qty/Unit",
+      "sellingPrice": "Price",
+      "total": "Total",
+      "remove": "Remove",
+      "optionUnit": "Piece",
+      "optionCarton": "Package",
+      "id": "ID"
+    },
+    "emptyCart": "Cart is empty",
+    "totalAmount": "Total Amount",
+    "remise": "Discount",
+    "totalPaid": "Total Paid",
+    "paymentTitle": "Type of Payment",
+    "paymentRequiredAlert": "Please choose a payment methode",
+    "payment": {
+      "cash": "Cash",
+      "card": "Credit card",
+      "bank": "Bank transfer",
+      "ccp": "CCP / BaridiMob"
+    },
+    "numpadTitle": "Numpad",
+    "qte": "Quantity",
+    "qteUnit": "Qty Unit",
+    "price": "Price",
+    "apply": "Apply",
+    "supplierTitle": "Supplier",
+
+    "optionsTitle": "Options",
+    "transactionOptions": {
+      "print": "Print",
+      "credit": "Credit",
+      "discount": "Discount",
+      "history": "History",
+      "timbre": "Timbre"
+    },
+    "cancelBtn": "Cancel",
+    "proceedBtn": "Proceed Purchase",
+    "updateBtn": "Update Purchase",
+    "remiseAlert": "Discount cannot be greater than the total amount.",
+    "creditRequired": "Please select a supplier for credit purchases.",
+    "successPurchase": "Purchase completed successfully!",
+    "errorPurchase": "Failed to complete purchase.",
+    "successPurchaseUpdate": "Purchase updated successfully!",
+    "errorPurchaseUpdate": "Failed to update purchase."
+  },
+  "TimbreModal": {
+    "title": "Timbre",
+    "sectionLabel": "Timbre",
+    "paidLabel": "Timbre Amount",
+    "paidPlaceholder": "Enter timbre amount"
+  },
+  "salesPage": {
+    "actions": {
+      "quickSale": "Quick Sale",
+      "detailedSale": "Detailed Sale"
+    },
+    "title": "Sales",
+    "subtitle": "{total} total transactions",
+    "searchPlaceholder": "Search by client...",
+    "retry": "Try again",
+    "pageInfo": "Page {page} of {pages}",
+    "stats": {
+      "totalSales": "Total Sales",
+      "totalRevenue": "Revenue (page)",
+      "totalPaid": "Collected (page)",
+      "clients": "Clients (page)"
+    },
+    "table": {
+      "id": "ID",
+      "date": "Date",
+      "client": "Client",
+      "items": "Items",
+      "itemsUnit": "item(s)",
+      "total": "Total",
+      "paid": "Paid",
+      "payment": "Payment",
+      "balance": "Balance",
+      "walkIn": "Walk-in",
+      "settled": "Settled",
+      "unknown": "—"
+    },
+    "empty": {
+      "title": "No sales found",
+      "desc": "Try adjusting your search or add a new sale."
+    }
+  },
+  "printModal": {
+    "type": "Choose Type of Paper"
+  },
+  "purchasesPage": {
+    "title": "Purchases",
+    "subtitle": "{total} total purchases",
+    "searchPlaceholder": "Search by supplier...",
+    "retry": "Try again",
+    "pageInfo": "Page {page} of {pages}",
+    "actions": {
+      "purchase": "Make Purchase"
+    },
+    "stats": {
+      "totalPurchases": "Total Purchases",
+      "totalRevenue": "Cost (page)",
+      "totalPaid": "Paied (page)",
+      "suppliers": "Suppliers (page)"
+    },
+    "table": {
+      "id": "ID",
+      "date": "Date",
+      "supplier": "supplier",
+      "items": "Items",
+      "itemsUnit": "item(s)",
+      "total": "Total",
+      "paid": "Paid",
+      "payment": "Payment",
+      "balance": "Balance",
+      "walkIn": "Walk-in",
+      "settled": "Settled",
+      "unknown": "—"
+    },
+    "empty": {
+      "title": "No purchases found",
+      "desc": "Try adjusting your search or add a new purchase."
+    }
+  },
+
+  "DetailedSale": {
+    "back": "Back",
+    "title": "Sale #{id}",
+    "delete": "Delete sale",
+    "print": "Print",
+    "printFormat": "Print format",
+    "a4": "A4",
+    "ticket": "Ticket",
+    "loading": "Loading sale details…",
+    "errorFetch": "Failed to load sale details. Please try again.",
+    "notFound": "Sale not found.",
+    "saleSummary": "Sale Summary",
+    "date": "Date",
+    "total": "Total",
+    "paid": "Paid",
+    "remaining": "Remaining",
+    "fullyPaid": "Fully paid",
+    "partiallyPaid": "Partially paid",
+    "unpaid": "Unpaid",
+    "paymentMethod": "Payment method",
+    "remise": "Discount",
+    "yes": "Yes",
+    "remiseAmount": "Discount amount",
+    "timbre": "Fiscal tax",
+    "client": "Client Information",
+    "clientName": "Name",
+    "clientAddress": "Address",
+    "clientPhone": "Phone",
+    "clientEmail": "Email",
+    "noClient": "This sale was registered without a client.",
+    "soldItems": "Sold Items",
+    "noItems": "No items found in this sale.",
+    "item": "Product",
+    "lot": "Lot/Batch",
+    "quantity": "Qty (× units)",
+    "unitPrice": "Unit price",
+    "totalPrice": "Line total",
+    "unknownItem": "Unknown product",
+    "thankYou": "Thank you for your purchase!",
+    "confirmDelete": "Are you sure you want to delete this sale?",
+    "currency": "DZD"
+  },
+  "DetailedPurchase": {
+    "back": "Back",
+    "title": "Purchase #{id}",
+    "delete": "Delete purchase",
+    "print": "Print",
+    "printFormat": "Print format",
+    "a4": "A4",
+    "ticket": "Ticket",
+    "loading": "Loading purchase details…",
+    "errorFetch": "Failed to load purchase details. Please try again.",
+    "notFound": "Purchase not found.",
+    "purchaseSummary": "Purchase Summary",
+    "date": "Date",
+    "total": "Total",
+    "paid": "Paid",
+    "remaining": "Remaining",
+    "fullyPaid": "Fully paid",
+    "partiallyPaid": "Partially paid",
+    "unpaid": "Unpaid",
+    "paymentMethod": "Payment method",
+    "remise": "Discount",
+    "yes": "Yes",
+    "remiseAmount": "Discount amount",
+    "timbre": "Fiscal tax",
+    "supplier": "Supplier Information",
+    "supplierName": "Name",
+    "supplierAddress": "Address",
+    "supplierPhone": "Phone",
+    "supplierEmail": "Email",
+    "noSupplier": "This purchase was registered without a supplier.",
+    "purchasedItems": "Purchased Items",
+    "noItems": "No items found in this purchase.",
+    "item": "Product",
+    "lot": "Lot/Batch",
+    "quantity": "Qty (× units)",
+    "unitPrice": "Unit price",
+    "totalPrice": "Line total",
+    "unknownItem": "Unknown product",
+    "thankYou": "Thank you for your business!",
+    "confirmDelete": "Are you sure you want to delete this purchase?",
+    "currency": "DZD"
+  },
+  "DetailedClient": {
+    "back": "Back",
+    "title": "Client #{id}",
+    "clientSince": "Client since {date}",
+    "deleteClient": "Delete client",
+    "loading": "Loading client details…",
+    "errorFetch": "Failed to load client details. Please try again.",
+    "notFound": "Client not found.",
+    "clientInfo": "Client Information",
+    "name": "Name",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "creditManagement": "Credit Management",
+    "totalOutstanding": "Total outstanding",
+    "amount": "Amount",
+    "recordPayment": "Record Payment",
+    "markAllAsPaid": "Mark All as Paid",
+    "sales": "Sales",
+    "noSales": "No sales recorded for this client.",
+    "saleId": "Sale ID",
+    "date": "Date",
+    "total": "Total",
+    "paid": "Paid",
+    "remaining": "Remaining",
+    "status": "Status",
+    "fullyPaid": "Fully paid",
+    "partiallyPaid": "Partially paid",
+    "unpaid": "Unpaid",
+    "markAllAsPaidSuccess": "All credits have been marked as paid successfully.",
+    "markAllAsPaidError": "Failed to mark all credits as paid.",
+    "currency": "DZD",
+    "recordPaymentSuccess": "Payment recorded successfully.",
+    "recordPaymentError": "Failed to record payment."
+  },
+  "DetailedSupplier": {
+    "back": "Back",
+    "title": "Supplier #{id}",
+    "supplierSince": "Supplier since {date}",
+    "deleteClient": "Delete client",
+    "loading": "Loading supplier details…",
+    "errorFetch": "Failed to load supplier details. Please try again.",
+    "notFound": "Supplier not found.",
+    "supplierInfo": "SUpplier Information",
+    "name": "Name",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "creditManagement": "Credit Management",
+    "totalOutstanding": "Total outstanding",
+    "amount": "Amount",
+    "recordPayment": "Record Payment",
+    "markAllAsPaid": "Mark All as Paid",
+    "purchases": "Purchases",
+    "noPurchases": "No Purchases recorded for this supplier.",
+    "purchaseId": "Purchase ID",
+    "date": "Date",
+    "total": "Total",
+    "paid": "Paid",
+    "remaining": "Remaining",
+    "status": "Status",
+    "fullyPaid": "Fully paid",
+    "partiallyPaid": "Partially paid",
+    "unpaid": "Unpaid",
+    "markAllAsPaidSuccess": "All credits have been marked as paid successfully.",
+    "markAllAsPaidError": "Failed to mark all credits as paid.",
+    "currency": "DZD",
+    "recordPaymentSuccess": "Payment recorded successfully.",
+    "recordPaymentError": "Failed to record payment."
+  },
+  "settings": {
+    "deletionConfirmation": "Are you sure you want to delete the database?",
+    "eyebrow": "Configuration",
+    "title": "Settings",
+    "desc": "Manage your business profile, language, appearance, and data backup.",
+    "owner": {
+      "sectionTitle": "Business Profile",
+      "sectionDesc": "Set up your company identity, contact details, and legal registration numbers."
+    },
+    "language": {
+      "title": "Language",
+      "desc": "Choose the display language for the entire application."
+    },
+    "theme": {
+      "title": "Appearance",
+      "desc": "Select a colour scheme that works best for your environment.",
+      "light": "Light",
+      "dim": "Dim",
+      "dark": "Dark"
+    },
+    "data": {
+      "title": "Data & Backup",
+      "desc": "Export or restore your database. Admin password required.",
+      "unlocked": "Access granted — backup actions are available.",
+      "lock": "Lock backup access",
+      "export": {
+        "title": "Export database",
+        "desc": "Download a complete SQLite snapshot of all your data."
+      },
+      "import": {
+        "title": "Import backup",
+        "desc": "Restore your data from a previously exported .sqlite file."
+      },
+      "delete": {
+        "title": "Delete database",
+        "desc": "Delete your database. This action cannot be undone."
+      }
+    },
+    "gate": {
+      "title": "Admin access required",
+      "desc": "Enter your admin password to access backup and restore actions.",
+      "placeholder": "Admin password",
+      "submit": "Unlock backup",
+      "wrongPassword": "Incorrect password. Please try again.",
+      "verifyError": "Verification failed. Check your connection."
+    },
+    "toast": {
+      "langChanged": "Language updated.",
+      "themeChanged": "Appearance updated.",
+      "exportSuccess": "Database exported successfully.",
+      "exportError": "Export failed. Please try again.",
+      "importSuccess": "Database restored successfully.",
+      "importError": "Import failed. The file may be invalid.",
+      "importInvalidFile": "Please select a valid .sqlite file.",
+      "deleteSuccess": "Database deleted successfully",
+      "deleteSuccess2": "please restart the app !",
+      "deleteError": "Delete failed. Please try again."
+    }
+  },
+  "owner": {
+    "gate": {
+      "title": "Identity verification required",
+      "desc": "Enter your admin password to access and modify the business profile.",
+      "placeholder": "Admin password",
+      "submit": "Unlock",
+      "wrongPassword": "Incorrect password. Please try again.",
+      "verifyError": "Verification failed. Check your connection."
+    },
+    "avatar": {
+      "title": "Company logo",
+      "hint": "PNG, JPG or WEBP — displayed on invoices and documents.",
+      "upload": "Change image",
+      "remove": "Remove"
+    },
+    "fields": {
+      "name": "Business name",
+      "password": "Admin password",
+      "passwordEditNote": "Leave blank to keep your current password.",
+      "description": "Description",
+      "address": "Address",
+      "phone": "Phone",
+      "fax": "Fax",
+      "email": "Email",
+      "website": "Website",
+      "capital": "Share capital",
+      "RC": "RC",
+      "NIS": "NIS",
+      "NIF": "NIF",
+      "IF": "IF",
+      "NA": "NA"
+    },
+    "placeholders": {
+      "name": "e.g. Dupont Supplies SARL",
+      "password": "Choose a secure password",
+      "passwordEdit": "Leave blank to keep current",
+      "description": "Brief description of your business activity…",
+      "address": "Full street address",
+      "phone": "+213 XX XX XX XX",
+      "fax": "+213 XX XX XX XX",
+      "email": "contact@company.com",
+      "website": "https://company.com",
+      "capital": "e.g. 1 000 000 DZD",
+      "RC": "Registration number",
+      "NIS": "Statistical ID number",
+      "NIF": "Tax ID number",
+      "IF": "Professional tax",
+      "NA": "Activity number"
+    },
+    "validation": {
+      "required": "This field is required.",
+      "invalidEmail": "Enter a valid email address."
+    },
+    "mode": {
+      "create": "New profile",
+      "edit": "Editing profile"
+    },
+    "actions": {
+      "create": "Create profile",
+      "save": "Save changes"
+    },
+    "toast": {
+      "created": "Business profile created.",
+      "updated": "Profile updated successfully.",
+      "saveError": "Save failed. Please try again.",
+      "loadError": "Could not load profile data.",
+      "invalidImage": "Please upload a valid image file."
+    }
+  },
+
+  "logs": {
+    "title": "Activity Logs",
+    "subtitle": "Complete audit trail of system events",
+    "refreshing": "Refreshing...",
+    "refreshTooltip": "Refresh",
+    "clearHistoryBtn": "Clear history",
+    "clearHistoryConfirm": "Are you sure you want to clear all history?",
+    "clearHistorySuccess": "History cleared. Refresh the page.",
+    "clearHistoryError": "Failed to clear history.",
+    "searchPlaceholder": "Search by entity, action, or details...",
+    "retry": "Retry",
+    "rowsPerPage": "Rows per page",
+    "details": "Details",
+    "stats": {
+      "totalLogs": "Total logs",
+      "today": "Today",
+      "creates": "Creates",
+      "deletes": "Deletes",
+      "entities": "Entities",
+      "page": "Page"
+    },
+    "filters": {
+      "title": "Filters",
+      "entity": "Entity",
+      "action": "Action",
+      "dateRange": "Date range",
+      "clearAll": "Clear all filters"
+    },
+    "sort": {
+      "label": "Sort by date",
+      "newestFirst": "Newest first",
+      "oldestFirst": "Oldest first"
+    },
+    "empty": {
+      "title": "No logs found",
+      "description": "Try adjusting your search or filters."
+    },
+    "pagination": {
+      "info": "Showing page {page} of {pages} ({total} total records)"
+    },
+    "entities": {
+      "sale": "Sale",
+      "stock": "Stock",
+      "batch": "Batch",
+      "credit": "Credit",
+      "supplier": "Supplier",
+      "client": "Client",
+      "product": "Product",
+      "stockPayment": "Purchase"
+    },
+    "actions": {
+      "create": "Create",
+      "update": "Update",
+      "delete": "Delete",
+      "payment": "Payment",
+      "adjustment": "Adjustment",
+      "add": "Add",
+      "new purchase": "New Purchase",
+      "remove": "Remove"
+    },
+    "errors": {
+      "fetchFailed": "Failed to load logs. Make sure the backend is running."
+    }
+  }
+}

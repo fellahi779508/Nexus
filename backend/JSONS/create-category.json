@@ -1,0 +1,12 @@
+[
+  { "name": "Boissons" },
+  { "name": "Conserves" },
+  { "name": "Produits Laitiers" },
+  { "name": "Snacks" },
+  { "name": "Épicerie Salée" },
+  { "name": "Biscuits et Gâteaux" },
+  { "name": "Surgelés" },
+  { "name": "Café, Thé et Infusions" },
+  { "name": "Épices et Condiments" },
+  { "name": "Pâtes, Riz et Semoule" }
+]

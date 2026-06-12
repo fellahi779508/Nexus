@@ -1,0 +1,74 @@
+// ===== POLYFILLS FOR ELECTRON NODE 16 =====
+
+// 1. Blob polyfill
+if (typeof global.Blob === "undefined") {
+  global.Blob = require("buffer").Blob;
+}
+
+// 2. File polyfill
+if (typeof global.File === "undefined") {
+  global.File = class File extends global.Blob {
+    constructor(fileBits, fileName, options = {}) {
+      super(fileBits, options);
+      this.name = fileName;
+      this.lastModified = options.lastModified || Date.now();
+    }
+  };
+}
+
+// 3. Web Streams polyfill
+if (typeof global.ReadableStream === "undefined") {
+  const webStreams = require("stream/web");
+  global.ReadableStream = webStreams.ReadableStream;
+  global.TransformStream = webStreams.TransformStream;
+  global.WritableStream = webStreams.WritableStream;
+}
+
+// 4. Fetch API polyfill using undici
+if (typeof global.Request === "undefined") {
+  const undici = require("undici");
+  global.Request = undici.Request;
+  global.Response = undici.Response;
+  global.Headers = undici.Headers;
+  global.fetch = undici.fetch;
+  if (undici.FormData) global.FormData = undici.FormData;
+}
+
+// 5. AsyncLocalStorage.snapshot() polyfill for Node 16 (Electron)
+if (
+  typeof global.AsyncLocalStorage === "undefined" ||
+  !require("async_hooks").AsyncLocalStorage.prototype.snapshot
+) {
+  const { AsyncLocalStorage } = require("async_hooks");
+  if (!AsyncLocalStorage.prototype.snapshot) {
+    AsyncLocalStorage.prototype.snapshot = function () {
+      try {
+        const store = this.getStore();
+        return () => store;
+      } catch (e) {
+        return () => undefined;
+      }
+    };
+  }
+}
+
+// ===== END POLYFILLS =====
+// ===== AGGRESSIVE PATCH: Polyfill snapshot() immediately =====
+(function () {
+  const asyncHooks = require("async_hooks");
+  const ALS = asyncHooks.AsyncLocalStorage;
+
+  if (ALS && !ALS.prototype.snapshot) {
+    ALS.prototype.snapshot = function () {
+      try {
+        const store = this.getStore();
+        return () => store;
+      } catch (e) {
+        return () => undefined;
+      }
+    };
+  }
+
+  // Also patch at module level
+  module.exports.AsyncLocalStorage = ALS;
+})();

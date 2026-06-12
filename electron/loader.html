@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0, user-scalable=no"
+		/>
+		<title>Electron App — Loading Screen</title>
+		<style>
+			/* ═══════════════════════════════════════════════════════════════════════════
+       LIGHT — Clean warm white
+       ═══════════════════════════════════════════════════════════════════════════ */
+			:root,
+			[data-theme="light"] {
+				--background: #f9f9f7;
+				--foreground: #18181b;
+				--background-secondary: #f0f0ec;
+				--foreground-muted: #71717a;
+				--border: #e4e4e0;
+				--accent: #2563eb;
+				--accent-foreground: #ffffff;
+				--surface: #ffffff;
+				--surface-hover: #f4f4f2;
+
+				/* ── Status: success / ok ── */
+				--success: #16a34a;
+				--success-bg: #f0fdf4;
+				--success-border: #bbf7d0;
+
+				/* ── Status: warning / expiring ── */
+				--warning: #d97706;
+				--warning-bg: #f8f1d3;
+				--warning-border: #fde68a;
+
+				/* ── Status: danger / expired / error ── */
+				--danger: #dc2626;
+				--danger-bg: #eed5d5;
+				--danger-border: #fecaca;
+
+				/* ── Status: info ── */
+				--info: #0284c7;
+				--info-bg: #f0f9ff;
+				--info-border: #bae6fd;
+			}
+
+			/* ═══════════════════════════════════════════════════════════════════════════
+       DIM — Slate blue-grey mid tone
+       ═══════════════════════════════════════════════════════════════════════════ */
+			[data-theme="dim"] {
+				--background: #1e2130;
+				--foreground: #e2e4ed;
+				--background-secondary: #252839;
+				--foreground-muted: #8b90a8;
+				--border: #2e3247;
+				--accent: #60a5fa;
+				--accent-foreground: #0f172a;
+				--surface: #252839;
+				--surface-hover: #2e3247;
+
+				/* ── Status: success / ok ── */
+				--success: #4ade80;
+				--success-bg: #052e16;
+				--success-border: #166534;
+
+				/* ── Status: warning / expiring ── */
+				--warning: #fbbf24;
+				--warning-bg: #24201c;
+				--warning-border: #854d0e;
+
+				/* ── Status: danger / expired / error ── */
+				--danger: #f87171;
+				--danger-bg: #1f0505;
+				--danger-border: #991b1b;
+
+				/* ── Status: info ── */
+				--info: #38bdf8;
+				--info-bg: #0c1a2e;
+				--info-border: #075985;
+			}
+
+			/* ═══════════════════════════════════════════════════════════════════════════
+       DARK — Deep zinc black
+       ═══════════════════════════════════════════════════════════════════════════ */
+			[data-theme="dark"] {
+				--background: #09090b;
+				--foreground: #fafafa;
+				--background-secondary: #111113;
+				--foreground-muted: #71717a;
+				--border: #27272a;
+				--accent: #3b82f6;
+				--accent-foreground: #ffffff;
+				--surface: #111113;
+				--surface-hover: #1c1c1f;
+
+				/* ── Status: success / ok ── */
+				--success: #4ade80;
+				--success-bg: #052e16;
+				--success-border: #166534;
+
+				/* ── Status: warning / expiring ── */
+				--warning: #fbbf24;
+				--warning-bg: #1c1200;
+				--warning-border: #854d0e;
+
+				/* ── Status: danger / expired / error ── */
+				--danger: #f87171;
+				--danger-bg: #1f0505;
+				--danger-border: #991b1b;
+
+				/* ── Status: info ── */
+				--info: #38bdf8;
+				--info-bg: #0c1a2e;
+				--info-border: #075985;
+			}
+
+			/* ═══════════════════════════════════════════════════════════════════════════
+       BASE & LOADING SCREEN STYLES
+       ═══════════════════════════════════════════════════════════════════════════ */
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family:
+					system-ui,
+					-apple-system,
+					"Segoe UI",
+					Roboto,
+					Helvetica,
+					Arial,
+					sans-serif;
+				background: var(--background);
+				transition: background 0.2s ease;
+			}
+
+			/* Loading screen container (full viewport) */
+			.loading-screen {
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				width: 100vw;
+				height: 100vh;
+				background: var(--background);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				z-index: 9999;
+				transition: background 0.2s ease;
+			}
+
+			.loading-card {
+				max-width: 480px;
+				width: 90%;
+				background: var(--surface);
+				border-radius: 1.5rem;
+				padding: 2rem 2rem 2.25rem;
+				box-shadow:
+					0 25px 45px -12px rgba(0, 0, 0, 0.15),
+					0 0 0 1px var(--border);
+				text-align: center;
+				transition:
+					background 0.2s ease,
+					box-shadow 0.2s ease;
+			}
+
+			/* Spinner */
+			.spinner {
+				width: 64px;
+				height: 64px;
+				margin: 0 auto 1.5rem auto;
+				border: 4px solid var(--border);
+				border-top: 4px solid var(--accent);
+				border-radius: 50%;
+				animation: spin 0.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+				transition: border-color 0.2s ease;
+			}
+
+			@keyframes spin {
+				0% {
+					transform: rotate(0deg);
+				}
+				100% {
+					transform: rotate(360deg);
+				}
+			}
+
+			/* Status text */
+			.status-text {
+				font-size: 1.3rem;
+				font-weight: 500;
+				letter-spacing: -0.01em;
+				color: var(--foreground);
+				margin: 0 0 0.5rem 0;
+				line-height: 1.4;
+				transition: color 0.2s ease;
+			}
+
+			/* Subtext */
+			.subtext {
+				font-size: 0.9rem;
+				color: var(--foreground-muted);
+				margin: 0 0 1.25rem 0;
+				line-height: 1.5;
+				transition: color 0.2s ease;
+			}
+
+			/* Progress bar container */
+			.progress-container {
+				width: 100%;
+				background: var(--background-secondary);
+				border-radius: 999px;
+				height: 6px;
+				overflow: hidden;
+				margin: 0.75rem 0 0.25rem 0;
+				transition: background 0.2s ease;
+			}
+
+			.progress-fill {
+				width: 0%;
+				height: 100%;
+				background: var(--accent);
+				border-radius: 999px;
+				transition: width 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+			}
+
+			.progress-percentage {
+				font-size: 0.75rem;
+				font-weight: 500;
+				color: var(--accent);
+				margin-top: 0.5rem;
+				letter-spacing: 0.3px;
+				transition: color 0.2s ease;
+			}
+
+			/* App badge */
+			.app-badge {
+				margin-top: 1.75rem;
+				font-size: 0.7rem;
+				color: var(--foreground-muted);
+				opacity: 0.7;
+				border-top: 1px solid var(--border);
+				padding-top: 1rem;
+				display: inline-block;
+				width: 100%;
+				transition:
+					opacity 0.2s ease,
+					border-color 0.2s ease;
+			}
+
+			/* Hidden live region for screen readers */
+			.live-region {
+				position: absolute;
+				width: 1px;
+				height: 1px;
+				padding: 0;
+				margin: -1px;
+				overflow: hidden;
+				clip: rect(0, 0, 0, 0);
+				white-space: nowrap;
+				border-width: 0;
+			}
+
+			/* Responsive adjustments */
+			@media (max-width: 480px) {
+				.loading-card {
+					padding: 1.5rem 1.25rem;
+				}
+				.status-text {
+					font-size: 1.1rem;
+				}
+				.spinner {
+					width: 52px;
+					height: 52px;
+				}
+			}
+
+			/* Theme picker (optional UI for demo, keeps localStorage in sync) */
+			.theme-picker {
+				position: fixed;
+				bottom: 16px;
+				right: 16px;
+				background: var(--surface);
+				border: 1px solid var(--border);
+				border-radius: 40px;
+				padding: 6px 12px;
+				font-size: 0.7rem;
+				z-index: 10000;
+				backdrop-filter: blur(8px);
+				font-weight: 500;
+				color: var(--foreground);
+				cursor: pointer;
+				transition:
+					background 0.2s,
+					color 0.2s;
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+			}
+			.theme-picker select {
+				background: transparent;
+				border: none;
+				color: var(--foreground);
+				font-size: 0.7rem;
+				font-weight: 500;
+				outline: none;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="loading-screen" id="loadingScreen">
+			<div class="loading-card">
+				<div class="spinner" aria-hidden="true"></div>
+				<h2 class="status-text" id="statusText">Initializing environment...</h2>
+				<p class="subtext" id="subtextEl">Please wait — 0% complete</p>
+				<div id="progressArea">
+					<div class="progress-container">
+						<div class="progress-fill" id="progressFill"></div>
+					</div>
+					<div class="progress-percentage" id="progressPercent">0%</div>
+				</div>
+				<div class="app-badge">Electron App • Loading environment</div>
+			</div>
+			<div
+				class="live-region"
+				id="liveRegion"
+				aria-live="polite"
+				aria-atomic="true"
+			></div>
+		</div>
+
+		<script>
+			(function () {
+				// ================================================================
+				// THEME HANDLING: read from localStorage key "theme"
+				// ================================================================
+				function applyTheme(themeValue) {
+					if (!themeValue) return;
+					// Only allow valid themes: light, dim, dark
+					if (
+						themeValue === "light" ||
+						themeValue === "dim" ||
+						themeValue === "dark"
+					) {
+						document.documentElement.setAttribute("data-theme", themeValue);
+						localStorage.setItem("theme", themeValue);
+					}
+				}
+
+				function initTheme() {
+					const storedTheme = localStorage.getItem("theme");
+					if (
+						storedTheme &&
+						(storedTheme === "light" ||
+							storedTheme === "dim" ||
+							storedTheme === "dark")
+					) {
+						applyTheme(storedTheme);
+					} else {
+						// Default to light if nothing is stored
+						applyTheme("light");
+					}
+					// Sync the dropdown selector (if present)
+					const themeSelect = document.getElementById("themeSelect");
+					if (themeSelect) {
+						const currentTheme =
+							document.documentElement.getAttribute("data-theme") || "light";
+						themeSelect.value = currentTheme;
+					}
+				}
+
+				// Listen to theme picker changes (optional UI)
+				const themeSelect = document.getElementById("themeSelect");
+				if (themeSelect) {
+					themeSelect.addEventListener("change", (e) => {
+						const newTheme = e.target.value;
+						applyTheme(newTheme);
+					});
+				}
+
+				// ================================================================
+				// Loading Screen Controller (matching the TSX logic)
+				// Supports:
+				//   - Uncontrolled mode: internal simulation with steps and progress
+				//   - Controlled mode: external calls via window.setLoadingStatus or window.loadingAPI
+				// ================================================================
+
+				// DOM elements
+				const statusEl = document.getElementById("statusText");
+				const subtextEl = document.getElementById("subtextEl");
+				const progressFill = document.getElementById("progressFill");
+				const progressPercentSpan = document.getElementById("progressPercent");
+				const progressAreaDiv = document.getElementById("progressArea");
+				const liveRegionEl = document.getElementById("liveRegion");
+
+				// Configuration for simulation (uncontrolled mode)
+				const DEFAULT_STEPS = [
+					"Initializing environment...",
+					"Loading configurations...",
+					"Connecting to services...",
+					"Preparing workspace...",
+					"Almost ready...",
+					"Launching application...",
+				];
+
+				let simulationInterval = null;
+				let currentStepIndex = 0;
+				let isControlled = false; // becomes true once external API is used
+				let externalStatus = null;
+				let externalProgress = null;
+				let externalSubtext = null;
+				let externalShowProgressBar = null;
+
+				// Internal simulation state (uncontrolled)
+				let currentSimulationSteps = [...DEFAULT_STEPS];
+				let simulationIntervalMs = 1800;
+
+				// Helper: update the UI based on current effective values
+				function updateUI() {
+					// Determine effective status, progress, subtext, showProgressBar
+					let effectiveStatus,
+						effectiveProgress,
+						effectiveSubtext,
+						shouldShowProgressBar;
+
+					if (isControlled) {
+						effectiveStatus =
+							externalStatus !== null ? externalStatus : "Loading...";
+						effectiveProgress =
+							externalProgress !== undefined ? externalProgress : null;
+						effectiveSubtext = externalSubtext !== null ? externalSubtext : "";
+						shouldShowProgressBar =
+							externalShowProgressBar !== null &&
+							externalShowProgressBar !== undefined
+								? externalShowProgressBar
+								: effectiveProgress !== null;
+					} else {
+						// Uncontrolled mode: internal simulation data
+						effectiveStatus =
+							currentSimulationSteps[currentStepIndex] || "Loading...";
+						// Progress computed based on step index / total steps
+						const totalSteps = currentSimulationSteps.length;
+						const targetProgress =
+							totalSteps === 0
+								? 0
+								: Math.min(
+										100,
+										Math.floor(((currentStepIndex + 1) / totalSteps) * 100),
+									);
+						effectiveProgress = targetProgress;
+						effectiveSubtext = `Please wait — ${Math.floor(effectiveProgress)}% complete`;
+						shouldShowProgressBar = true;
+					}
+
+					// Update DOM for status text
+					if (statusEl) statusEl.textContent = effectiveStatus;
+
+					// Subtext: if controlled subtext provided, use it; else fallback for uncontrolled
+					if (isControlled && externalSubtext !== null) {
+						subtextEl.textContent = externalSubtext;
+					} else if (!isControlled) {
+						subtextEl.textContent = effectiveSubtext;
+					} else if (effectiveSubtext) {
+						subtextEl.textContent = effectiveSubtext;
+					} else {
+						subtextEl.textContent = "";
+					}
+
+					// Handle progress bar visibility and value
+					if (
+						shouldShowProgressBar &&
+						effectiveProgress !== null &&
+						effectiveProgress !== undefined
+					) {
+						progressAreaDiv.style.display = "block";
+						const percent = Math.min(100, Math.max(0, effectiveProgress));
+						progressFill.style.width = `${percent}%`;
+						progressPercentSpan.textContent = `${Math.floor(percent)}%`;
+					} else {
+						progressAreaDiv.style.display = "none";
+					}
+
+					// Update live region for screen readers
+					let liveMessage = effectiveStatus;
+					if (effectiveProgress !== null && effectiveProgress !== undefined) {
+						liveMessage += `, ${Math.floor(effectiveProgress)} percent complete`;
+					}
+					if (liveRegionEl) liveRegionEl.textContent = liveMessage;
+				}
+
+				// Stop the internal simulation if it's running
+				function stopSimulation() {
+					if (simulationInterval) {
+						clearInterval(simulationInterval);
+						simulationInterval = null;
+					}
+				}
+
+				// Start or restart simulation (uncontrolled mode) - only if not controlled
+				function startSimulation(steps = DEFAULT_STEPS, intervalMs = 1800) {
+					if (isControlled) return;
+					stopSimulation();
+					currentSimulationSteps = [...steps];
+					simulationIntervalMs = intervalMs;
+					currentStepIndex = 0;
+					// Reset to first step
+					updateUI();
+					// If there is more than one step, schedule progression
+					if (currentSimulationSteps.length > 1) {
+						simulationInterval = setInterval(() => {
+							// Do not advance if controlled mode was activated externally
+							if (isControlled) {
+								stopSimulation();
+								return;
+							}
+							// Move to next step if not at the last
+							if (currentStepIndex < currentSimulationSteps.length - 1) {
+								currentStepIndex++;
+								updateUI();
+							} else {
+								// Reached final step: stop interval, keep final status
+								stopSimulation();
+							}
+						}, simulationIntervalMs);
+					}
+				}
+
+				// --------------------------------------------------------------
+				// External API for controlling the loading screen
+				// Expose globally: window.setLoadingStatus(status, progress, subtext, showProgressBar)
+				// Also expose window.loadingAPI for Electron preload compatibility
+				// --------------------------------------------------------------
+				window.setLoadingStatus = function (
+					status,
+					progress,
+					subtext,
+					showProgressBar,
+				) {
+					// First call to external API activates controlled mode and kills simulation
+					if (!isControlled) {
+						isControlled = true;
+						stopSimulation();
+					}
+					if (status !== undefined) externalStatus = status;
+					if (progress !== undefined) externalProgress = progress;
+					if (subtext !== undefined) externalSubtext = subtext;
+					if (showProgressBar !== undefined)
+						externalShowProgressBar = showProgressBar;
+					updateUI();
+				};
+
+				// For convenience: also expose an object that matches typical Electron bridge
+				window.loadingAPI = {
+					setStatus: (status, progress, subtext, showProgressBar) => {
+						window.setLoadingStatus(status, progress, subtext, showProgressBar);
+					},
+					resetToSimulation: (stepsArray, intervalMs) => {
+						// Revert to uncontrolled simulation mode
+						if (isControlled) {
+							isControlled = false;
+							externalStatus = null;
+							externalProgress = null;
+							externalSubtext = null;
+							externalShowProgressBar = null;
+						}
+						stopSimulation();
+						currentStepIndex = 0;
+						const steps =
+							stepsArray && stepsArray.length ? stepsArray : DEFAULT_STEPS;
+						const ms =
+							typeof intervalMs === "number" && intervalMs > 0
+								? intervalMs
+								: 1800;
+						startSimulation(steps, ms);
+					},
+				};
+
+				// --------------------------------------------------------------
+				// Initialization: start in uncontrolled simulation mode
+				// --------------------------------------------------------------
+				function init() {
+					// Initialize theme first (reads localStorage key "theme")
+					initTheme();
+
+					// Start loading simulation
+					isControlled = false;
+					externalStatus = null;
+					externalProgress = null;
+					externalSubtext = null;
+					externalShowProgressBar = null;
+					currentStepIndex = 0;
+					startSimulation(DEFAULT_STEPS, 1800);
+				}
+
+				// Console hint for developers using Electron
+				console.log(
+					"[LoadingScreen] Ready. Theme reads localStorage.getItem('theme'). Use window.setLoadingStatus(status, progress, subtext, showProgressBar) to control. Use window.loadingAPI.resetToSimulation() to revert to demo simulation.",
+				);
+
+				// Run initialization
+				init();
+			})();
+		</script>
+	</body>
+</html>

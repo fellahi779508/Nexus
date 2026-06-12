@@ -1,0 +1,224 @@
+/* ── Overlay ────────────────────────────────────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 16px;
+  animation: overlayIn 0.2s ease;
+}
+
+@keyframes overlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ── Container ──────────────────────────────────────────────────────────── */
+.container {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 32px 28px 28px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.12),
+    0 4px 16px rgba(0, 0, 0, 0.06);
+  animation: cardIn 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+  position: relative;
+}
+
+@keyframes cardIn {
+  from {
+    transform: translateY(14px) scale(0.98);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* ── Close button ───────────────────────────────────────────────────────── */
+.closeBtn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--background-secondary);
+  color: var(--foreground-muted);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    color 0.15s;
+}
+
+.closeBtn:hover {
+  background: var(--border);
+  color: var(--foreground);
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+.header {
+  margin-bottom: 22px;
+  padding-right: 36px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--accent);
+  margin: 0 0 6px;
+}
+
+.title {
+  font-family: "Georgia", "Times New Roman", serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--foreground);
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+/* ── Cards list ─────────────────────────────────────────────────────────── */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ── Shared card styles ─────────────────────────────────────────────────── */
+.card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  text-decoration: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition:
+    border-color 0.15s,
+    background 0.15s,
+    transform 0.12s,
+    box-shadow 0.15s;
+  font-family: inherit;
+}
+
+.card:hover {
+  background: var(--surface-hover);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.card:active {
+  transform: translateY(0);
+}
+
+/* Accent variant (Update) */
+.cardAccent {
+  background: var(--background);
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+}
+
+.cardAccent:hover {
+  background: var(--background-secondary);
+}
+.cardAccentRed {
+  background: var(--danger-bg);
+  border-color: var(--danger-border);
+  color: var(--danger);
+}
+
+.cardAccentRed:hover {
+  background: color-mix(in srgb, rgb(219, 20, 20) 12%, var(--background));
+  border-color: color-mix(in srgb, rgb(219, 20, 20) 40%, var(--border));
+}
+
+/* ── Card icon ──────────────────────────────────────────────────────────── */
+.cardIcon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+}
+
+/* ── Card body ──────────────────────────────────────────────────────────── */
+.cardBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cardTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.cardDesc {
+  font-size: 12px;
+  color: var(--foreground-muted);
+  line-height: 1.4;
+}
+
+/* ── Arrow ──────────────────────────────────────────────────────────────── */
+.cardArrow {
+  flex-shrink: 0;
+  color: var(--foreground-muted);
+  transition:
+    transform 0.15s,
+    color 0.15s;
+}
+
+.card:hover .cardArrow {
+  transform: translateX(3px);
+  color: var(--accent);
+}
+
+/* ── RTL ────────────────────────────────────────────────────────────────── */
+[dir="rtl"] .closeBtn {
+  right: auto;
+  left: 16px;
+}
+
+[dir="rtl"] .header {
+  padding-right: 0;
+  padding-left: 36px;
+}
+
+[dir="rtl"] .cardArrow {
+  transform: scaleX(-1);
+}
+
+[dir="rtl"] .card:hover .cardArrow {
+  transform: scaleX(-1) translateX(3px);
+}

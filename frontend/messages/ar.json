@@ -1,0 +1,1245 @@
+{
+  "dashboard": {
+    "title": "لوحة القيادة",
+    "subtitle": "مدير المخزون · نظرة عامة",
+    "loading": "جاري جلب البيانات…",
+    "dateBanner": {
+      "live": "مباشر"
+    },
+    "actions": {
+      "quickSale": "بيع سريع",
+      "quickPurchase": "شراء سريع"
+    },
+    "metrics": {
+      "profit": "أرباح اليوم",
+      "costs": "إجمالي التكاليف",
+      "credit": "الائتمان",
+      "losses": "إجمالي الخسائر",
+      "salesVolume": "حجم المبيعات",
+      "purchases": "المشتريات"
+    },
+    "sections": {
+      "latestSales": "آخر المبيعات",
+      "latestPurchases": "آخر المشتريات",
+      "damagedExpired": "التالف و المنتهي الصلاحية"
+    },
+    "labels": {
+      "sale": "بيع",
+      "purchaseOrder": "أ.ش",
+      "total": "المجموع",
+      "paid": "المدفوع",
+      "amount": "المبلغ",
+      "remaining": "المتبقي",
+      "qty": "الكمية",
+      "lost": "مفقود",
+      "batch": "دفعة",
+      "stock": "المخزون",
+      "lossReason": {
+        "damaged": "تالف",
+        "expired": "منتهي الصلاحية"
+      }
+    },
+    "empty": {
+      "noSales": "— لا توجد مبيعات اليوم —",
+      "noPurchases": "— لا توجد مشتريات اليوم —",
+      "noLosses": "— لا توجد خسائر اليوم —"
+    },
+    "error": {
+      "default": "فشل تحميل بيانات لوحة القيادة",
+      "retry": "إعادة المحاولة"
+    }
+  },
+  "sidebar": {
+    "appName": "نيكسوس",
+    "appTagline": "مجموعة الإدارة",
+    "sectionMain": "العمليات",
+    "sectionLogs": "السجلات",
+    "products": "المنتجات",
+    "stock": "المخزون",
+    "clients": "العملاء",
+    "suppliers": "الموردين",
+    "sales": "المبيعات",
+    "purchases": "المشتريات",
+    "history": "السجل",
+    "logs": "سجلات النشاط",
+    "settings": "الإعدادات",
+    "settingsDescription": "إعدادات النظام",
+    "dashboard": "لوحة القيادة",
+    "categories": "الفئات",
+    "alert": {
+      "title": "تنبيه",
+      "message": "تحقق من مخزونك بانتظام."
+    }
+  },
+  "products": {
+    "title": "المنتجات",
+    "total": "{count} إجمالاً",
+    "addProduct": "إضافة منتج",
+    "searchPlaceholder": "ابحث بالاسم أو الفئة…",
+    "loading": "جاري تحميل المنتجات…",
+    "errorLoad": "فشل تحميل المنتجات.",
+    "emptyTitle": "لا توجد منتجات",
+    "emptySubtitle": "ابدأ بإضافة منتجك الأول.",
+    "emptySearchSubtitle": "لا توجد نتائج لـ \"{query}\"",
+    "pageInfo": "صفحة {page} من {pages}",
+    "productId": "#{id}",
+    "refresh": "تحديث",
+    "noCategory": "بدون فئة"
+  },
+  "productOptions": {
+    "eyebrow": "إجراءات المنتج",
+    "title": "ماذا تريد أن تفعل؟",
+    "close": "إغلاق",
+    "viewDetails": {
+      "title": "عرض التفاصيل",
+      "desc": "عرض تفاصيل المنتج"
+    },
+    "updateProduct": {
+      "title": "تحديث المنتج",
+      "desc": "تحديث معلومات المنتج"
+    },
+    "deleteProduct": {
+      "title": "حذف المنتج",
+      "desc": "حذف المنتج من النظام",
+      "error": "فشل حذف المنتج"
+    },
+    "confirmDelete": "هل أنت متأكد من حذف هذا المنتج؟ هذا الإجراء لا يمكن التراجع عنه."
+  },
+  "categories": {
+    "title": "الفئات",
+    "total": "{count, plural, =0 {لا توجد فئات} one {فئة واحدة} two {فئتان} other {{count} فئات}}",
+    "addCategory": "إضافة فئة",
+    "searchPlaceholder": "ابحث عن الفئات...",
+    "loading": "جاري تحميل الفئات...",
+    "errorLoad": "فشل تحميل الفئات. يرجى المحاولة مرة أخرى.",
+    "emptyTitle": "لا توجد فئات",
+    "emptySubtitle": "ابدأ بإنشاء فئتك الأولى.",
+    "emptySearchSubtitle": "لا توجد فئات تطابق \"{query}\". جرب بحثًا آخر.",
+    "pageInfo": "صفحة {page} من {pages}",
+    "refresh": "تحديث"
+  },
+  "pageInfo": "صفحة {page} من {pages}",
+  "addCategory": {
+    "title": "إضافة فئة",
+    "subtitle": "أضف فئة جديدة لتنظيم منتجاتك",
+    "sectionLabel": "المعلومات الأساسية",
+    "nameLabel": "اسم الفئة",
+    "namePlaceholder": "أدخل اسم الفئة",
+    "btnClose": "إغلاق",
+    "btnCreate": "إنشاء الفئة",
+    "successCreate": "تم إنشاء الفئة بنجاح",
+    "errorCreate": "فشل إنشاء الفئة",
+    "errorNameRequired": "اسم الفئة مطلوب",
+    "updateTitle": "تحديث الفئة",
+    "updateSubtitle": "تحديث تفاصيل الفئة",
+    "updateBtn": "تحديث الفئة",
+    "successUpdate": "تم تحديث الفئة بنجاح",
+    "errorUpdate": "فشل تحديث الفئة"
+  },
+  "updateProduct": {
+    "title": "تحديث المنتج",
+    "subtitle": "تحديث معلومات المنتج",
+    "toast": {
+      "success": "تم تحديث المنتج بنجاح",
+      "error": "فشل تحديث المنتج"
+    }
+  },
+  "productDetails": {
+    "eyebrow": "تفاصيل المنتج",
+    "created": "أنشئ",
+    "updated": "حُدّث",
+    "fetchError": "فشل تحميل المنتج",
+    "breadcrumb": {
+      "products": "المنتجات",
+      "product": "المنتج"
+    },
+    "variants": {
+      "title": "المتغيرات",
+      "empty": "لا توجد متغيرات لهذا المنتج",
+      "batches": "دفعات",
+      "size": "الحجم",
+      "color": "اللون",
+      "flavor": "النكهة",
+      "weight": "الوزن",
+      "height": "الارتفاع"
+    },
+    "refresh": "تحديث",
+    "searchPlaceholder": "ابحث بالاسم أو الباركود...",
+    "addButton": "إضافة متغير"
+  },
+  "categoryOptions": {
+    "eyebrow": "إجراءات الفئة",
+    "title": "ماذا تريد أن تفعل؟",
+    "close": "إغلاق",
+    "viewProducts": {
+      "title": "عرض المنتجات",
+      "desc": "تصفح جميع المنتجات داخل هذه الفئة"
+    },
+    "updateCategory": {
+      "title": "تحديث الفئة",
+      "desc": "تعديل اسم أو تفاصيل هذه الفئة"
+    },
+    "deleteCategory": {
+      "title": "حذف الفئة",
+      "desc": "إزالة هذه الفئة وجميع منتجاتها بشكل دائم"
+    },
+    "confirmDelete": "هل أنت متأكد من حذف هذه الفئة؟ هذا الإجراء لا يمكن التراجع عنه."
+  },
+  "addProduct": {
+    "step1": {
+      "title": "منتج جديد",
+      "subtitle": "الخطوة 1 من 2 — معلومات أساسية",
+      "name": "اسم المنتج",
+      "productNamePlaceholder": "مثال: سماعات لاسلكية",
+      "category": "الفئة",
+      "categoryPlaceholder": "ابحث واختر فئة…"
+    },
+    "step2": {
+      "title": "إضافة متغير",
+      "updateTitle": "تحديث المتغير",
+      "subtitle": "الخطوة 2 من 2 — تفاصيل المتغير",
+      "updateSubtitle": "تحديث تفاصيل المتغير",
+      "primaryLabel": "التفاصيل الأساسية",
+      "name": "اسم المتغير",
+      "namePlaceholder": "مثال: أحمر / L",
+      "barcode": "الباركود",
+      "barcodePlaceholder": "123456789",
+      "secondaryLabel": "التفاصيل الثانوية",
+      "quantity": "الكمية (المخزون)",
+      "quantityPlaceholder": "مثال: 100",
+      "alertPeriodPerDay": "فترة التنبيه (أيام)",
+      "alertPeriodPerDayPlaceholder": "مثال: 7",
+      "alertPeriodPerStock": "فترة التنبيه (المخزون)",
+      "alertPeriodPerStockPlaceholder": "مثال: 20",
+      "fabricationDate": "تاريخ التصنيع",
+      "fabricationDatePlaceholder": "اختر تاريخًا",
+      "expirationDate": "تاريخ الانتهاء",
+      "expirationDatePlaceholder": "اختر تاريخًا",
+      "nLot": "رقم الدفعة",
+      "nLotPlaceholder": "مثال: 123456",
+      "PPA": "سعر الشراء",
+      "PPAPlaceholder": "مثال: 200",
+      "purchasePrice": "سعر الشراء",
+      "pricingLabel": "التسعير",
+      "purchasePricePlaceholder": "مثال: 50",
+      "sellingPriceHT": "سعر البيع HT",
+      "sellingPriceHTPlaceholder": "مثال: 80",
+      "vatRate": "نسبة الضريبة (%)",
+      "vatRatePlaceholder": "مثال: 19",
+      "sellingPriceTTC": "سعر البيع TTC",
+      "sellingPriceTTCPlaceholder": "مثال: 95",
+      "profit": "الربح",
+      "profitPlaceholder": "مثال: 100",
+      "profitRate": "نسبة الربح (%)",
+      "profitRatePlaceholder": "مثال: 20",
+      "discount": "الخصم",
+      "discountPlaceholder": "مثال: 80",
+      "discountLabel": "الخصم",
+      "discountRate": "نسبة الخصم (%)",
+      "discountRatePlaceholder": "مثال: 10",
+      "attributes": "السمات",
+      "size": "الحجم",
+      "sizePlaceholder": "مثال: XL",
+      "color": "اللون",
+      "colorPlaceholder": "مثال: أحمر",
+      "flavor": "النكهة",
+      "flavorPlaceholder": "مثال: فانيليا",
+      "weight": "الوزن (غ)",
+      "weightPlaceholder": "مثال: 500",
+      "height": "الارتفاع (سم)",
+      "heightPlaceholder": "مثال: 30",
+      "supplier": "المورد",
+      "supplierPlaceholder": "مثال: محمد"
+    },
+    "actions": {
+      "cancel": "إلغاء",
+      "next": "التالي",
+      "saving": "جاري الحفظ…",
+      "createProduct": "إنشاء المنتج",
+      "creating": "جاري الإنشاء…",
+      "close": "إغلاق",
+      "update": "تحديث"
+    },
+    "toast": {
+      "productCreated": "تم إنشاء المنتج بنجاح",
+      "variantCreated": "تم إنشاء المتغير — المنتج جاهز!",
+      "unknownError": "حدث خطأ ما، يرجى المحاولة مرة أخرى",
+      "variantUpdated": "تم تحديث المتغير بنجاح",
+      "fieldsRequired": {
+        "name": "اسم المنتج مطلوب",
+        "category": "الفئة مطلوبة",
+        "variantName": "اسم المتغير مطلوب",
+        "variantBarcode": "الباركود مطلوب",
+        "variantPurchasePrice": "سعر شراء المتغير مطلوب",
+        "variantQuantity": "كمية المتغير مطلوبة",
+        "variantSellingPriceHT": "سعر البيع HT مطلوب"
+      }
+    },
+    "optional": "اختياري"
+  },
+  "calculator": {
+    "title": "الآلة الحاسبة",
+    "subtitle": "أدخل قيمة أو تعبير",
+    "cancel": "إلغاء",
+    "done": "تم",
+    "close": "إغلاق"
+  },
+  "addSupplier": {
+    "title": "إضافة مورد",
+    "subtitle": "أضف موردًا جديدًا لإدارة مشترياتك",
+    "sectionLabel": "المعلومات الأساسية",
+    "nameLabel": "اسم المورد",
+    "namePlaceholder": "أدخل اسم المورد",
+    "emailLabel": "البريد الإلكتروني",
+    "emailPlaceholder": "أدخل البريد الإلكتروني",
+    "phoneLabel": "الهاتف",
+    "phonePlaceholder": "أدخل رقم الهاتف",
+    "addressLabel": "العنوان",
+    "addressPlaceholder": "أدخل العنوان",
+    "btnClose": "إغلاق",
+    "btnCreate": "إنشاء المورد",
+    "successCreate": "تم إنشاء المورد بنجاح",
+    "errorCreate": "فشل إنشاء المورد",
+    "errorNameRequired": "اسم المورد مطلوب",
+    "updateTitle": "تحديث المورد",
+    "updateSubtitle": "تحديث تفاصيل المورد",
+    "updateBtn": "تحديث المورد",
+    "successUpdate": "تم تحديث المورد بنجاح",
+    "errorUpdate": "فشل تحديث المورد"
+  },
+  "suppliers": {
+    "title": "الموردين",
+    "total": "{count, plural, =0 {لا يوجد موردون} one {مورد واحد} two {موردان} other {{count} موردين}}",
+    "addSupplier": "إضافة مورد",
+    "searchPlaceholder": "ابحث عن الموردين...",
+    "loading": "جاري تحميل الموردين...",
+    "errorLoad": "فشل تحميل الموردين. يرجى المحاولة مرة أخرى.",
+    "emptyTitle": "لا يوجد موردون",
+    "emptySubtitle": "ابدأ بإنشاء موردك الأول.",
+    "emptySearchSubtitle": "لا يوجد موردون يطابقون \"{query}\". جرب بحثًا آخر.",
+    "pageInfo": "صفحة {page} من {pages}",
+    "refresh": "تحديث",
+    "supplierId": "معرف المورد: {id}"
+  },
+  "supplierOptions": {
+    "eyebrow": "المورد",
+    "title": "ماذا تريد أن تفعل؟",
+    "close": "إغلاق",
+    "viewDetails": {
+      "title": "عرض التفاصيل",
+      "desc": "عرض تفاصيل المورد"
+    },
+    "updateSupplier": {
+      "title": "تحديث المورد",
+      "desc": "تحديث تفاصيل المورد"
+    },
+    "deleteSupplier": {
+      "title": "حذف المورد",
+      "desc": "حذف المورد من النظام"
+    },
+    "confirmDelete": "هل أنت متأكد من حذف هذا المورد؟ هذا الإجراء لا يمكن التراجع عنه."
+  },
+  "variantOptions": {
+    "eyebrow": "المتغير",
+    "title": "ماذا تريد أن تفعل؟",
+    "close": "إغلاق",
+    "viewDetails": {
+      "title": "عرض التفاصيل",
+      "desc": "عرض تفاصيل المتغير"
+    },
+    "updateVariant": {
+      "title": "تحديث المتغير",
+      "desc": "تحديث تفاصيل المتغير"
+    },
+    "deleteVariant": {
+      "title": "حذف المتغير",
+      "desc": "حذف المتغير من النظام"
+    },
+    "confirmDelete": "هل أنت متأكد من حذف هذا المتغير؟ هذا الإجراء لا يمكن التراجع عنه."
+  },
+  "stock": {
+    "title": "المخزون",
+    "total": "{count} إدخالات",
+    "searchPlaceholder": "ابحث باسم المتغير أو الباركود…",
+    "refresh": "تحديث",
+    "loading": "جاري تحميل المخزون…",
+    "errorLoad": "فشل تحميل المخزون",
+    "emptyTitle": "لا توجد إدخالات في المخزون",
+    "emptySubtitle": "سيظهر المخزون هنا بمجرد إضافة الدفعات",
+    "emptySearchSubtitle": "لا توجد نتائج لـ \"{query}\"",
+    "pageInfo": "صفحة {page} من {pages}",
+    "batchStatus": {
+      "all": "الكل",
+      "expiring": "قيد الانتهاء",
+      "expired": "منتهي الصلاحية",
+      "low": "منخفض",
+      "empty": "فارغ"
+    },
+    "col": {
+      "variant": "المتغير",
+      "quantity": "الكمية",
+      "purchasePrice": "الشراء",
+      "sellingPriceTTC": "السعر TTC",
+      "vatRate": "الضريبة",
+      "supplier": "المورد",
+      "fabricationDate": "تاريخ التصنيع",
+      "expirationDate": "تاريخ الانتهاء",
+      "alert": "تنبيه الانتهاء",
+      "profit": "الربح",
+      "profitRate": "نسبة الربح",
+      "promotion": "العرض",
+      "barcode": "الباركود",
+      "lot": "الدفعة #",
+      "alertStock": "تنبيه المخزون"
+    }
+  },
+  "variantDetails": {
+    "loading": "جاري تحميل المتغير…",
+    "errorLoad": "فشل تحميل المتغير",
+    "pageInfo": "صفحة {page} من {pages}",
+    "breadcrumb": {
+      "products": "المنتجات",
+      "product": "المنتج",
+      "stock": "المخزون"
+    },
+    "refresh": "تحديث",
+    "hero": {
+      "eyebrow": "تفاصيل المتغير",
+      "size": "الحجم:",
+      "color": "اللون:",
+      "flavor": "النكهة:",
+      "purchasePrice": "الشراء",
+      "sellingHT": "البيع HT",
+      "sellingTTC": "البيع TTC",
+      "vat": "الضريبة",
+      "profit": "الربح",
+      "profitRate": "نسبة الربح",
+      "promotion": "سعر العرض",
+      "promotionRate": "نسبة العرض",
+      "PPA": "PPA"
+    },
+    "batches": {
+      "title": "الدفعات",
+      "add": "إضافة دفعة",
+      "searchPlaceholder": "ابحث برقم الدفعة…",
+      "empty": "لا توجد دفعات",
+      "emptySearch": "لا توجد دفعات تطابق بحثك",
+      "actions": {
+        "remove": "إزالة",
+        "edit": "تعديل"
+      }
+    },
+    "col": {
+      "nLot": "الدفعة #",
+      "status": "الحالة",
+      "quantity": "الكمية",
+      "qtyStatus": "حالة الكمية",
+      "fabricationDate": "تاريخ التصنيع",
+      "expirationDate": "تاريخ الانتهاء",
+      "alertDay": "تنبيه (أيام)",
+      "alertStock": "تنبيه (المخزون)",
+      "supplier": "المورد",
+      "actions": "الإجراءات"
+    },
+    "status": {
+      "ok": "جيد",
+      "expiring": "قيد الانتهاء",
+      "expired": "منتهي الصلاحية"
+    },
+    "qtyStatus": {
+      "ok": "جيد",
+      "low": "منخفض",
+      "empty": "فارغ"
+    }
+  },
+  "addBatch": {
+    "title": "إضافة دفعة",
+    "subtitle": "إنشاء دفعة جديدة لهذا المتغير",
+    "updateTitle": "تحديث الدفعة",
+    "updateSubtitle": "تعديل معلومات الدفعة",
+    "btnClose": "إلغاء",
+    "btnCreate": "إنشاء",
+    "updateBtn": "تحديث",
+    "successCreate": "تم إنشاء الدفعة بنجاح!",
+    "errorCreate": "فشل إنشاء الدفعة.",
+    "successUpdate": "تم تحديث الدفعة بنجاح!",
+    "errorUpdate": "فشل تحديث الدفعة.",
+    "quantityRequired": "الكمية مطلوبة ويجب أن تكون أكبر من 0.",
+    "variantRequired": "متغير غير صالح.",
+    "dateOrderError": "لا يمكن أن يكون تاريخ التصنيع بعد تاريخ الانتهاء.",
+    "batchInfo": "معلومات الدفعة",
+    "nLotLabel": "رقم الدفعة",
+    "nLotPlaceholder": "مثال: دفعة-001",
+    "quantityLabel": "الكمية *",
+    "fabricationDateLabel": "تاريخ التصنيع",
+    "expirationDateLabel": "تاريخ الانتهاء",
+    "supplierIdLabel": "المورد",
+    "alertPeriodPerDayLabel": "تنبيه (أيام قبل الانتهاء)",
+    "alertPeriodPerStockLabel": "حد تنبيه المخزون",
+    "alertPeriodPerDayPlaceholder": "أيام قبل الانتهاء",
+    "alertPeriodPerStockPlaceholder": "حد المخزون",
+    "supplierSection": "المورد والتنبيهات",
+    "primary": "أساسية (تباع أولاً)",
+    "primaryPlaceHolder": "تعيين كدفعة أساسية"
+  },
+  "batchOptions": {
+    "eyebrow": "إجراءات الدفعة",
+    "title": "إدارة الدفعة",
+    "edit": {
+      "title": "تعديل المعلومات",
+      "desc": "تحديث تفاصيل وبيانات الدفعة"
+    },
+    "add": {
+      "title": "إضافة إلى المخزون",
+      "desc": "زيادة كمية الدفعة"
+    },
+    "remove": {
+      "title": "سحب من المخزون",
+      "desc": "تقليل كمية الدفعة"
+    },
+    "delete": {
+      "title": "حذف الدفعة",
+      "desc": "إزالة هذه الدفعة بشكل دائم"
+    },
+    "confirmDelete": "هل أنت متأكد من حذف هذه الدفعة؟"
+  },
+  "stockAdjustment": {
+    "title": "تعديل المخزون",
+    "subtitle": "قم بتحديث الكمية وحدد السبب",
+    "close": "إغلاق",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "confirming": "جاري الحفظ…",
+    "fields": {
+      "quantity": "الكمية",
+      "quantityPlaceholder": "مثال: 10",
+      "reason": "السبب",
+      "reasonPlaceholder": "اختر سببًا…"
+    },
+    "validation": {
+      "quantity": "يرجى إدخال كمية صالحة",
+      "reason": "يرجى اختيار سبب"
+    },
+    "reasons": {
+      "refill": "إعادة تعبئة",
+      "return": "مرتجع عميل",
+      "damage": "بضائع تالفة",
+      "loss": "فقدان / نقص",
+      "correction": "تصحيح جرد",
+      "transfer": "تحويل"
+    },
+    "toast": {
+      "success": "تم تعديل المخزون بنجاح!",
+      "error": "فشل تعديل المخزون."
+    }
+  },
+  "Dashboard": {
+    "title": "نقطة بيع مدير المخزون",
+    "quickSale": "بيع سريع",
+    "quickPurchase": "شراء سريع",
+    "todaySales": "مبيعات اليوم",
+    "todayPurchases": "مشتريات اليوم",
+    "profit": "الربح",
+    "costs": "التكاليف",
+    "salesCount": "المبيعات",
+    "purchaseCount": "المشتريات",
+    "lowStockAlert": "تنبيه مخزون منخفض",
+    "expiringAlert": "دفعات قاربت على الانتهاء",
+    "recentTransactions": "المعاملات الأخيرة",
+    "transactionId": "المعرف",
+    "type": "النوع",
+    "customerOrSupplier": "العميل / المورد",
+    "amount": "المبلغ",
+    "time": "الوقت",
+    "sale": "بيع",
+    "purchase": "شراء",
+    "searchProduct": "ابحث عن منتج...",
+    "cart": "سلة التسوق",
+    "emptyCart": "السلة فارغة",
+    "total": "المجموع",
+    "completeSale": "إتمام البيع",
+    "completePurchase": "إتمام الشراء",
+    "cancel": "إلغاء",
+    "purchaseMockMessage": "سيتم إضافة اختيار المورد وبنود المنتج هنا."
+  },
+  "posOverlay": {
+    "quickSale": "بيع سريع",
+    "quickPurchase": "شراء سريع",
+    "searchPlaceholder": "ابحث بالاسم...",
+    "barcodePlaceholder": "امسح أو اكتب الباركود...",
+    "scan": "مسح",
+    "loading": "جاري التحميل...",
+    "fetchError": "فشل تحميل المنتجات.",
+    "noProducts": "لا توجد منتجات.",
+    "loadMore": "تحميل المزيد",
+    "selectProduct": "اختر منتجًا للبدء",
+    "currentTransaction": "المعاملة الحالية",
+    "noItems": "لم تتم إضافة أي عناصر.",
+    "total": "المجموع",
+    "cancel": "إلغاء",
+    "proceed": "متابعة",
+    "options": {
+      "printReceipt": "طباعة الإيصال",
+      "sendInvoice": "إرسال الفاتورة",
+      "applyLoyalty": "تطبيق نقاط الولاء",
+      "printOrder": "طباعة أمر الشراء",
+      "updateStock": "تحديث المخزون تلقائيًا",
+      "notifySupplier": "إشعار المورد"
+    }
+  },
+  "Clients": {
+    "title": "العملاء",
+    "total": "{count} عملاء",
+    "addClient": "إضافة عميل",
+    "searchPlaceholder": "ابحث عن العملاء...",
+    "refresh": "تحديث",
+    "errorLoad": "فشل تحميل العملاء. يرجى المحاولة مرة أخرى.",
+    "loading": "جاري تحميل العملاء...",
+    "emptyTitle": "لا يوجد عملاء",
+    "emptySubtitle": "ابدأ بإضافة عميلك الأول.",
+    "emptySearchSubtitle": "لا يوجد عملاء يطابقون \"{query}\".",
+    "pageInfo": "صفحة {page} من {pages}"
+  },
+  "addClient": {
+    "title": "إضافة عميل",
+    "subtitle": "املأ التفاصيل لإنشاء عميل جديد.",
+    "updateTitle": "تحديث العميل",
+    "updateSubtitle": "عدل معلومات العميل أدناه.",
+    "sectionLabel": "معلومات العميل",
+    "nameLabel": "الاسم الكامل",
+    "namePlaceholder": "أدخل الاسم الكامل",
+    "emailLabel": "البريد الإلكتروني",
+    "emailPlaceholder": "أدخل عنوان البريد الإلكتروني",
+    "phoneLabel": "الهاتف",
+    "phonePlaceholder": "أدخل رقم الهاتف",
+    "addressLabel": "العنوان",
+    "addressPlaceholder": "أدخل العنوان",
+    "btnClose": "إلغاء",
+    "btnCreate": "إنشاء العميل",
+    "updateBtn": "حفظ التغييرات",
+    "successCreate": "تم إنشاء العميل بنجاح.",
+    "errorCreate": "فشل إنشاء العميل. يرجى المحاولة مرة أخرى.",
+    "successUpdate": "تم تحديث العميل بنجاح.",
+    "errorUpdate": "فشل تحديث العميل. يرجى المحاولة مرة أخرى.",
+    "errorNameRequired": "الاسم مطلوب."
+  },
+  "clientOptions": {
+    "close": "إغلاق",
+    "eyebrow": "خيارات العميل",
+    "title": "ماذا تريد أن تفعل؟",
+    "viewDetails": {
+      "title": "عرض التفاصيل",
+      "desc": "الاطلاع على الملف الكامل وسجل هذا العميل."
+    },
+    "updateClient": {
+      "title": "تعديل العميل",
+      "desc": "تحديث معلومات هذا العميل."
+    },
+    "deleteClient": {
+      "title": "حذف العميل"
+    },
+    "deleteCLient": {
+      "desc": "إزالة هذا العميل بشكل دائم من النظام."
+    },
+    "confirmDelete": "هل أنت متأكد من حذف هذا العميل؟"
+  },
+  "creditModal": {
+    "title": "الدفع بالائتمان",
+    "sectionLabel": "إعدادات الائتمان",
+    "activateLabel": "تفعيل الائتمان",
+    "paidLabel": "المبلغ المدفوع",
+    "paidPlaceholder": "أدخل المبلغ المدفوع",
+    "clientLabel": "اختر العميل",
+    "clientListPlaceholder": "ابحث عن عميل..."
+  },
+  "currency": "دج",
+  "sale": {
+    "title": "بيع",
+    "searchPlaceholder": "ابحث بالاسم، الباركود...",
+    "pageInfo": "صفحة {page} من {pages}",
+    "cartTitle": "السلة",
+    "numpadTitle": "لوحة الأرقام",
+    "optionsTitle": "الخيارات",
+    "cancelBtn": "إلغاء",
+    "proceedBtn": "متابعة",
+    "updateBtn": "تحديث",
+    "qte": "الكمية",
+    "qteUnit": "الكمية لكل وحدة",
+    "price": "السعر",
+    "apply": "تطبيق",
+    "creditRequired": "العميل مطلوب عند تفعيل الائتمان.",
+    "successSale": "تم إنشاء البيع بنجاح.",
+    "successSaleUpdate": "تم تحديث البيع بنجاح.",
+    "errorSale": "فشل إنشاء البيع.",
+    "errorSaleUpdate": "فشل تحديث البيع.",
+    "totalAmount": "المبلغ الإجمالي",
+    "totalPaid": "إجمالي المدفوع",
+    "ttc": "المجموع TTC",
+    "timbre": "الطابع",
+    "remise": "المبلغ الإجمالي (الخصم)",
+    "remiseAlert": "لا يمكن أن يتجاوز الخصم المبلغ الإجمالي.",
+    "paymentTitle": "طريقة الدفع",
+    "paymentRequiredAlert": "يرجى اختيار طريقة الدفع",
+    "payment": {
+      "cash": "نقدًا",
+      "card": "بطاقة ائتمان",
+      "bank": "تحويل بنكي",
+      "ccp": "حوالة بريدية"
+    },
+    "currency": "دج",
+    "transactionOptions": {
+      "print": "طباعة",
+      "credit": "ائتمان",
+      "discount": "خصم",
+      "history": "السجل",
+      "timbre": "الطابع"
+    },
+    "variantsTable": {
+      "productName": "اسم المنتج",
+      "nLot": "رقم الدفعة",
+      "fabricationDate": "تاريخ التصنيع",
+      "expirationDate": "تاريخ الانتهاء",
+      "barcode": "الباركود",
+      "stockQty": "كمية المخزون",
+      "purchasePrice": "سعر الشراء",
+      "tva": "الضريبة",
+      "id": "المعرف",
+      "discountPrice": "سعر الخصم",
+      "sellingPrice": "سعر البيع"
+    },
+    "cartTable": {
+      "productName": "اسم المنتج",
+      "barcode": "الباركود",
+      "quantity": "الكمية",
+      "fabricationDate": "تاريخ التصنيع",
+      "expirationDate": "تاريخ الانتهاء",
+      "sellingPrice": "سعر البيع",
+      "id": "المعرف",
+      "total": "المجموع",
+      "remove": "إزالة",
+      "unit": "وحدة",
+      "QteUnit": "الكمية لكل وحدة",
+      "optionUnit": "قطعة",
+      "optionCarton": "طرد (كرتون، صندوق، إلخ)"
+    },
+    "emptyCart": "لا توجد عناصر في السلة."
+  },
+  "remiseModal": {
+    "title": "الخصم",
+    "sectionLabel": "إعدادات الخصم",
+    "activateLabel": "تفعيل الخصم",
+    "remiseLabel": "مبلغ الخصم",
+    "remisePlaceholder": "أدخل مبلغ الخصم"
+  },
+  "historyModal": {
+    "title": {
+      "sale": "سجل المبيعات",
+      "purchase": "سجل المشتريات"
+    },
+    "subtitle": {
+      "sale": "اختر عملية بيع لتحميلها",
+      "purchase": "اختر عملية شراء لتحميلها"
+    },
+    "close": "إغلاق",
+    "cancel": "إلغاء",
+    "load": "تحميل",
+    "loading": "جاري تحميل المبيعات…",
+    "errorLoad": "فشل تحميل المبيعات",
+    "empty": {
+      "sale": "لا توجد مبيعات مسجلة اليوم",
+      "purchase": "لا توجد مشتريات مسجلة اليوم"
+    },
+    "items": "عناصر",
+    "paid": "المدفوع",
+    "remise": "الخصم"
+  },
+  "purchase": {
+    "title": "لوحة المشتريات",
+    "searchPlaceholder": "ابحث عن المتغيرات...",
+    "variantsTable": {
+      "productName": "اسم المنتج",
+      "barcode": "الباركود",
+      "stockQty": "كمية المخزون",
+      "purchasePrice": "سعر الشراء",
+      "tva": "الضريبة",
+      "discountPrice": "سعر الخصم",
+      "sellingPrice": "سعر البيع",
+      "actions": "تعديل",
+      "editVariant": "تعديل المنتج",
+      "addBatch": "إضافة دفعة",
+      "editBatch": "تعديل الدفعة",
+      "fabricationDate": "تاريخ التصنيع",
+      "expirationDate": "تاريخ الانتهاء",
+      "nLot": "رقم الدفعة",
+      "id": "المعرف"
+    },
+    "currency": "دج",
+    "pageInfo": "صفحة {page} من {pages}",
+    "cartTitle": "العناصر المشتراة",
+    "cartTable": {
+      "productName": "اسم المنتج",
+      "barcode": "الباركود",
+      "quantity": "الكمية",
+      "unit": "وحدة",
+      "QteUnit": "الكمية/وحدة",
+      "sellingPrice": "السعر",
+      "total": "المجموع",
+      "remove": "إزالة",
+      "optionUnit": "قطعة",
+      "optionCarton": "طرد",
+      "id": "المعرف"
+    },
+    "emptyCart": "السلة فارغة",
+    "totalAmount": "المبلغ الإجمالي",
+    "remise": "الخصم",
+    "totalPaid": "إجمالي المدفوع",
+    "paymentTitle": "طريقة الدفع",
+    "paymentRequiredAlert": "يرجى اختيار طريقة الدفع",
+    "payment": {
+      "cash": "نقدًا",
+      "card": "بطاقة ائتمان",
+      "bank": "تحويل بنكي",
+      "ccp": "CCP / BaridiMob"
+    },
+    "numpadTitle": "لوحة الأرقام",
+    "qte": "الكمية",
+    "qteUnit": "كمية الوحدة",
+    "price": "السعر",
+    "apply": "تطبيق",
+    "supplierTitle": "المورد",
+    "optionsTitle": "الخيارات",
+    "transactionOptions": {
+      "print": "طباعة",
+      "credit": "ائتمان",
+      "discount": "خصم",
+      "history": "السجل",
+      "timbre": "الطابع"
+    },
+    "cancelBtn": "إلغاء",
+    "proceedBtn": "متابعة الشراء",
+    "updateBtn": "تحديث الشراء",
+    "remiseAlert": "لا يمكن أن يتجاوز الخصم المبلغ الإجمالي.",
+    "creditRequired": "يرجى اختيار مورد للمشتريات بالائتمان.",
+    "successPurchase": "تمت عملية الشراء بنجاح!",
+    "errorPurchase": "فشل إتمام الشراء.",
+    "successPurchaseUpdate": "تم تحديث الشراء بنجاح!",
+    "errorPurchaseUpdate": "فشل تحديث الشراء."
+  },
+  "TimbreModal": {
+    "title": "الطابع",
+    "sectionLabel": "الطابع",
+    "paidLabel": "مبلغ الطابع",
+    "paidPlaceholder": "أدخل مبلغ الطابع"
+  },
+  "salesPage": {
+    "actions": {
+      "quickSale": "بيع سريع",
+      "detailedSale": "بيع مفصل"
+    },
+    "title": "المبيعات",
+    "subtitle": "{total} إجمالي المعاملات",
+    "searchPlaceholder": "ابحث عن عميل...",
+    "retry": "حاول مرة أخرى",
+    "pageInfo": "صفحة {page} من {pages}",
+    "stats": {
+      "totalSales": "إجمالي المبيعات",
+      "totalRevenue": "الإيرادات (الصفحة)",
+      "totalPaid": "المحصل (الصفحة)",
+      "clients": "العملاء (الصفحة)"
+    },
+    "table": {
+      "id": "المعرف",
+      "date": "التاريخ",
+      "client": "العميل",
+      "items": "العناصر",
+      "itemsUnit": "عنصر(عناصر)",
+      "total": "المجموع",
+      "paid": "المدفوع",
+      "payment": "الدفع",
+      "balance": "الرصيد",
+      "walkIn": "عابر",
+      "settled": "مسدد",
+      "unknown": "—"
+    },
+    "empty": {
+      "title": "لا توجد مبيعات",
+      "desc": "حاول تعديل بحثك أو أضف عملية بيع جديدة."
+    }
+  },
+  "printModal": {
+    "type": "اختر نوع الورق"
+  },
+  "purchasesPage": {
+    "title": "المشتريات",
+    "subtitle": "{total} إجمالي المشتريات",
+    "searchPlaceholder": "ابحث عن مورد...",
+    "retry": "حاول مرة أخرى",
+    "pageInfo": "صفحة {page} من {pages}",
+    "actions": {
+      "purchase": "إجراء عملية شراء"
+    },
+    "stats": {
+      "totalPurchases": "إجمالي المشتريات",
+      "totalRevenue": "التكلفة (الصفحة)",
+      "totalPaid": "المدفوع (الصفحة)",
+      "suppliers": "الموردين (الصفحة)"
+    },
+    "table": {
+      "id": "المعرف",
+      "date": "التاريخ",
+      "supplier": "المورد",
+      "items": "العناصر",
+      "itemsUnit": "عنصر(عناصر)",
+      "total": "المجموع",
+      "paid": "المدفوع",
+      "payment": "الدفع",
+      "balance": "الرصيد",
+      "walkIn": "عابر",
+      "settled": "مسدد",
+      "unknown": "—"
+    },
+    "empty": {
+      "title": "لا توجد مشتريات",
+      "desc": "حاول تعديل بحثك أو أضف عملية شراء جديدة."
+    }
+  },
+  "DetailedSale": {
+    "back": "رجوع",
+    "title": "بيع #{id}",
+    "delete": "حذف البيع",
+    "print": "طباعة",
+    "printFormat": "تنسيق الطباعة",
+    "a4": "A4",
+    "ticket": "تذكرة",
+    "loading": "جاري تحميل تفاصيل البيع…",
+    "errorFetch": "فشل تحميل تفاصيل البيع. يرجى المحاولة مرة أخرى.",
+    "notFound": "البيع غير موجود.",
+    "saleSummary": "ملخص البيع",
+    "date": "التاريخ",
+    "total": "المجموع",
+    "paid": "المدفوع",
+    "remaining": "المتبقي",
+    "fullyPaid": "مدفوع بالكامل",
+    "partiallyPaid": "مدفوع جزئيًا",
+    "unpaid": "غير مدفوع",
+    "paymentMethod": "طريقة الدفع",
+    "remise": "الخصم",
+    "yes": "نعم",
+    "remiseAmount": "مبلغ الخصم",
+    "timbre": "الطابع الضريبي",
+    "client": "معلومات العميل",
+    "clientName": "الاسم",
+    "clientAddress": "العنوان",
+    "clientPhone": "الهاتف",
+    "clientEmail": "البريد الإلكتروني",
+    "noClient": "تم تسجيل هذا البيع بدون عميل.",
+    "soldItems": "العناصر المباعة",
+    "noItems": "لا توجد عناصر في هذا البيع.",
+    "item": "المنتج",
+    "lot": "الدفعة",
+    "quantity": "الكمية (× وحدات)",
+    "unitPrice": "سعر الوحدة",
+    "totalPrice": "إجمالي السطر",
+    "unknownItem": "منتج غير معروف",
+    "thankYou": "شكرًا على شرائك!",
+    "confirmDelete": "هل أنت متأكد من حذف هذا البيع؟",
+    "currency": "دج"
+  },
+  "DetailedPurchase": {
+    "back": "رجوع",
+    "title": "شراء #{id}",
+    "delete": "حذف الشراء",
+    "print": "طباعة",
+    "printFormat": "تنسيق الطباعة",
+    "a4": "A4",
+    "ticket": "تذكرة",
+    "loading": "جاري تحميل تفاصيل الشراء…",
+    "errorFetch": "فشل تحميل تفاصيل الشراء. يرجى المحاولة مرة أخرى.",
+    "notFound": "الشراء غير موجود.",
+    "purchaseSummary": "ملخص الشراء",
+    "date": "التاريخ",
+    "total": "المجموع",
+    "paid": "المدفوع",
+    "remaining": "المتبقي",
+    "fullyPaid": "مدفوع بالكامل",
+    "partiallyPaid": "مدفوع جزئيًا",
+    "unpaid": "غير مدفوع",
+    "paymentMethod": "طريقة الدفع",
+    "remise": "الخصم",
+    "yes": "نعم",
+    "remiseAmount": "مبلغ الخصم",
+    "timbre": "الطابع الضريبي",
+    "supplier": "معلومات المورد",
+    "supplierName": "الاسم",
+    "supplierAddress": "العنوان",
+    "supplierPhone": "الهاتف",
+    "supplierEmail": "البريد الإلكتروني",
+    "noSupplier": "تم تسجيل هذا الشراء بدون مورد.",
+    "purchasedItems": "العناصر المشتراة",
+    "noItems": "لا توجد عناصر في هذا الشراء.",
+    "item": "المنتج",
+    "lot": "الدفعة",
+    "quantity": "الكمية (× وحدات)",
+    "unitPrice": "سعر الوحدة",
+    "totalPrice": "إجمالي السطر",
+    "unknownItem": "منتج غير معروف",
+    "thankYou": "شكرًا لتعاملكم معنا!",
+    "confirmDelete": "هل أنت متأكد من حذف هذا الشراء؟",
+    "currency": "دج"
+  },
+  "DetailedClient": {
+    "back": "رجوع",
+    "title": "عميل #{id}",
+    "clientSince": "عميل منذ {date}",
+    "deleteClient": "حذف العميل",
+    "loading": "جاري تحميل تفاصيل العميل…",
+    "errorFetch": "فشل تحميل تفاصيل العميل. يرجى المحاولة مرة أخرى.",
+    "notFound": "العميل غير موجود.",
+    "clientInfo": "معلومات العميل",
+    "name": "الاسم",
+    "address": "العنوان",
+    "phone": "الهاتف",
+    "email": "البريد الإلكتروني",
+    "creditManagement": "إدارة الائتمان",
+    "totalOutstanding": "إجمالي المستحق",
+    "amount": "المبلغ",
+    "recordPayment": "تسجيل دفعة",
+    "markAllAsPaid": "تعليم الكل كمدفوع",
+    "sales": "المبيعات",
+    "noSales": "لا توجد مبيعات مسجلة لهذا العميل.",
+    "saleId": "معرف البيع",
+    "date": "التاريخ",
+    "total": "المجموع",
+    "paid": "المدفوع",
+    "remaining": "المتبقي",
+    "status": "الحالة",
+    "fullyPaid": "مدفوع بالكامل",
+    "partiallyPaid": "مدفوع جزئيًا",
+    "unpaid": "غير مدفوع",
+    "markAllAsPaidSuccess": "تم تعليم جميع الائتمانات كمدفوعة بنجاح.",
+    "markAllAsPaidError": "فشل تعليم جميع الائتمانات كمدفوعة.",
+    "currency": "دج",
+    "recordPaymentSuccess": "تم تسجيل الدفعة بنجاح.",
+    "recordPaymentError": "فشل تسجيل الدفعة."
+  },
+  "DetailedSupplier": {
+    "back": "رجوع",
+    "title": "مورد #{id}",
+    "supplierSince": "مورد منذ {date}",
+    "deleteClient": "حذف المورد",
+    "loading": "جاري تحميل تفاصيل المورد…",
+    "errorFetch": "فشل تحميل تفاصيل المورد. يرجى المحاولة مرة أخرى.",
+    "notFound": "المورد غير موجود.",
+    "supplierInfo": "معلومات المورد",
+    "name": "الاسم",
+    "address": "العنوان",
+    "phone": "الهاتف",
+    "email": "البريد الإلكتروني",
+    "creditManagement": "إدارة الائتمان",
+    "totalOutstanding": "إجمالي المستحق",
+    "amount": "المبلغ",
+    "recordPayment": "تسجيل دفعة",
+    "markAllAsPaid": "تعليم الكل كمدفوع",
+    "purchases": "المشتريات",
+    "noPurchases": "لا توجد مشتريات مسجلة لهذا المورد.",
+    "purchaseId": "معرف الشراء",
+    "date": "التاريخ",
+    "total": "المجموع",
+    "paid": "المدفوع",
+    "remaining": "المتبقي",
+    "status": "الحالة",
+    "fullyPaid": "مدفوع بالكامل",
+    "partiallyPaid": "مدفوع جزئيًا",
+    "unpaid": "غير مدفوع",
+    "markAllAsPaidSuccess": "تم تعليم جميع الائتمانات كمدفوعة بنجاح.",
+    "markAllAsPaidError": "فشل تعليم جميع الائتمانات كمدفوعة.",
+    "currency": "دج",
+    "recordPaymentSuccess": "تم تسجيل الدفعة بنجاح.",
+    "recordPaymentError": "فشل تسجيل الدفعة."
+  },
+  "settings": {
+    "eyebrow": "الإعدادات",
+    "title": "الإعدادات",
+    "desc": "إدارة ملف الشركة، اللغة، المظهر، ونسخ البيانات الاحتياطي.",
+    "owner": {
+      "sectionTitle": "ملف الشركة",
+      "sectionDesc": "حدد هوية شركتك، معلومات الاتصال، وأرقام التسجيل القانونية."
+    },
+    "language": {
+      "title": "اللغة",
+      "desc": "اختر لغة العرض للتطبيق بأكمله."
+    },
+    "theme": {
+      "title": "المظهر",
+      "desc": "اختر نظام ألوان يناسب بيئة عملك.",
+      "light": "فاتح",
+      "dim": "خافت",
+      "dark": "داكن"
+    },
+    "data": {
+      "title": "البيانات والنسخ الاحتياطي",
+      "desc": "تصدير أو استعادة قاعدة البيانات. كلمة مرور المدير مطلوبة.",
+      "unlocked": "تم السماح بالوصول — إجراءات النسخ الاحتياطي متاحة.",
+      "lock": "قفل الوصول للنسخ الاحتياطي",
+      "export": {
+        "title": "تصدير قاعدة البيانات",
+        "desc": "تنزيل نسخة كاملة SQLite لجميع بياناتك."
+      },
+      "import": {
+        "title": "استيراد نسخة احتياطية",
+        "desc": "استعادة بياناتك من ملف .sqlite تم تصديره مسبقًا."
+      }
+    },
+    "gate": {
+      "title": "مطلوب وصول المدير",
+      "desc": "أدخل كلمة مرور المدير للوصول إلى إجراءات النسخ الاحتياطي والاستعادة.",
+      "placeholder": "كلمة مرور المدير",
+      "submit": "فتح النسخ الاحتياطي",
+      "wrongPassword": "كلمة مرور غير صحيحة. يرجى المحاولة مرة أخرى.",
+      "verifyError": "فشل التحقق. تحقق من اتصالك."
+    },
+    "toast": {
+      "langChanged": "تم تحديث اللغة.",
+      "themeChanged": "تم تحديث المظهر.",
+      "exportSuccess": "تم تصدير قاعدة البيانات بنجاح.",
+      "exportError": "فشل التصدير. يرجى المحاولة مرة أخرى.",
+      "importSuccess": "تمت استعادة قاعدة البيانات بنجاح.",
+      "importError": "فشل الاستيراد. قد يكون الملف غير صالح.",
+      "importInvalidFile": "يرجى اختيار ملف .sqlite صالح."
+    }
+  },
+  "owner": {
+    "gate": {
+      "title": "التحقق من الهوية مطلوب",
+      "desc": "أدخل كلمة مرور المدير للوصول إلى ملف الشركة وتعديله.",
+      "placeholder": "كلمة مرور المدير",
+      "submit": "فتح",
+      "wrongPassword": "كلمة مرور غير صحيحة. يرجى المحاولة مرة أخرى.",
+      "verifyError": "فشل التحقق. تحقق من اتصالك."
+    },
+    "avatar": {
+      "title": "شعار الشركة",
+      "hint": "PNG, JPG أو WEBP — يظهر على الفواتير والمستندات.",
+      "upload": "تغيير الصورة",
+      "remove": "إزالة"
+    },
+    "fields": {
+      "name": "اسم الشركة",
+      "password": "كلمة مرور المدير",
+      "passwordEditNote": "اتركه فارغًا للإبقاء على كلمة المرور الحالية.",
+      "description": "الوصف",
+      "address": "العنوان",
+      "phone": "الهاتف",
+      "fax": "الفاكس",
+      "email": "البريد الإلكتروني",
+      "website": "الموقع الإلكتروني",
+      "capital": "رأس المال",
+      "RC": "السجل التجاري",
+      "NIS": "رقم التعريف الإحصائي",
+      "NIF": "رقم التعريف الضريبي",
+      "IF": "الضريبة المهنية",
+      "NA": "رقم النشاط"
+    },
+    "placeholders": {
+      "name": "مثال: شركة دوبونت للتوريدات",
+      "password": "اختر كلمة مرور آمنة",
+      "passwordEdit": "اتركه فارغًا للإبقاء على الحالي",
+      "description": "وصف موجز لنشاطك التجاري…",
+      "address": "العنوان البريدي الكامل",
+      "phone": "213 XX XX XX XX+",
+      "fax": "213 XX XX XX XX+",
+      "email": "contact@company.com",
+      "website": "https://company.com",
+      "capital": "مثال: 1 000 000 دج",
+      "RC": "رقم السجل التجاري",
+      "NIS": "رقم التعريف الإحصائي",
+      "NIF": "رقم التعريف الضريبي",
+      "IF": "الضريبة المهنية",
+      "NA": "رقم النشاط"
+    },
+    "validation": {
+      "required": "هذا الحقل مطلوب.",
+      "invalidEmail": "أدخل عنوان بريد إلكتروني صالح."
+    },
+    "mode": {
+      "create": "ملف جديد",
+      "edit": "تعديل الملف"
+    },
+    "actions": {
+      "create": "إنشاء الملف",
+      "save": "حفظ التغييرات"
+    },
+    "toast": {
+      "created": "تم إنشاء ملف الشركة.",
+      "updated": "تم تحديث الملف بنجاح.",
+      "saveError": "فشل الحفظ. يرجى المحاولة مرة أخرى.",
+      "loadError": "تعذر تحميل بيانات الملف.",
+      "invalidImage": "يرجى تحميل ملف صورة صالح."
+    }
+  },
+
+  "logs": {
+    "title": "سجلات النشاط",
+    "subtitle": "مسار تدقيق كامل لأحداث النظام",
+    "refreshing": "جارٍ التحديث...",
+    "refreshTooltip": "تحديث",
+    "clearHistoryBtn": "مسح السجل",
+    "clearHistoryConfirm": "هل أنت متأكد من مسح كل السجل؟",
+    "clearHistorySuccess": "تم مسح السجل. قم بتحديث الصفحة.",
+    "clearHistoryError": "فشل مسح السجل.",
+    "searchPlaceholder": "البحث حسب الكيان أو الإجراء أو التفاصيل...",
+    "retry": "إعادة المحاولة",
+    "rowsPerPage": "صفوف لكل صفحة",
+    "details": "تفاصيل",
+    "stats": {
+      "totalLogs": "إجمالي السجلات",
+      "today": "اليوم",
+      "creates": "الإنشاءات",
+      "deletes": "الحذف",
+      "entities": "الكيانات",
+      "page": "الصفحة"
+    },
+    "filters": {
+      "title": "الفلاتر",
+      "entity": "الكيان",
+      "action": "الإجراء",
+      "dateRange": "نطاق التاريخ",
+      "clearAll": "مسح جميع الفلاتر"
+    },
+    "sort": {
+      "label": "ترتيب حسب التاريخ",
+      "newestFirst": "الأحدث أولاً",
+      "oldestFirst": "الأقدم أولاً"
+    },
+    "empty": {
+      "title": "لم يتم العثور على سجلات",
+      "description": "حاول تعديل بحثك أو الفلاتر."
+    },
+    "pagination": {
+      "info": "الصفحة {page} من {pages} (إجمالي {total} سجل)"
+    },
+    "entities": {
+      "sale": "بيع",
+      "stock": "مخزون",
+      "batch": "دفعة",
+      "credit": "رصيد",
+      "supplier": "مورد",
+      "client": "عميل",
+      "product": "منتج",
+      "stockPayment": "شراء"
+    },
+    "actions": {
+      "create": "إنشاء",
+      "update": "تحديث",
+      "delete": "حذف",
+      "payment": "دفع",
+      "adjustment": "تعديل",
+      "add": "إضافة",
+      "new purchase": "أمر شراء جديد",
+      "remove": "إزالة"
+    },
+    "errors": {
+      "fetchFailed": "فشل تحميل السجلات. تأكد من تشغيل الخادم الخلفي."
+    }
+  }
+}

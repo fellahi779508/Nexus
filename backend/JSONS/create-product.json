@@ -1,0 +1,230 @@
+[
+  {
+    "name": "Jus Bifa Orange",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 1
+  },
+  {
+    "name": "Boisson Kool Fraise",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 1
+  },
+  {
+    "name": "Hamoud Boualem Limonade",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 1
+  },
+  {
+    "name": "Petits Pois Condia",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 2
+  },
+  {
+    "name": "Maïs Condia",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 2
+  },
+  {
+    "name": "Concentré de Tomate El Mordjene",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 2
+  },
+  {
+    "name": "Lait Djurdjura Demi-écrémé",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 3
+  },
+  {
+    "name": "Yaourt Danone Nature",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 3
+  },
+  {
+    "name": "Chips Oumia Nature",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 4
+  },
+  {
+    "name": "Chips Chipsy Piment",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 4
+  },
+  {
+    "name": "Huile d'olive Tassili 1L",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 5
+  },
+  {
+    "name": "Huile de tournesol Elio 1L",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 5
+  },
+  {
+    "name": "Mayonnaise El Mordjene 500g",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 5
+  },
+  {
+    "name": "Harissa El Mordjene 200g",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 5
+  },
+  {
+    "name": "Sauce tomate Cid 500g",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 5
+  },
+  {
+    "name": "Gallet Oranges 200g",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 6
+  },
+  {
+    "name": "Biscuits Bonbons Fourrés Chocolat 150g",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 6
+  },
+  {
+    "name": "Gauffrettes Djurdjura 100g",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 6
+  },
+  {
+    "name": "Biscuits Petit Déjeuner Océan 250g",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 6
+  },
+  {
+    "name": "Cake aux fruits El Kseur 300g",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 6
+  },
+  {
+    "name": "Petits pois surgelés Ardennes 1kg",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 7
+  },
+  {
+    "name": "Frites surgelées McCain 1kg",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 7
+  },
+  {
+    "name": "Brick feuilles de brick 500g",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 7
+  },
+  {
+    "name": "Poisson pané Findus 400g",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 7
+  },
+  {
+    "name": "Café moulu El Mordjene 250g",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 8
+  },
+  {
+    "name": "Thé vert El Kseur 100g",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 8
+  },
+  {
+    "name": "Café soluble Nescafé 200g",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 8
+  },
+  {
+    "name": "Infusion camomille 20 sachets",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 8
+  },
+  {
+    "name": "Cumin moulu El Mordjene 50g",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 9
+  },
+  {
+    "name": "Paprika doux 50g",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 9
+  },
+  {
+    "name": "Poivre noir moulu 50g",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 9
+  },
+  {
+    "name": "Ras el hanout 50g",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 9
+  },
+  {
+    "name": "Curcuma 50g",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 9
+  },
+  {
+    "name": "Couscous fin La Belle 1kg",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 10
+  },
+  {
+    "name": "Spaghetti La Belle 500g",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 10
+  },
+  {
+    "name": "Riz long La Belle 1kg",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 10
+  },
+  {
+    "name": "Vermicelle La Belle 500g",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 10
+  },
+  {
+    "name": "Lentilles La Belle 1kg",
+    "createdAt": "2025-02-27T10:00:00Z",
+    "updatedAt": "2025-02-27T10:00:00Z",
+    "categoryId": 10
+  }
+]

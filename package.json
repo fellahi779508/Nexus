@@ -1,0 +1,76 @@
+{
+  "name": "Nexus",
+  "version": "1.0.5",
+  "main": "electron/main.js",
+  "description": "Inventory and stock management system",
+  "author": "Raouf Fellahi (DuSStQ)",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "dependencies": {
+    "axios": "^1.14.0",
+    "tree-kill": "^1.2.2",
+    "undici": "^5.29.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
+    "electron": "^22.3.27",
+    "electron-builder": "^26.8.1",
+    "wait-on": "^9.0.4"
+  },
+  "build": {
+    "appId": "com.dusstq.nexus",
+    "productName": "Nexus",
+    "copyright": "Copyright © 2026",
+    "files": [
+      "electron/**/*",
+      "package.json",
+      "node_modules/**/*"
+    ],
+    "win": {
+      "target": "msix",
+      "icon": "electron/build/nexus.png",
+      "publisherName": "Raouf Fellahi"
+    },
+    "appx": {
+      "displayName": "Nexus",
+      "identityName": "Nexus",
+      "publisher": "Raouf Fellahi",
+      "languages": [
+        "en-US",
+        "fr-FR",
+        "ar-DZ"
+      ]
+    },
+    "extraResources": [
+      {
+        "from": "backend/dist/",
+        "to": "backend/dist/",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "backend/node_modules",
+        "to": "backend/node_modules",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "frontend/.next",
+        "to": "frontend/.next",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "resources/node",
+        "to": "node"
+      }
+    ]
+  }
+}

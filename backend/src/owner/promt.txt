@@ -1,0 +1,270 @@
+i want to create a dashboard page for this stock manager app 
+the dashboard will display today's losses and costes and profits 
+will display list of the day's sales and purchases and logs for expired and damaged products
+will contain buttons to make quick sale or a quick purchase (no function applied for now)
+use the same css style as the other pages
+
+today's sales backend response :
+ {
+        "id": 3,
+        "total": 390,
+        "paid": 390,
+        "date": "2026-04-24",
+        "soldItems": [
+            {
+                "id": 3,
+                "quantity": 10,
+                "total": 2000,
+                "batch": {
+                    "id": 1,
+                    "createdAt": "2026-04-23T13:07:38.602Z",
+                    "updatedAt": "2026-04-23T13:07:38.602Z",
+                    "fabricationDate": null,
+                    "expirationDate": null,
+                    "alertPeriodPerDay": null,
+                    "alertPeriodPerStock": null,
+                    "nLot": "5R45F",
+                    "status": "ok",
+                    "stockQTYStatus": "ok",
+                    "variant": {
+                        "id": 1,
+                        "name": "variant 1",
+                        "PPA": "0",
+                        "purchasePrice": 100,
+                        "sellingPriceHT": 200,
+                        "vatRate": 0,
+                        "sellingPriceTTC": 200,
+                        "profit": 100,
+                        "profitRate": 100,
+                        "profitTTC": 100,
+                        "promotionPrice": null,
+                        "promotionRate": null,
+                        "barcode": "2268460180696",
+                        "size": null,
+                        "color": null,
+                        "weight": null,
+                        "height": null,
+                        "flavor": null,
+                        "createdAt": "2026-04-23T13:07:38.602Z",
+                        "updatedAt": "2026-04-23T13:07:38.602Z"
+                    }
+                }
+            }
+        ]
+    },
+
+today's purchases backend response :
+    [
+    {
+        "id": 1,
+        "amount": 1000,
+        "total": 1000,
+        "remaining": 0,
+        "date": "2026-04-24",
+        "paymentMethod": "cash",
+        "timbre": null,
+        "supplier": {
+            "id": 1,
+            "name": "raouf",
+            "phone": null,
+            "email": null
+        },
+        "purchasedItems": [
+            {
+                "id": 1,
+                "quantity": 10,
+                "total": 2000,
+                "batch": {
+                    "id": 1,
+                    "variant": {
+                        "id": 1,
+                        "name": "variant 1",
+                        "purchasePrice": 100
+                    }
+                }
+            }
+        ]
+    }
+]
+today's profit response :
+{
+        "total": 2360,
+    "data": [
+        {
+            "id": 3,
+            "total": 390,
+            "paid": 390,
+            "date": "2026-04-24",
+            "soldItems": [
+                {
+                    "id": 3,
+                    "quantity": 10,
+                    "total": 2000,
+                    "batch": {
+                        "id": 1,
+                        "createdAt": "2026-04-23T13:07:38.602Z",
+                        "updatedAt": "2026-04-23T13:07:38.602Z",
+                        "fabricationDate": null,
+                        "expirationDate": null,
+                        "alertPeriodPerDay": null,
+                        "alertPeriodPerStock": null,
+                        "nLot": "5R45F",
+                        "status": "ok",
+                        "stockQTYStatus": "ok",
+                        "variant": {
+                            "id": 1,
+                            "name": "variant 1",
+                            "PPA": "0",
+                            "purchasePrice": 100,
+                            "sellingPriceHT": 200,
+                            "vatRate": 0,
+                            "sellingPriceTTC": 200,
+                            "profit": 100,
+                            "profitRate": 100,
+                            "profitTTC": 100,
+                            "promotionPrice": null,
+                            "promotionRate": null,
+                            "barcode": "2268460180696",
+                            "size": null,
+                            "color": null,
+                            "weight": null,
+                            "height": null,
+                            "flavor": null,
+                            "createdAt": "2026-04-23T13:07:38.602Z",
+                            "updatedAt": "2026-04-23T13:07:38.602Z"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
+today's costes :
+{
+    "totalCost": 1000,
+    "totalCredit": 0,
+    "data": [
+        {
+            "id": 1,
+            "amount": 1000,
+            "total": 1000,
+            "remaining": 0,
+            "date": "2026-04-24",
+            "paymentMethod": "cash",
+            "timbre": null,
+            "supplier": {
+                "id": 1,
+                "name": "raouf",
+                "address": null,
+                "phone": null,
+                "email": null,
+                "createdAt": "2026-04-23T13:07:35.410Z",
+                "updatedAt": "2026-04-23T13:07:35.410Z"
+            }
+        }
+    ]
+}
+today's losses:
+{
+    "totalLoss": 1000,
+    "data": [
+        {
+            "id": 6,
+            "timestamp": "2026-04-24T09:49:13.365Z",
+            "entityType": "stock",
+            "action": "remove",
+            "reason": "damaged",
+            "quantity": 10,
+            "stock": {
+                "id": 1,
+                "quantity": 90,
+                "batch": {
+                    "id": 1,
+                    "variant": {
+                        "purchasePrice": 100
+                    }
+                }
+            }
+        }
+    ]
+}
+here is the current page :
+"use client";
+import { useCallback, useEffect, useState } from "react";
+import styles from "./dashboard.module.css";
+import {
+	getTodaysCosts,
+	getTodaysLosses,
+	getTodaysProfits,
+	getTodaysPurchases,
+	getTodaysSales,
+} from "@/api/owner-api";
+export default function Main() {
+	// you should add types
+	const [profits, setProfits] = useState<any>({});
+	const [costes, setCostes] = useState<any>({});
+	const [losses, setLosses] = useState<any>({});
+	const [sales, setSales] = useState<any>({});
+	const [purchases, setPurchases] = useState<any>({});
+	const getData = useCallback(async () => {
+		try {
+			const profitsRes = await getTodaysProfits();
+			setProfits(profitsRes);
+			const costesRes = await getTodaysCosts();
+			setCostes(costesRes);
+			const lossesRes = await getTodaysLosses();
+			setLosses(lossesRes);
+			const purchasesRes = await getTodaysPurchases();
+			setPurchases(purchasesRes);
+			const salesRes = await getTodaysSales();
+			setSales(salesRes);
+		} catch (error) {}
+	}, []);
+	useEffect(() => {
+		getData();
+	}, []);
+	return (
+		<div className={styles.dashboard}>
+			<h1>Dashboard</h1>
+			<p>Profits: {profits.total || 0}</p>
+			<p>Costes: {costes.total || 0}</p>
+			<p>Losses: {losses.total || 0}</p>
+			<p>Sales: {sales.total || 0}</p>
+			<p>Purchases: {purchases.total || 0}</p>
+		</div>
+	);
+}
+use the same api cqalling methods that are imported 
+use this css variables :
+--background: #ffffff;
+	--foreground: #0f172a;
+	--background-secondary: #f8fafc;
+	--foreground-muted: #64748b;
+	--border: #e2e8f0;
+	--accent: #6366f1;
+	--accent-foreground: #ffffff;
+	--surface: #ffffff;
+	--surface-hover: #f1f5f9;
+
+	/* ── Status: success / ok ── */
+	--success: #10b981;
+	--success-bg: #ecfdf5;
+	--success-border: #a7f3d0;
+
+	/* ── Status: warning / expiring ── */
+	--warning: #f59e0b;
+	--warning-bg: #fffbeb;
+	--warning-border: #fde68a;
+
+	/* ── Status: danger / expired / error ── */
+	--danger: #ef4444;
+	--danger-bg: #fef2f2;
+	--danger-border: #fecaca;
+
+	/* ── Status: info ── */
+	--info: #3b82f6;
+	--info-bg: #eff6ff;
+	--info-border: #bfdbfe;
+use lucid icons 
+make it look modern and go full rambo with the design
+
