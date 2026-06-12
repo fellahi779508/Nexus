@@ -1,0 +1,686 @@
+/* ─── Root variables ───────────────────────────────────────────────────────── */
+
+/* ─── Layout ───────────────────────────────────────────────────────────────── */
+.page {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+/* ─── Page header ──────────────────────────────────────────────────────────── */
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+
+.pageHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.pageIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+.pageIcon svg {
+  color: #fff;
+}
+
+.pageTitle {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin: 0 0 2px;
+  line-height: 1.2;
+}
+
+.pageSubtitle {
+  font-size: 14px;
+  color: var(--foreground-muted);
+  margin: 0;
+}
+
+/* ─── Verify button ─────────────────────────────────────────────────────────── */
+.verifyBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: var(--accent-foreground);
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition:
+    opacity 0.15s,
+    transform 0.1s;
+  white-space: nowrap;
+}
+
+.verifyBtn:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.verifyBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ─── Status banner ─────────────────────────────────────────────────────────── */
+.statusBanner {
+  border-radius: 16px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+  border: 1.5px solid;
+}
+
+.statusBanner.satisfied {
+  background: var(--success-bg);
+  border-color: var(--success-border);
+}
+
+.statusBanner.pending {
+  background: var(--warning-bg);
+  border-color: var(--warning-border);
+}
+
+.statusBanner.notReached {
+  background: var(--info-bg);
+  border-color: var(--info-border);
+}
+
+.statusIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.satisfied .statusIcon {
+  background: var(--success);
+  color: #fff;
+}
+
+.pending .statusIcon {
+  background: var(--warning);
+  color: #fff;
+}
+
+.notReached .statusIcon {
+  background: var(--info);
+  color: #fff;
+}
+
+.statusText h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.satisfied .statusText h3 {
+  color: var(--success);
+}
+
+.pending .statusText h3 {
+  color: var(--warning);
+}
+
+.notReached .statusText h3 {
+  color: var(--info);
+}
+
+.statusText p {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--foreground-muted);
+  line-height: 1.5;
+}
+
+/* ─── Stats grid ─────────────────────────────────────────────────────────────── */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.statCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.statLabel {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--foreground-muted);
+  margin-bottom: 8px;
+}
+
+.statValue {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--foreground);
+  line-height: 1.2;
+}
+
+.statValue.accent {
+  color: var(--accent);
+}
+
+.statValue.success {
+  color: var(--success);
+}
+
+.statValue.warning {
+  color: var(--warning);
+}
+
+.statSub {
+  font-size: 12px;
+  color: var(--foreground-muted);
+  margin-top: 4px;
+}
+
+/* ─── Progress section ──────────────────────────────────────────────────────── */
+.progressCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 28px;
+}
+
+.progressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.progressTitle {
+  font-size: 15px;
+  font-weight: 650;
+  margin: 0;
+}
+
+.progressPercent {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.progressTrack {
+  width: 100%;
+  height: 10px;
+  background: var(--background-secondary);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%);
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progressFill.complete {
+  background: linear-gradient(90deg, #059669 0%, #10b981 100%);
+}
+
+.progressMeta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12.5px;
+  color: var(--foreground-muted);
+}
+
+/* ─── Zakat amount highlight ─────────────────────────────────────────────────── */
+.zakatAmountCard {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  border-radius: 16px;
+  padding: 28px 28px;
+  color: #fff;
+  margin-bottom: 28px;
+  position: relative;
+  overflow: hidden;
+}
+
+.zakatAmountCard::before {
+  content: "";
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.zakatAmountCard::after {
+  content: "";
+  position: absolute;
+  bottom: -50px;
+  right: 60px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.zakatAmountLabel {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  margin-bottom: 8px;
+}
+
+.zakatAmountValue {
+  font-size: 40px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.1;
+}
+
+.zakatAmountSub {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-top: 6px;
+}
+
+/* ─── Panel (setup / update forms) ─────────────────────────────────────────── */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 28px;
+}
+
+.panelTitle {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.panelTitle svg {
+  color: var(--accent);
+}
+
+/* ─── Form ───────────────────────────────────────────────────────────────────── */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formField.fullWidth {
+  grid-column: 1 / -1;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.labelHint {
+  font-size: 11.5px;
+  color: var(--foreground-muted);
+  font-weight: 400;
+}
+
+.input {
+  height: 42px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 0 14px;
+  font-size: 14px;
+  color: var(--foreground);
+  background: var(--background);
+  outline: none;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+.formActions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 8px;
+  grid-column: 1 / -1;
+}
+
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition:
+    opacity 0.15s,
+    transform 0.1s;
+}
+
+.btnPrimary:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.btnPrimary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--foreground-muted);
+  font-size: 14px;
+  font-weight: 600;
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btnSecondary:hover {
+  background: var(--surface-hover);
+}
+
+.btnDanger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--danger);
+  font-size: 14px;
+  font-weight: 600;
+  border: 1.5px solid var(--danger-border);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btnDanger:hover {
+  background: var(--danger-bg);
+}
+
+/* ─── Config details row ─────────────────────────────────────────────────────── */
+.configRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.configRow:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.configKey {
+  font-size: 13px;
+  color: var(--foreground-muted);
+  font-weight: 500;
+}
+
+.configVal {
+  font-size: 14px;
+  font-weight: 650;
+  color: var(--foreground);
+}
+
+/* ─── Accordion toggle ───────────────────────────────────────────────────────── */
+.accordionBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.accordionBtn svg {
+  color: var(--foreground-muted);
+  transition: transform 0.2s;
+}
+
+.accordionBtn.open svg {
+  transform: rotate(180deg);
+}
+
+.accordionBody {
+  margin-top: 20px;
+}
+
+/* ─── Skeleton ───────────────────────────────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--background-secondary) 25%,
+    var(--surface-hover) 50%,
+    var(--background-secondary) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 8px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeletonBanner {
+  height: 88px;
+  border-radius: 16px;
+  margin-bottom: 28px;
+}
+
+.skeletonStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.skeletonStat {
+  height: 90px;
+  border-radius: 14px;
+}
+
+.skeletonProgress {
+  height: 100px;
+  border-radius: 14px;
+  margin-bottom: 28px;
+}
+
+/* ─── Error ──────────────────────────────────────────────────────────────────── */
+.errorBanner {
+  background: var(--danger-bg);
+  border: 1.5px solid var(--danger-border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  color: var(--danger);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ─── Empty / setup CTA ──────────────────────────────────────────────────────── */
+.setupCta {
+  text-align: center;
+  padding: 60px 24px;
+}
+
+.setupCtaIcon {
+  width: 64px;
+  height: 64px;
+  background: var(--info-bg);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.setupCtaIcon svg {
+  color: var(--info);
+}
+
+.setupCtaTitle {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.setupCtaDesc {
+  font-size: 14px;
+  color: var(--foreground-muted);
+  max-width: 380px;
+  margin: 0 auto 28px;
+  line-height: 1.6;
+}
+
+/* ─── Spinning ────────────────────────────────────────────────────────────────── */
+.spin {
+  animation: spin 0.9s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ─── Badge ──────────────────────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.badge.success {
+  background: var(--success-bg);
+  color: var(--success);
+  border: 1px solid var(--success-border);
+}
+
+.badge.warning {
+  background: var(--warning-bg);
+  color: var(--warning);
+  border: 1px solid var(--warning-border);
+}
+
+.badge.info {
+  background: var(--info-bg);
+  color: var(--info);
+  border: 1px solid var(--info-border);
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .statsGrid,
+  .skeletonStats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .formField.fullWidth {
+    grid-column: 1;
+  }
+
+  .zakatAmountValue {
+    font-size: 30px;
+  }
+
+  .pageHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 420px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+}

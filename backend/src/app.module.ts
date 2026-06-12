@@ -19,6 +19,7 @@ import { OwnerModule } from './owner/owner.module';
 import { PurchasedItemModule } from './purchased-item/purchased-item.module';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { ZakatModule } from './zakat/zakat.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     PackageModule,
     OwnerModule,
     PurchasedItemModule,
+    ZakatModule,
   ],
 })
 export class AppModule {}

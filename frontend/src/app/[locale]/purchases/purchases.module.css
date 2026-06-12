@@ -1,7 +1,7 @@
 /* ── Layout ── */
 .container {
   padding: 28px 32px 48px;
-
+  max-width: 1800px;
   margin: 0 auto;
   font-family: "DM Sans", sans-serif;
 }

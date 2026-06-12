@@ -18,6 +18,7 @@ import {
   List,
   Settings,
   AlertCircle,
+  HandHeartIcon,
 } from "lucide-react";
 import styles from "./side-bar.module.css";
 import { getExpiredBatches, getExpiringBatches } from "@/api/batch-api";
@@ -33,7 +34,10 @@ const NAV_ITEMS = [
   { key: "purchases", href: "/purchases", icon: CircleDollarSign },
 ];
 
-const LOG_ITEMS = [{ key: "history", href: "/history", icon: Clock }];
+const LOG_ITEMS = [
+  { key: "zakat", href: "/zakat", icon: HandHeartIcon },
+  { key: "history", href: "/history", icon: Clock },
+];
 
 export default function SideBar() {
   const verifyAlert = useCallback(async () => {

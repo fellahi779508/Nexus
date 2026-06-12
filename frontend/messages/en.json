@@ -66,6 +66,7 @@
     "settingsDescription": "System configuration",
     "dashboard": "Dashboard",
     "categories": "Categories",
+    "zakat": "Zakat",
     "alert": {
       "title": "Alert",
       "message": "Please check your stock regularly."
