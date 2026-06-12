@@ -89,3 +89,15 @@ export async function printPurchase(id: number, paperType: string = "A4") {
     return { success: false, error: error.message };
   }
 }
+export async function clearAllPurchases() {
+  try {
+    const response = await api
+      .delete(`/stock-payment/clear`)
+      .then((res) => res.data);
+    console.log(response);
+
+    return { response, status: 1 };
+  } catch (error: any) {
+    return { error, status: 0 };
+  }
+}

@@ -835,8 +835,12 @@
   "salesPage": {
     "actions": {
       "quickSale": "Vente Rapide",
-      "detailedSale": "Vente Détaillée"
+      "detailedSale": "Vente Détaillée",
+      "deleteAll": "Supprimer toutes les ventes"
     },
+    "confirmSalesDelete": "Voulez-vous vraiment supprimer toutes les transactions ?",
+    "succsessDeleteAllSales": "Toutes les transactions ont été supprimées !",
+    "errorDeleteAllSales": "Échec de la suppression des transactions !",
     "title": "Ventes",
     "subtitle": "{total} transactions au total",
     "searchPlaceholder": "Rechercher par client...",
@@ -874,10 +878,14 @@
     "title": "Achats",
     "subtitle": "{total} achats au total",
     "searchPlaceholder": "Rechercher par fournisseur...",
+    "confirmPurchaseDelete": "Voulez-vous vraiment supprimer tous les enregistrements d'achats ?",
+    "succsessDeleteAllPurchases": "Tous les enregistrements d'achats ont été supprimés !",
+    "errorDeleteAllPurchases": "Échec de la suppression des achats !",
     "retry": "Réessayer",
     "pageInfo": "Page {page} sur {pages}",
     "actions": {
-      "purchase": "Effectuer un Achat"
+      "purchase": "Effectuer un Achat",
+      "deleteAll": "Supprimer toutes les achats "
     },
     "stats": {
       "totalPurchases": "Total des Achats",
@@ -1244,7 +1252,8 @@
       "adjustment": "Ajustement",
       "add": "Ajouter",
       "new purchase": "Nouvelle commande",
-      "remove": "Retirer"
+      "remove": "Retirer",
+      "new credit": "Nouveau crédit"
     },
     "errors": {
       "fetchFailed": "Échec du chargement des journaux. Vérifiez que le backend est en cours d'exécution."

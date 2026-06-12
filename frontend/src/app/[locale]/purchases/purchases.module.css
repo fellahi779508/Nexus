@@ -91,6 +91,26 @@
   opacity: 0;
   transition: opacity 0.18s ease;
 }
+.actionDelete::before {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--danger) 12%, transparent),
+    transparent
+  );
+}
+
+.actionDelete:hover {
+  border-color: var(--danger);
+  color: var(--danger);
+  box-shadow:
+    0 0 0 1px var(--success),
+    0 8px 20px color-mix(in srgb, var(--danger) 18%, transparent);
+  transform: translateY(-1px);
+}
+
+.actionDelete:hover::before {
+  opacity: 1;
+}
 
 .actionSale::before {
   background: linear-gradient(

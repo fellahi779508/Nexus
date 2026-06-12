@@ -796,4 +796,12 @@ export class StockPaymentService {
       doc.on('end', () => resolve(Buffer.concat(buffers)));
     });
   }
+  async clearAll() {
+    await this.stockPaymentRepository.clear();
+    await this.datasource.manager.save(Log, {
+      action: Actions.DELETE,
+      entityType: Types.STOCK_PAYMENT,
+      timestamp: new Date().toISOString(),
+    });
+  }
 }

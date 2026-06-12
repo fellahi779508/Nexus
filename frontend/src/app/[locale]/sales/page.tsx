@@ -2,7 +2,7 @@
 import { Meta, Sale } from "@/utils/types";
 import { useCallback, useEffect, useState } from "react";
 import styles from "./sales.module.css";
-import { getAllSales } from "@/api/sale-api";
+import { clearAllSales, getAllSales } from "@/api/sale-api";
 import {
   ChevronLeft,
   ChevronRight,
@@ -14,6 +14,7 @@ import {
   LayoutDashboard,
   Package,
   ShoppingCart,
+  DeleteIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -34,6 +35,18 @@ export default function Sales() {
     limit: 10,
     pages: 0,
   });
+  async function removeAllSales() {
+    if (!window.confirm(t("confirmSalesDelete"))) {
+      return;
+    }
+    const res = await clearAllSales();
+    if (res.status === 1) {
+      alert(t("succsessDeleteAllSales"));
+      fetchSales();
+    } else {
+      alert(t("errorDeleteAllSales"));
+    }
+  }
 
   const fetchSales = useCallback(async () => {
     setLoading(true);
@@ -138,6 +151,13 @@ export default function Sales() {
             <Package size={15} className={styles.btnIcon} />
             {t("actions.detailedSale")}
           </Link>
+          <button
+            className={`${styles.actionButton} ${styles.actionDelete}`}
+            onClick={removeAllSales}
+          >
+            <DeleteIcon size={15} className={styles.btnIcon} />
+            {t("actions.deleteAll")}
+          </button>
         </div>
       </header>
 

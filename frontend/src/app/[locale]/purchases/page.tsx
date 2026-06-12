@@ -13,11 +13,12 @@ import {
   LayoutDashboard,
   Package,
   ShoppingCart,
+  DeleteIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { getAllPurchases } from "@/api/purchase-api";
+import { clearAllPurchases, getAllPurchases } from "@/api/purchase-api";
 
 export default function Purchases() {
   const t = useTranslations("purchasesPage");
@@ -104,7 +105,18 @@ export default function Purchases() {
       acc.push(p);
       return acc;
     }, []);
-
+  async function removeAllPurchases() {
+    if (!window.confirm(t("confirmPurchaseDelete"))) {
+      return;
+    }
+    const res = await clearAllPurchases();
+    if (res.status === 1) {
+      alert(t("succsessDeleteAllPurchases"));
+      fetchPurchases();
+    } else {
+      alert(t("errorDeleteAllPurchases"));
+    }
+  }
   return (
     <div className={styles.container}>
       <title>Nexus | Purchases</title>
@@ -131,6 +143,13 @@ export default function Purchases() {
             <ShoppingCart size={15} className={styles.btnIcon} />
             {t("actions.purchase")}
           </Link>
+          <button
+            className={`${styles.actionButton} ${styles.actionDelete}`}
+            onClick={removeAllPurchases}
+          >
+            <DeleteIcon size={15} className={styles.btnIcon} />
+            {t("actions.deleteAll")}
+          </button>
         </div>
       </header>
 

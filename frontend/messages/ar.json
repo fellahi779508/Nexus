@@ -835,9 +835,13 @@
   "salesPage": {
     "actions": {
       "quickSale": "بيع سريع",
-      "detailedSale": "بيع مفصل"
+      "detailedSale": "بيع مفصل",
+      "deleteAll": "حذف الكل"
     },
     "title": "المبيعات",
+    "confirmSalesDelete": "هل تريد حذف كل سجلات المبيعات؟",
+    "succsessDeleteAllSales": "تم حذف كل المبيعات !",
+    "errorDeleteAllSales": "فشل في حذف المبيعات !",
     "subtitle": "{total} إجمالي المعاملات",
     "searchPlaceholder": "ابحث عن عميل...",
     "retry": "حاول مرة أخرى",
@@ -874,10 +878,14 @@
     "title": "المشتريات",
     "subtitle": "{total} إجمالي المشتريات",
     "searchPlaceholder": "ابحث عن مورد...",
+    "confirmPurchaseDelete": "هل تريد حذف جميع سجلات المشتريات؟",
+    "succsessDeleteAllPurchases": "تم حذف جميع المشتريات بنجاح!",
+    "errorDeleteAllPurchases": "خطأ في حذف المشتريات!",
     "retry": "حاول مرة أخرى",
     "pageInfo": "صفحة {page} من {pages}",
     "actions": {
-      "purchase": "إجراء عملية شراء"
+      "purchase": "إجراء عملية شراء",
+      "deleteAll": "حذف جميع المشتريات"
     },
     "stats": {
       "totalPurchases": "إجمالي المشتريات",
@@ -1244,7 +1252,8 @@
       "adjustment": "تعديل",
       "add": "إضافة",
       "new purchase": "أمر شراء جديد",
-      "remove": "إزالة"
+      "remove": "إزالة",
+      "new credit": "جديد رصيدs"
     },
     "errors": {
       "fetchFailed": "فشل تحميل السجلات. تأكد من تشغيل الخادم الخلفي."

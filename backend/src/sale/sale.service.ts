@@ -800,6 +800,11 @@ export class SaleService {
   }
 
   async cleareAll() {
-    return await this.saleRepository.clear();
+    await this.saleRepository.clear();
+    await this.datasource.manager.save(Log, {
+      action: Actions.DELETE,
+      entityType: Types.SALE,
+      timestamp: new Date().toISOString(),
+    });
   }
 }

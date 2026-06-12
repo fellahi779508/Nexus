@@ -838,9 +838,13 @@
   "salesPage": {
     "actions": {
       "quickSale": "Quick Sale",
-      "detailedSale": "Detailed Sale"
+      "detailedSale": "Detailed Sale",
+      "deleteAll": "Delete All records"
     },
     "title": "Sales",
+    "confirmSalesDelete": "Do you want to delete all sales records ?",
+    "succsessDeleteAllSales": "All sales deleted !",
+    "errorDeleteAllSales": "Error deleting sales !",
     "subtitle": "{total} total transactions",
     "searchPlaceholder": "Search by client...",
     "retry": "Try again",
@@ -876,11 +880,15 @@
   "purchasesPage": {
     "title": "Purchases",
     "subtitle": "{total} total purchases",
+    "confirmPurchaseDelete": "Do you want to delete all purchases records ?",
+    "succsessDeleteAllPurchases": "All purchases deleted !",
+    "errorDeleteAllPurchases": "Error deleting purchases !",
     "searchPlaceholder": "Search by supplier...",
     "retry": "Try again",
     "pageInfo": "Page {page} of {pages}",
     "actions": {
-      "purchase": "Make Purchase"
+      "purchase": "Make Purchase",
+      "deleteAll": "Delete All records"
     },
     "stats": {
       "totalPurchases": "Total Purchases",
@@ -1249,7 +1257,8 @@
       "adjustment": "Adjustment",
       "add": "Add",
       "new purchase": "New Purchase",
-      "remove": "Remove"
+      "remove": "Remove",
+      "new credit": "New Credit"
     },
     "errors": {
       "fetchFailed": "Failed to load logs. Make sure the backend is running."

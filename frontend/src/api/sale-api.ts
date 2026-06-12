@@ -89,3 +89,13 @@ export async function printSale(id: number, paperType: string) {
     return { success: false, error: error.message };
   }
 }
+export async function clearAllSales() {
+  try {
+    const response = await api.delete(`/sale/clear`).then((res) => res.data);
+    console.log(response);
+
+    return { response, status: 1 };
+  } catch (error: any) {
+    return { error, status: 0 };
+  }
+}

@@ -63,6 +63,10 @@ export class StockPaymentController {
     return this.stockPaymentService.update(+id, updateStockPaymentDto);
   }
 
+  @Delete('clear')
+  clear() {
+    return this.stockPaymentService.clearAll();
+  }
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.stockPaymentService.remove(+id);
