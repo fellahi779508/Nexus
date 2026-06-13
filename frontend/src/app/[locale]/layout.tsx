@@ -23,7 +23,7 @@ export default async function LocaleLayout({ children, params }: Props) {
         <body style={{ display: "flex", minHeight: "100vh" }}>
           <ThemeScript />
           <SideBar />
-          <main style={{ flex: 1, overflow: "auto" }}>{children}</main>
+          <main style={{ flex: 1 }}>{children}</main>
         </body>
       </NextIntlClientProvider>
     </html>

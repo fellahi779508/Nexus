@@ -397,19 +397,21 @@ export default function DetailedSale() {
       alert(t("creditRequired"));
       return;
     }
+    const totalTTC = cart.total + (timbre ?? 0);
+
     const res = await createSale({
-      total: isRemiseActivated ? remiseAmount : cart.total,
+      total: isRemiseActivated ? remiseAmount + (timbre ?? 0) : totalTTC,
       clientId: isCreditActivated ? (clientId ?? undefined) : undefined,
       paid: isCreditActivated
         ? paidAmount
         : isRemiseActivated
-          ? remiseAmount
-          : cart.total,
+          ? remiseAmount + (timbre ?? 0)
+          : totalTTC,
       remise: isRemiseActivated,
-      remiseAmount: isRemiseActivated ? remise : 0,
-      isDetailed: true,
+      payment_methode: "cash",
       timbre,
-      payment_methode: paymentMethod,
+      remiseAmount: isRemiseActivated ? remise : 0,
+      isDetailed: false,
       soldItems: cart.soldItems.map((item) => ({
         batchId: item.batchId,
         quantity: item.quantity,

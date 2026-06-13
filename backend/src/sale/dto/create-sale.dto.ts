@@ -30,6 +30,10 @@ export class CreateSaleDto {
   @IsNumber()
   timbre: number;
 
+  @IsString()
+  @IsOptional()
+  printType: string;
+
   @IsDateString()
   date: string;
 

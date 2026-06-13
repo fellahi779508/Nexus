@@ -1,6 +1,6 @@
 {
   "name": "Nexus",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "main": "electron/main.js",
   "description": "Inventory and stock management system",
   "author": "Raouf Fellahi (DuSStQ)",

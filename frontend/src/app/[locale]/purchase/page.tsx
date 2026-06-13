@@ -398,19 +398,20 @@ export default function Purchase() {
       alert(t("creditRequired"));
       return;
     }
+    const totalTTC = cart.total + (timbre ?? 0);
     const res = await createPurchase({
-      total: isRemiseActivated ? remiseAmount : cart.total,
-      supplierId: supplierId ?? undefined,
+      total: isRemiseActivated ? remiseAmount + (timbre ?? 0) : totalTTC,
+      supplierId: isCreditActivated ? (supplierId ?? undefined) : undefined,
       paid: isCreditActivated
         ? paidAmount
         : isRemiseActivated
-          ? remiseAmount
-          : cart.total,
+          ? remiseAmount + (timbre ?? 0)
+          : totalTTC,
       remise: isRemiseActivated,
+      payment_method: "cash",
+      timbre,
       remiseAmount: isRemiseActivated ? remise : 0,
       isDetailed: false,
-      timbre,
-      payment_method: paymentMethod!,
       purchasedItems: cart.purchasedItems.map((item) => ({
         batchId: item.batchId,
         quantity: item.quantity,
@@ -881,6 +882,25 @@ export default function Purchase() {
                 {paidAmount} {t("currency")}
               </h2>
             </div>
+          )}
+          {timbre > 0 && (
+            <>
+              <div className={styles.totalSec_item}>
+                <h2>{t("timbre")} :</h2>
+                <h2 className={styles.total}>
+                  {timbre} {t("currency")}
+                </h2>
+              </div>
+              <div className={styles.totalSec_item}>
+                <h2>{t("ttc")} :</h2>
+                <h2 className={styles.total}>
+                  {isRemiseActivated
+                    ? remiseAmount + timbre
+                    : cart.total + timbre}{" "}
+                  {t("currency")}
+                </h2>
+              </div>
+            </>
           )}
         </div>
       </section>

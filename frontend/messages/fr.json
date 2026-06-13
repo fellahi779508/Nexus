@@ -369,6 +369,7 @@
     "emptySubtitle": "Le stock apparaîtra ici une fois les lots ajoutés",
     "emptySearchSubtitle": "Aucun résultat pour \"{query}\"",
     "pageInfo": "Page {page} sur {pages}",
+    "totalTable": "Total par page",
     "batchStatus": {
       "all": "Tous",
       "expiring": "Expire bientôt",
@@ -391,7 +392,8 @@
       "promotion": "Promo",
       "barcode": "Code-barres",
       "lot": "Lot #",
-      "alertStock": "Alerte Stock"
+      "alertStock": "Alerte Stock",
+      "totalInventory": "Inventaire Total (qte * PrixVenteTTC)"
     }
   },
   "variantDetails": {
@@ -792,8 +794,10 @@
     },
     "emptyCart": "Le panier est vide",
     "totalAmount": "Montant Total",
-    "remise": "Remise",
     "totalPaid": "Total Payé",
+    "ttc": "Total TTC",
+    "timbre": "Timbre",
+    "remise": "Montant Total (Remise)",
     "paymentTitle": "Type de Paiement",
     "paymentRequiredAlert": "Veuillez choisir un mode de paiement",
     "payment": {

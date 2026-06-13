@@ -37,6 +37,7 @@ export default function StockPage() {
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [page, setPage] = useState(1);
+  const [totalInventory, setTotalInventory] = useState(0);
   const [meta, setMeta] = useState<Meta>({
     total: 0,
     page: 1,
@@ -98,6 +99,14 @@ export default function StockPage() {
       `/products/${productId}/${variantId}?fromStock=true&lot=${lot}`,
     );
   }
+  useEffect(() => {
+    let total = 0;
+    stocks.map((stock) => {
+      const batch = stock.batch;
+      total += stock.quantity * batch.variant.sellingPriceTTC;
+    });
+    setTotalInventory(total);
+  }, [stocks]);
 
   return (
     <div className={styles.page}>
@@ -207,6 +216,7 @@ export default function StockPage() {
                   <th className={styles.th}>{t("col.expirationDate")}</th>
                   <th className={styles.th}>{t("col.alert")}</th>
                   <th className={styles.th}>{t("col.alertStock")}</th>
+                  <th className={styles.th}>{t("col.totalInventory")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -341,9 +351,36 @@ export default function StockPage() {
                           "—"
                         )}
                       </td>
+                      <td className={styles.td}>
+                        {(
+                          stock.quantity * batch?.variant.sellingPriceTTC
+                        ).toFixed(2)}{" "}
+                        {g("currency")}
+                      </td>
                     </tr>
                   );
                 })}
+                <tr>
+                  <td className={styles.tdEmpty}></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td className={styles.td}>
+                    {t("totalTable")} : {totalInventory.toFixed(2)}{" "}
+                    {g("currency")}
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -352,10 +389,7 @@ export default function StockPage() {
             <div className={styles.pagination}>
               <button
                 className={styles.pageBtn}
-                onClick={() => {
-                  setPage((p) => Math.max(1, p - 1));
-                  setSuccessToast(true);
-                }}
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page === 1}
               >
                 <ChevronLeft size={16} />

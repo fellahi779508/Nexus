@@ -141,6 +141,7 @@ export type PostSale = {
   remise: boolean;
   timbre: number;
   remiseAmount: number;
+  printType?: string;
   soldItems: {
     batchId: number;
     quantity: number;

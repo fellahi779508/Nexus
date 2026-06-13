@@ -1,10 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap");
-
+.main {
+  position: absolute;
+}
 /* ── Mobile toggle ── */
 .mobileToggle {
-  display: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: fixed;
-  top: 14px;
+  top: 80%;
   left: 14px;
   z-index: 200;
   background: var(--surface);
@@ -15,10 +19,13 @@
   color: var(--foreground);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   transition: background 0.18s ease;
+  opacity: 0.4;
+  height: auto;
 }
 
 .mobileToggle:hover {
   background: var(--surface-hover);
+  opacity: 1;
 }
 .alert {
   display: flex;
@@ -74,23 +81,32 @@
 
 /* ── Overlay ── */
 .overlay {
-  display: none;
+  display: block;
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
   z-index: 99;
-  backdrop-filter: blur(2px);
 }
 
 /* ── Container ── */
 .container {
+  position: fixed; /* Changed from absolute to fixed */
+  top: 0;
+  left: 0;
+  bottom: 0; /* Forces it to span from top to bottom of screen */
+  z-index: 100;
+
+  /* On desktop, keep it visible natively instead of translating it away */
+  transform: translateX(-100%);
+
+  transition:
+    transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.28s ease;
   display: flex;
   flex-direction: column;
   width: 260px;
-  min-height: 100vh;
   background: var(--surface);
   border-right: 1px solid var(--border);
-  position: relative;
   overflow: hidden;
   flex-shrink: 0;
   font-family: "DM Sans", sans-serif;
@@ -298,6 +314,10 @@
   color: var(--foreground-muted);
   font-family: "DM Sans", sans-serif;
   letter-spacing: 0.04em;
+}
+.container.mobileOpen {
+  transform: translateX(0);
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
 }
 
 /* ── Responsive ── */

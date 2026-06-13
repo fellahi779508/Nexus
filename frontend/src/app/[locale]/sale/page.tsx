@@ -108,6 +108,7 @@ export default function Sale() {
       setSelectedSoldItem(null);
     }
   }, [isHistoryLoaded]);
+
   function addToCart(item: Variant) {
     // Use the functional updater form to guarantee fresh state
     setCart((prevCart) => {
@@ -377,14 +378,15 @@ export default function Sale() {
       alert(t("creditRequired"));
       return;
     }
+    const totalTTC = cart.total + (timbre ?? 0);
     const res = await createSale({
-      total: isRemiseActivated ? remiseAmount : cart.total,
+      total: isRemiseActivated ? remiseAmount + (timbre ?? 0) : totalTTC,
       clientId: isCreditActivated ? (clientId ?? undefined) : undefined,
       paid: isCreditActivated
         ? paidAmount
         : isRemiseActivated
-          ? remiseAmount
-          : cart.total,
+          ? remiseAmount + (timbre ?? 0)
+          : totalTTC,
       remise: isRemiseActivated,
       payment_methode: "cash",
       timbre,
@@ -427,6 +429,7 @@ export default function Sale() {
           : cart.total,
       remise: isRemiseActivated,
       remiseAmount: isRemiseActivated ? remise : 0,
+      printType: paperType,
       isDetailed: false,
       timbre,
       payment_methode: "cash",
@@ -456,7 +459,6 @@ export default function Sale() {
     setClientId(0);
     setIsCreditActivated(false);
     setPaidAmount(0);
-    setPaperType(null);
     setIsRemiseActivated(false);
     setRemiseAmount(0);
     setRemise(0);

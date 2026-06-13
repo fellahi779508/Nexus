@@ -369,6 +369,7 @@
     "emptySubtitle": "سيظهر المخزون هنا بمجرد إضافة الدفعات",
     "emptySearchSubtitle": "لا توجد نتائج لـ \"{query}\"",
     "pageInfo": "صفحة {page} من {pages}",
+    "totalTable": "الإجمالي للصفحة",
     "batchStatus": {
       "all": "الكل",
       "expiring": "قيد الانتهاء",
@@ -391,7 +392,8 @@
       "promotion": "العرض",
       "barcode": "الباركود",
       "lot": "الدفعة #",
-      "alertStock": "تنبيه المخزون"
+      "alertStock": "تنبيه المخزون",
+      "totalInventory": "المخزون الإجمالي (الكمية * سعر البيع )"
     }
   },
   "variantDetails": {
@@ -792,8 +794,10 @@
     },
     "emptyCart": "السلة فارغة",
     "totalAmount": "المبلغ الإجمالي",
-    "remise": "الخصم",
     "totalPaid": "إجمالي المدفوع",
+    "ttc": "المجموع TTC",
+    "timbre": "الطابع",
+    "remise": "المبلغ الإجمالي (الخصم)",
     "paymentTitle": "طريقة الدفع",
     "paymentRequiredAlert": "يرجى اختيار طريقة الدفع",
     "payment": {

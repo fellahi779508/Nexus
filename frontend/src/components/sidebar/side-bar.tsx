@@ -40,6 +40,9 @@ const LOG_ITEMS = [
 ];
 
 export default function SideBar() {
+  function handleOverlayClick(e: React.MouseEvent<HTMLDivElement>) {
+    if (e.target === e.currentTarget) setMobileOpen(false);
+  }
   const verifyAlert = useCallback(async () => {
     const expiringBatches = await getExpiringBatches(1, 0);
     const expiredBatches = await getExpiredBatches(1, 0);
@@ -90,7 +93,6 @@ export default function SideBar() {
           <Link
             key={key}
             href={href}
-            onClick={handleNavClick}
             className={`${styles.navItem} ${isActive(href) ? styles.active : ""}`}
           >
             <NavIcon className={styles.navIcon} size={18} />
@@ -108,7 +110,6 @@ export default function SideBar() {
           <Link
             key={key}
             href={href}
-            onClick={handleNavClick}
             className={`${styles.navItem} ${isActive(href) ? styles.active : ""}`}
           >
             <NavIcon className={styles.navIcon} size={18} />
@@ -147,7 +148,7 @@ export default function SideBar() {
   );
 
   return (
-    <>
+    <div className={styles.main}>
       {/* Mobile toggle button */}
       <button
         className={styles.mobileToggle}
@@ -159,7 +160,7 @@ export default function SideBar() {
 
       {/* Overlay */}
       {mobileOpen && (
-        <div className={styles.overlay} onClick={() => setMobileOpen(false)} />
+        <div className={styles.overlay} onClick={handleOverlayClick} />
       )}
 
       {/* Sidebar */}
@@ -168,6 +169,6 @@ export default function SideBar() {
       >
         {sidebarContent}
       </aside>
-    </>
+    </div>
   );
 }

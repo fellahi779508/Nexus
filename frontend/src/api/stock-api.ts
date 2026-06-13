@@ -10,7 +10,7 @@ export async function getAllStocks(
   try {
     const response = await api
       .get(
-        `/stock?page=${page}&limit=10${search ? `&search=${search}` : ""}${status ? `&status=${status}` : ""}${stockStatus ? `&stockStatus=${stockStatus}` : ""}`,
+        `/stock?page=${page}&limit=15${search ? `&search=${search}` : ""}${status ? `&status=${status}` : ""}${stockStatus ? `&stockStatus=${stockStatus}` : ""}`,
       )
       .then((res) => res.data);
     console.log(response);

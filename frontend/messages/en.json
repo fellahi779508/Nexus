@@ -371,6 +371,7 @@
     "emptySubtitle": "Stock will appear here once batches are added",
     "emptySearchSubtitle": "No results for \"{query}\"",
     "pageInfo": "Page {page} of {pages}",
+    "totalTable": "Total per page",
     "batchStatus": {
       "all": "All",
       "expiring": "Expiring",
@@ -393,7 +394,8 @@
       "promotion": "Promo",
       "barcode": "Barcode",
       "lot": "Lot #",
-      "alertStock": "Alert Stock"
+      "alertStock": "Alert Stock",
+      "totalInventory": "Total Inventory (qte * sellingTTC)"
     }
   },
   "variantDetails": {
@@ -793,9 +795,12 @@
       "id": "ID"
     },
     "emptyCart": "Cart is empty",
+
     "totalAmount": "Total Amount",
-    "remise": "Discount",
     "totalPaid": "Total Paid",
+    "ttc": "Total TTC",
+    "timbre": "Timbre",
+    "remise": "Total Amount (Discount)",
     "paymentTitle": "Type of Payment",
     "paymentRequiredAlert": "Please choose a payment methode",
     "payment": {

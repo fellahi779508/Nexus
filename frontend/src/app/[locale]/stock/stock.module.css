@@ -211,10 +211,6 @@
 /* ── Table ───────────────────────────────────────────────────────────────── */
 .tableWrapper {
   overflow-x: auto;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: var(--surface);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
 }
 
 .table {
@@ -247,6 +243,8 @@
   border-bottom: 1px solid var(--border);
   transition: background 0.12s;
   cursor: pointer;
+  background-color: var(--surface);
+  opacity: 1;
 }
 
 .row:last-child {
@@ -255,6 +253,7 @@
 
 .row:hover {
   background: var(--surface-hover);
+  opacity: 0.5;
 }
 
 .rowExpired {
@@ -276,6 +275,13 @@
 .td {
   padding: 11px 14px;
   color: var(--foreground);
+  vertical-align: middle;
+  white-space: nowrap;
+  background-color: var(--surface);
+}
+.tdEmpty {
+  padding: 11px 14px;
+  color: transparent;
   vertical-align: middle;
   white-space: nowrap;
 }
@@ -400,31 +406,30 @@
 .pagination {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  margin-top: 20px;
+  padding: 8px 0 24px;
 }
 
 .pageBtn {
-  width: 34px;
-  height: 34px;
-  border-radius: 9px;
-  border: 1.5px solid var(--border);
-  background: var(--surface);
-  color: var(--foreground-muted);
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--foreground);
   cursor: pointer;
   transition:
-    border-color 0.15s,
-    color 0.15s,
-    background 0.15s;
+    background 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .pageBtn:hover:not(:disabled) {
-  border-color: var(--accent);
-  color: var(--accent);
   background: var(--surface-hover);
+  border-color: var(--accent);
 }
 
 .pageBtn:disabled {
@@ -439,42 +444,48 @@
 }
 
 .pageNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-width: 34px;
   height: 34px;
   padding: 0 6px;
-  border-radius: 9px;
-  border: 1.5px solid var(--border);
-  background: var(--surface);
-  color: var(--foreground-muted);
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  font-family: "DM Sans", sans-serif;
   font-size: 13px;
   font-weight: 500;
+  color: var(--foreground-muted);
   cursor: pointer;
   transition:
-    border-color 0.15s,
-    color 0.15s,
-    background 0.15s;
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .pageNumber:hover {
-  border-color: var(--accent);
-  color: var(--accent);
   background: var(--surface-hover);
+  color: var(--foreground);
 }
 
 .pageActive {
   background: var(--accent) !important;
-  border-color: var(--accent) !important;
   color: var(--accent-foreground) !important;
+  border-color: var(--accent) !important;
+  font-weight: 600 !important;
 }
 
 .ellipsis {
   color: var(--foreground-muted);
+  font-size: 13px;
   padding: 0 4px;
-  font-size: 14px;
+  user-select: none;
 }
 
 .pageInfo {
-  font-size: 12.5px;
+  font-size: 12px;
   color: var(--foreground-muted);
-  margin-left: 6px;
+  margin-left: 8px;
+  white-space: nowrap;
 }
