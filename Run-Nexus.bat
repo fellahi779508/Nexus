@@ -11,7 +11,7 @@ for /f "tokens=5" %%a in ('netstat -aon ^| findstr :3001') do taskkill /f /pid %
 
 :: Define paths
 set "NODE_BIN=%~dp0resources\node\node.exe"
-set "CHROME_PROFILE=%~dp0resources\browser_profile"
+set "CHROME_PROFILE=%~dp0resources\win_profile"
 
 :: 2. Launch your compiled background servers silently
 start /b "" "%NODE_BIN%" "%~dp0backend\dist\main.js"
@@ -22,13 +22,28 @@ start /b "" "%NODE_BIN%" "%~dp0frontend\.next/standalone/frontend/server.js"
 :: 3. Give background instances a brief moment to stabilize
 timeout /t 3 /nobreak >nul
 
-:: 4. Launch in Normal Maximized App Mode and WAIT for the user to close it.
-:: --start-maximized ensures it fills the screen safely without hiding the taskbar.
+:: 4. Detect System Default Browser via Registry Choice
+set "TARGET_BROWSER="
+for /f "tokens=3" %%a in ('reg query "HKCU\Software\Microsoft\Windows\Shell\Associations\UrlAssociations\http\UserChoice" /v ProgId 2^>nul') do set "PROG_ID=%%a"
+
+:: Map common compatible Chromium default engines
+if "%PROG_ID%"=="ChromeHTML" set "TARGET_BROWSER=C:\Program Files\Google\Chrome\Application\chrome.exe"
+if "%PROG_ID%"=="MSEdgeHTM"  set "TARGET_BROWSER=msedge"
+if "%PROG_ID%"=="BraveHTML"   set "TARGET_BROWSER=brave"
+
+:: If a compatible default browser was found, skip the fallback verification
+if defined TARGET_BROWSER goto launch
+
+:: 5. Fallback Chain (Runs only if default browser is Firefox or unidentifiable)
 if exist "C:\Program Files\Google\Chrome\Application\chrome.exe" (
-    start /wait "" "C:\Program Files\Google\Chrome\Application\chrome.exe" --app=http://127.0.0.1:3000/fr --start-maximized --user-data-dir="%CHROME_PROFILE%"
+    set "TARGET_BROWSER=C:\Program Files\Google\Chrome\Application\chrome.exe"
 ) else (
-    start /wait "" msedge --app=http://127.0.0.1:3000/fr --start-maximized --user-data-dir="%CHROME_PROFILE%"
+    set "TARGET_BROWSER=msedge"
 )
+
+:launch
+:: Launch in Normal Maximized App Mode and WAIT for the user to close it.
+start /wait "" "%TARGET_BROWSER%" --app=http://127.0.0.1:3000/fr --start-maximized --window-size=1280,800 --user-data-dir="%CHROME_PROFILE%"
 
 :: =====================================================================
 :: 🚀 LIFECYCLE CLEANUP TRIGGERED
