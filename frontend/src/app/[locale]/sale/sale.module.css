@@ -72,7 +72,8 @@
 .tableWrapper {
   height: 500px;
   overflow-y: auto;
-  border: 1px solid var(--border);
+  border: 1px solid var(--foreground);
+
   border-radius: 0.5rem;
   display: flex;
   flex-direction: column;
@@ -150,7 +151,8 @@
 .cartWrapper {
   height: 300px;
   overflow-y: auto;
-  border: 1px solid var(--border);
+  border: 1px solid var(--foreground);
+
   border-radius: 0.5rem;
   display: flex;
   flex-direction: column;
@@ -241,6 +243,7 @@
   padding: 1rem;
   background-color: var(--surface);
   flex-direction: column;
+  border: 1px solid var(--foreground);
 }
 .numPadHeader {
   display: flex;
@@ -269,11 +272,13 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  border: 1px solid var(--foreground);
 }
 .resultFieldValue {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+
   gap: 10px;
 }
 .resultFieldValue h3 {
@@ -303,6 +308,7 @@
   justify-content: center;
   background-color: var(--background);
   padding: 2rem;
+  border: 1px solid var(--foreground);
   cursor: pointer;
 }
 .numpadButton:hover {
@@ -323,7 +329,7 @@
   display: flex;
   align-items: center;
   padding: 0.8rem;
-  border: 1px solid var(--border);
+  border: 1px solid var(--foreground);
   border-radius: 10px;
   gap: 1rem;
   cursor: pointer;
@@ -356,7 +362,7 @@
   color: var(--primary-foreground);
   width: 200px;
   height: 50px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--foreground);
   cursor: pointer;
 }
 .proceedBtn {
@@ -364,7 +370,7 @@
   width: 200px;
   height: 50px;
   color: white;
-  border: 1px solid var(--border);
+  border: 1px solid var(--foreground);
   cursor: pointer;
 }
 

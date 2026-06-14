@@ -1,8 +1,11 @@
 /* ── Page ────────────────────────────────────────────────────────────────── */
 .page {
-  min-height: 100vh;
   background: var(--background);
   padding: 24px 28px 60px;
+  overflow: auto;
+  max-width: 100vw;
+  max-height: 100vh;
+  height: 100vh;
 }
 
 /* ── Header ──────────────────────────────────────────────────────────────── */
@@ -49,6 +52,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  font-size: large;
 }
 .statusItem {
   font-size: 12px;
@@ -57,12 +61,13 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 20px;
+  font-size: large;
   padding: 3px 10px;
   cursor: pointer;
 }
 .statusItem.active {
   background: var(--accent);
-  color: var(--foreground);
+  color: var(--background);
 }
 .searchBox {
   display: flex;
@@ -216,7 +221,7 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: large;
 }
 
 .th {
@@ -229,6 +234,7 @@
   color: var(--foreground-muted);
   background: var(--background-secondary);
   border-bottom: 1px solid var(--border);
+  border: 1px solid var(--border);
   white-space: nowrap;
 }
 
@@ -245,6 +251,8 @@
   cursor: pointer;
   background-color: var(--surface);
   opacity: 1;
+  font-size: large;
+  border: 1px solid var(--border);
 }
 
 .row:last-child {
@@ -277,6 +285,8 @@
   color: var(--foreground);
   vertical-align: middle;
   white-space: nowrap;
+  font-size: large;
+  border: 1px solid var(--border);
   background-color: var(--surface);
 }
 .tdTotal {
@@ -285,6 +295,14 @@
   vertical-align: middle;
   white-space: nowrap;
   background-color: var(--info-border);
+}
+.tdP {
+  padding: 11px 14px;
+  color: var(--foreground);
+  vertical-align: middle;
+  white-space: nowrap;
+  background-color: var(--background-secondary);
+  border: 1px solid var(--border);
 }
 .tdEmpty {
   padding: 11px 14px;

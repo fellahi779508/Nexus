@@ -16,7 +16,7 @@ export const selectStyles = {
   control: (base: any, state: any) => ({
     ...base,
     borderRadius: 10,
-    borderColor: state.isFocused ? cssVar("--accent") : cssVar("--border"),
+    borderColor: state.isFocused ? cssVar("--accent") : cssVar("--foreground"),
     borderWidth: 1.5,
     boxShadow: state.isFocused ? `0 0 0 3px ${cssVar("--accent")}1f` : "none",
     background: cssVar("--background"),

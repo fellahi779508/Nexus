@@ -6,7 +6,7 @@ import {
   Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, DataSource, MoreThan, ILike } from 'typeorm';
+import { Repository, DataSource, MoreThan, ILike, Not } from 'typeorm';
 
 import { Zakat } from './entities/zakat.entity';
 import { Stock } from '../stock/entities/stock.entity';
@@ -86,7 +86,7 @@ export class ZakatService implements OnApplicationBootstrap {
   async getInventoryValue(date?: string): Promise<number> {
     const stockRepo = this.dataSource.getRepository(Stock);
     const stocks = await stockRepo.find({
-      where: { quantity: MoreThan(0) },
+      where: { quantity: MoreThan(0), batch: { status: Not('expired') } },
       relations: ['batch', 'batch.variant'],
     });
     let result = 0;

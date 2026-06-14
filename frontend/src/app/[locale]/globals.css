@@ -5,69 +5,69 @@
 [data-theme="light"] {
   /* Base */
   --background: #fafafa;
-  --foreground: #09090b; /* Deepened to near-absolute black for maximum crispness */
+  --foreground: #18181b;
   --background-secondary: #f4f4f5;
-  --foreground-muted: #3f3f46; /* Darkened from #52525b to comfortably pass WCAG AAA contrast */
-  --border: #d4d4d8; /* Darkened slightly so dividers and inputs don't wash out */
+  --foreground-muted: #52525b;
+  --border: #d4d4d8;
 
   /* Surface */
   --surface: #ffffff;
   --surface-hover: #f4f4f6;
 
   /* Accent – modern indigo */
-  --accent: #4338ca; /* Slightly deeper indigo to ensure white text on top pops perfectly */
+  --accent: #4f46e5;
   --accent-foreground: #ffffff;
 
   /* Status: success */
-  --success: #047857; /* Deepened for better contrast against white/green bg */
-  --success-bg: #ecfdf5;
-  --success-border: #a7f3d0;
+  --success: #15803d;
+  --success-bg: #f0fdf4;
+  --success-border: #86efac;
 
   /* Status: warning */
-  --warning: #b45309; /* Darkened for much better readability as text */
+  --warning: #b45309;
   --warning-bg: #fffbeb;
-  --warning-border: #fde047;
+  --warning-border: #fcd34d;
 
   /* Status: danger */
-  --danger: #b91c1c; /* Deeper red to pass text contrast standards */
+  --danger: #dc2626;
   --danger-bg: #fef2f2;
-  --danger-border: #fecaca;
+  --danger-border: #fca5a5;
 
   /* Status: info */
-  --info: #1d4ed8; /* Deeper blue for readable text/icons */
+  --info: #2563eb;
   --info-bg: #eff6ff;
-  --info-border: #bfdbfe;
+  --info-border: #93c5fd;
 }
 
 /* DIM – Slate blue-gray (GitHub Dimmed, modernized) */
 [data-theme="dim"] {
   /* Base */
   --background: #0d1117;
-  --foreground: #f0f6fc; /* Brightened from #e6edf3 to stand out more against the dim bg */
+  --foreground: #e6edf3;
   --background-secondary: #161b22;
-  --foreground-muted: #9ba6b2; /* Brightened from #8b949e to reduce eye strain when reading long text */
-  --border: #3d444d; /* Slightly lighter so structural lines are actually visible */
+  --foreground-muted: #9ba6b2;
+  --border: #30363d;
 
   /* Surface */
   --surface: #21262d;
   --surface-hover: #30363d;
 
   /* Accent */
-  --accent: #4493f8; /* Brighter, punchier blue for better visibility in dim mode */
-  --accent-foreground: #ffffff;
+  --accent: #58a6ff;
+  --accent-foreground: #0d1117;
 
   /* Status: success */
-  --success: #3fb950; /* Brighter, more legible green */
+  --success: #3fb950;
   --success-bg: #0a2c1a;
   --success-border: #238636;
 
   /* Status: warning */
-  --warning: #d29922; /* Lifted the yellow/gold to pop against the dark background */
+  --warning: #d29922;
   --warning-bg: #3b2a0a;
   --warning-border: #9e6a03;
 
   /* Status: danger */
-  --danger: #ff7b72; /* Brighter coral-red for better alert visibility */
+  --danger: #f85149;
   --danger-bg: #3d1010;
   --danger-border: #8e1519;
 
@@ -81,26 +81,26 @@
 [data-theme="dark"] {
   /* Base */
   --background: #080808;
-  --foreground: #fafafa; /* Pushed to pure off-white for maximum OLED contrast */
+  --foreground: #f5f5f5;
   --background-secondary: #121212;
-  --foreground-muted: #b4b4bc; /* Brightened significantly from #a1a1aa to fix dark-mode squinting */
-  --border: #333338; /* Lifted slightly to separate cards from the deep black background */
+  --foreground-muted: #a1a1aa;
+  --border: #2e2e33;
 
   /* Surface */
   --surface: #18181b;
   --surface-hover: #27272a;
 
   /* Accent */
-  --accent: #b794f4; /* Brightened the violet slightly to pop against #080808 */
-  --accent-foreground: #09090b; /* Pure dark for sharp contrast against the light violet accent */
+  --accent: #a78bfa;
+  --accent-foreground: #18181b;
 
   /* Status: success */
-  --success: #4ade80; /* Already had good contrast, kept bright */
+  --success: #4ade80;
   --success-bg: #052e16;
   --success-border: #15803d;
 
   /* Status: warning */
-  --warning: #fde047; /* Brightened to a vivid yellow for immediate OLED attention */
+  --warning: #fbbf24;
   --warning-bg: #422006;
   --warning-border: #a16207;
 
@@ -110,7 +110,7 @@
   --danger-border: #b91c1c;
 
   /* Status: info */
-  --info: #38bdf8; /* Shifted to a brighter sky blue to stay legible */
+  --info: #38bdf8;
   --info-bg: #082f49;
   --info-border: #0369a1;
 }

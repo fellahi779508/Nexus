@@ -27,6 +27,7 @@
 .gateTitle {
   font-size: 15px;
   font-weight: 700;
+  font-size: large;
   color: var(--foreground);
   margin: 0 0 4px;
 }
@@ -336,6 +337,7 @@
 .fieldLabel {
   font-size: 12px;
   font-weight: 600;
+  font-size: large;
   color: var(--foreground-muted);
   letter-spacing: 0.2px;
 }

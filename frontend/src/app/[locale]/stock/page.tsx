@@ -403,44 +403,26 @@ export default function StockPage() {
                   );
                 })}
                 <tr>
-                  <td className={styles.tdEmpty}></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td className={styles.td}>
-                    {t("totalTable")} : {totalInventory.toFixed(2)}{" "}
-                    {g("currency")}
-                  </td>
-                </tr>
-                <tr>
-                  <td className={styles.tdEmpty}></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
                   <td className={styles.tdTotal}>
                     {t("totalInventoryTable")} : {inventory.toFixed(2)}{" "}
+                    {g("currency")}
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td className={styles.tdP}>
+                    {t("totalTable")} : {totalInventory.toFixed(2)}{" "}
                     {g("currency")}
                   </td>
                 </tr>
