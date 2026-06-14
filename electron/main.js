@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const { spawn, exec } = require("child_process");
+const { spawn, execSync } = require("child_process");
 const { app, BrowserWindow } = require("electron");
 const axios = require("axios");
 const treeKill = require("tree-kill");
@@ -24,13 +24,57 @@ let frontendProcess = null;
 let mainWindow = null;
 
 // ----------------------------------------------------
-// WINDOW
+// NATIVE PORT CLEANUP (Awaited Asynchronously)
 // ----------------------------------------------------
 function killPorts() {
   return new Promise((resolve) => {
-    exec("npx kill-port 3000 3001", () => resolve());
+    if (process.platform !== "win32") {
+      return resolve();
+    }
+
+    const ports = [3000, 3001];
+    const killPromises = [];
+
+    try {
+      const stdout = execSync(`netstat -ano -p tcp`, { encoding: "utf8" });
+      const lines = stdout.split("\n");
+
+      ports.forEach((port) => {
+        for (const line of lines) {
+          if (
+            line.includes(`127.0.0.1:${port}`) ||
+            line.includes(`0.0.0.0:${port}`)
+          ) {
+            const parts = line.trim().split(/\s+/);
+            const pid = parts[parts.length - 1];
+
+            if (pid && parseInt(pid, 10) > 0) {
+              console.log(
+                `[PORT CLEANUP] Found lingering process ${pid} on port ${port}. Purging...`,
+              );
+              killPromises.push(
+                new Promise((res) =>
+                  treeKill(parseInt(pid, 10), "SIGKILL", () => res()),
+                ),
+              );
+            }
+          }
+        }
+      });
+    } catch (err) {
+      // Ports are already clear
+    }
+
+    // Wait until all processes are confirmed terminated before proceeding
+    Promise.all(killPromises).then(() => {
+      setTimeout(resolve, 500);
+    });
   });
 }
+
+// ----------------------------------------------------
+// WINDOW
+// ----------------------------------------------------
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1920,
@@ -61,6 +105,10 @@ function startBackend() {
     ? path.join(__dirname, "../backend/dist/main.js")
     : path.join(resourcesPath, "backend/dist/main.js");
 
+  const backendDir = isDev
+    ? path.join(__dirname, "../backend")
+    : path.join(resourcesPath, "backend");
+
   console.log("Backend path:", backendPath);
 
   if (!fs.existsSync(backendPath)) {
@@ -68,7 +116,8 @@ function startBackend() {
   }
 
   backendProcess = spawn(nodeBinary, [backendPath], {
-    detached: true,
+    cwd: backendDir, // Sets proper context for local DB paths or configurations
+    windowsHide: true, // Prevents sudden cmd window flashes
     stdio: "pipe",
     env: {
       ...process.env,
@@ -80,17 +129,12 @@ function startBackend() {
   backendProcess.stdout.on("data", (d) =>
     console.log("[BACKEND]", d.toString()),
   );
-
   backendProcess.stderr.on("data", (d) =>
     console.error("[BACKEND ERR]", d.toString()),
   );
-
   backendProcess.on("error", (err) =>
     console.error("BACKEND SPAWN ERROR:", err),
   );
-  console.log("RESOURCES:", process.resourcesPath);
-  console.log("BACKEND PATH:", backendPath);
-  console.log("EXISTS:", fs.existsSync(backendPath));
 }
 
 // ----------------------------------------------------
@@ -108,6 +152,11 @@ function startFrontend() {
       )
     : path.join(__dirname, "../frontend/.next/standalone/frontend/server.js");
 
+  // Next.js Standalone requires its base execution directory context to map internal server assets
+  const frontendCwd = app.isPackaged
+    ? path.join(process.resourcesPath, "frontend", ".next", "standalone")
+    : path.join(__dirname, "../frontend/.next/standalone");
+
   console.log("Frontend path:", serverPath);
 
   if (!fs.existsSync(serverPath)) {
@@ -115,7 +164,8 @@ function startFrontend() {
   }
 
   frontendProcess = spawn(nodeBinary, [serverPath], {
-    detached: true,
+    cwd: frontendCwd,
+    windowsHide: true,
     stdio: "pipe",
     env: {
       ...process.env,
@@ -129,41 +179,44 @@ function startFrontend() {
   frontendProcess.stdout.on("data", (d) =>
     console.log("[FRONTEND]", d.toString()),
   );
-
   frontendProcess.stderr.on("data", (d) =>
     console.error("[FRONTEND ERR]", d.toString()),
   );
-
   frontendProcess.on("error", (err) =>
     console.error("FRONTEND SPAWN ERROR:", err),
   );
 }
 
 // ----------------------------------------------------
-// WAIT FOR FRONTEND (SAFE)
+// WAIT FOR SERVICES (Safe lifecycle check loops)
 // ----------------------------------------------------
 async function waitForBackend() {
+  console.log("Checking backend synchronization status...");
   for (let i = 0; i < 60; i++) {
     try {
-      await axios.get("http://127.0.0.1:3001/category");
+      // Added an explicit short timeout duration to prevent HTTP request hanging
+      await axios.get("http://127.0.0.1:3001/category", { timeout: 1000 });
+      console.log("✅ Backend connection established.");
       return;
     } catch {
       await new Promise((r) => setTimeout(r, 500));
     }
   }
-
   throw new Error("backend timeout");
 }
+
 async function waitForFrontend() {
+  console.log("Checking frontend localization rendering runtime...");
   for (let i = 0; i < 60; i++) {
     try {
-      await axios.get("http://127.0.0.1:3000/");
+      // Added an explicit short timeout duration to prevent HTTP request hanging
+      await axios.get("http://127.0.0.1:3000/", { timeout: 1000 });
+      console.log("✅ Frontend render stream online.");
       return;
     } catch {
       await new Promise((r) => setTimeout(r, 500));
     }
   }
-
   throw new Error("Frontend timeout");
 }
 
@@ -173,6 +226,7 @@ async function waitForFrontend() {
 async function loadApp() {
   await waitForBackend();
   await waitForFrontend();
+  console.log("Routing browser view port to NextJS server...");
   await mainWindow.loadURL("http://127.0.0.1:3000/fr");
 }
 
@@ -181,7 +235,6 @@ async function loadApp() {
 // ----------------------------------------------------
 async function cleanup() {
   console.log("🧹 Cleaning up processes...");
-
   const killPromises = [];
 
   const killProc = (proc, name) => {
@@ -205,11 +258,10 @@ async function cleanup() {
   killProc(frontendProcess, "frontend");
 
   killPromises.push(killPorts());
-
   await Promise.all(killPromises);
-
   console.log("🧹 Cleanup complete");
 }
+
 // ----------------------------------------------------
 // START
 // ----------------------------------------------------
@@ -219,10 +271,10 @@ app.whenReady().then(async () => {
     await killPorts();
 
     console.log("Starting backend...");
-    startBackend(); // fire & forget
+    startBackend();
 
     console.log("Starting frontend...");
-    startFrontend(); // fire & forget
+    startFrontend();
 
     console.log("Loading app...");
     await loadApp();
@@ -230,7 +282,6 @@ app.whenReady().then(async () => {
     console.log("READY");
   } catch (err) {
     console.error("FATAL STARTUP ERROR:", err);
-
     if (mainWindow) {
       mainWindow.loadFile(path.join(__dirname, "loader.html"));
     }
