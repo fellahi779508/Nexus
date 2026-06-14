@@ -4,101 +4,115 @@
 :root,
 [data-theme="light"] {
   /* Base */
-  --background: #fafafa; /* warm off-white, easier on eyes */
-  --foreground: #0a0c10; /* near-black with slight cool tint */
+  --background: #fafafa;
+  --foreground: #09090b; /* Deepened to near-absolute black for maximum crispness */
   --background-secondary: #f4f4f5;
-  --foreground-muted: #52525b;
-  --border: #e4e4e7;
+  --foreground-muted: #3f3f46; /* Darkened from #52525b to comfortably pass WCAG AAA contrast */
+  --border: #d4d4d8; /* Darkened slightly so dividers and inputs don't wash out */
 
   /* Surface */
-  --surface: #ffffff; /* pure white for cards/panels */
+  --surface: #ffffff;
   --surface-hover: #f4f4f6;
 
   /* Accent – modern indigo */
-  --accent: #4f46e5;
+  --accent: #4338ca; /* Slightly deeper indigo to ensure white text on top pops perfectly */
   --accent-foreground: #ffffff;
 
   /* Status: success */
-  --success: #059669;
+  --success: #047857; /* Deepened for better contrast against white/green bg */
   --success-bg: #ecfdf5;
-  --success-border: #bbf7d0;
+  --success-border: #a7f3d0;
 
   /* Status: warning */
-  --warning: #d97706;
+  --warning: #b45309; /* Darkened for much better readability as text */
   --warning-bg: #fffbeb;
-  --warning-border: #fde68a;
+  --warning-border: #fde047;
 
   /* Status: danger */
-  --danger: #dc2626;
+  --danger: #b91c1c; /* Deeper red to pass text contrast standards */
   --danger-bg: #fef2f2;
   --danger-border: #fecaca;
 
   /* Status: info */
-  --info: #2563eb;
+  --info: #1d4ed8; /* Deeper blue for readable text/icons */
   --info-bg: #eff6ff;
   --info-border: #bfdbfe;
 }
 
 /* DIM – Slate blue-gray (GitHub Dimmed, modernized) */
 [data-theme="dim"] {
-  --background: #0d1117; /* classic GitHub dim */
-  --foreground: #e6edf3;
+  /* Base */
+  --background: #0d1117;
+  --foreground: #f0f6fc; /* Brightened from #e6edf3 to stand out more against the dim bg */
   --background-secondary: #161b22;
-  --foreground-muted: #8b949e;
-  --border: #30363d;
+  --foreground-muted: #9ba6b2; /* Brightened from #8b949e to reduce eye strain when reading long text */
+  --border: #3d444d; /* Slightly lighter so structural lines are actually visible */
 
+  /* Surface */
   --surface: #21262d;
   --surface-hover: #30363d;
 
-  --accent: #2f81f7; /* cleaner blue accent */
+  /* Accent */
+  --accent: #4493f8; /* Brighter, punchier blue for better visibility in dim mode */
   --accent-foreground: #ffffff;
 
-  --success: #2ea043;
+  /* Status: success */
+  --success: #3fb950; /* Brighter, more legible green */
   --success-bg: #0a2c1a;
-  --success-border: #1b5e2a;
+  --success-border: #238636;
 
-  --warning: #e3b341;
+  /* Status: warning */
+  --warning: #d29922; /* Lifted the yellow/gold to pop against the dark background */
   --warning-bg: #3b2a0a;
-  --warning-border: #5e4a1a;
+  --warning-border: #9e6a03;
 
-  --danger: #f85149;
+  /* Status: danger */
+  --danger: #ff7b72; /* Brighter coral-red for better alert visibility */
   --danger-bg: #3d1010;
-  --danger-border: #7a2e2e;
+  --danger-border: #8e1519;
 
+  /* Status: info */
   --info: #79c0ff;
   --info-bg: #0f2d3d;
-  --info-border: #1f5a7a;
+  --info-border: #1f6feb;
 }
 
 /* DARK – Deep OLED-friendly, with subtle warmth */
 [data-theme="dark"] {
-  --background: #080808; /* not pure black, reduces smearing */
-  --foreground: #efefef;
-  --background-secondary: #141414;
-  --foreground-muted: #a1a1aa;
-  --border: #27272a;
+  /* Base */
+  --background: #080808;
+  --foreground: #fafafa; /* Pushed to pure off-white for maximum OLED contrast */
+  --background-secondary: #121212;
+  --foreground-muted: #b4b4bc; /* Brightened significantly from #a1a1aa to fix dark-mode squinting */
+  --border: #333338; /* Lifted slightly to separate cards from the deep black background */
 
+  /* Surface */
   --surface: #18181b;
   --surface-hover: #27272a;
 
-  --accent: #a78bfa; /* soft violet, modern alternative */
-  --accent-foreground: #0a0a0a;
+  /* Accent */
+  --accent: #b794f4; /* Brightened the violet slightly to pop against #080808 */
+  --accent-foreground: #09090b; /* Pure dark for sharp contrast against the light violet accent */
 
-  --success: #4ade80;
+  /* Status: success */
+  --success: #4ade80; /* Already had good contrast, kept bright */
   --success-bg: #052e16;
-  --success-border: #166534;
+  --success-border: #15803d;
 
-  --warning: #facc15;
-  --warning-bg: #3b2c0a;
-  --warning-border: #854d0e;
+  /* Status: warning */
+  --warning: #fde047; /* Brightened to a vivid yellow for immediate OLED attention */
+  --warning-bg: #422006;
+  --warning-border: #a16207;
 
+  /* Status: danger */
   --danger: #f87171;
-  --danger-bg: #3f0d12;
-  --danger-border: #be123c;
+  --danger-bg: #450a0a;
+  --danger-border: #b91c1c;
 
-  --info: #7dd3fc;
-  --info-bg: #0c4a6e;
-  --info-border: #0284c7;
+  /* Status: info */
+  --info: #38bdf8; /* Shifted to a brighter sky blue to stay legible */
+  --info-bg: #082f49;
+  --info-border: #0369a1;
 }
 /* ═══════════════════════════════════════════════════════════════════════════
    BASE STYLES

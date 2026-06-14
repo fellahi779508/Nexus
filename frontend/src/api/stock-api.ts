@@ -44,3 +44,30 @@ export async function removeFromStock(
     return { error: error.response.data.message, status: 0 };
   }
 }
+export async function getInventoryValue() {
+  try {
+    const response = await api.get(`/zakat/inventory`).then((res) => res.data);
+    console.log(response);
+    return { response, status: 1 };
+  } catch (error: any) {
+    return { error: error.response.data.message, status: 0 };
+  }
+}
+export async function getSellableStock(
+  page: number,
+  search?: string,
+  status?: string,
+  stockStatus?: string,
+) {
+  try {
+    const response = await api
+      .get(
+        `/stock/sellable?page=${page}&limit=15${search ? `&search=${search}` : ""}${status ? `&status=${status}` : ""}${stockStatus ? `&stockStatus=${stockStatus}` : ""}`,
+      )
+      .then((res) => res.data);
+    console.log(response);
+    return { response, status: 1 };
+  } catch (error: any) {
+    return { error: error.response.data.message, status: 0 };
+  }
+}

@@ -279,6 +279,13 @@
   white-space: nowrap;
   background-color: var(--surface);
 }
+.tdTotal {
+  padding: 11px 14px;
+  color: var(--foreground);
+  vertical-align: middle;
+  white-space: nowrap;
+  background-color: var(--info-border);
+}
 .tdEmpty {
   padding: 11px 14px;
   color: transparent;

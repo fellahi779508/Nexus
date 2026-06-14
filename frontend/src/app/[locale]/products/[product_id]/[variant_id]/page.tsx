@@ -2,7 +2,7 @@
 import Breadcrumb from "@/components/products/breadcrumb";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { getAllBatchesOfVariant } from "@/api/variant-api";
+import { getAllBatchesOfVariant, printBarcode } from "@/api/variant-api";
 import { useCallback, useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import styles from "./variant-details.module.css";
@@ -21,6 +21,8 @@ import {
   XCircle,
   ChevronLeft,
   ChevronRight,
+  Barcode,
+  Printer,
 } from "lucide-react";
 import AddBatchModal from "@/components/batches/add-batch";
 import { Meta, Supplier } from "@/utils/types";
@@ -172,6 +174,9 @@ export default function VariantDetails() {
     if (s === "low") return <AlertTriangle size={13} strokeWidth={2.5} />;
     return <CheckCircle2 size={13} strokeWidth={2.5} />;
   }
+  async function makeBarcode() {
+    await printBarcode(variant?.barcode || "");
+  }
 
   return (
     <div className={styles.page}>
@@ -313,10 +318,19 @@ export default function VariantDetails() {
             <h2 className={styles.title}>{t("batches.title")}</h2>
             <span className={styles.totalBadge}>{meta.total}</span>
           </div>
-          <button className={styles.addBtn} onClick={() => setOpenModal(true)}>
-            <Plus size={16} strokeWidth={2.5} />
-            <span>{t("batches.add")}</span>
-          </button>
+          <div style={{ display: "flex", gap: "0.5rem" }}>
+            <button className={styles.addBtn} onClick={makeBarcode}>
+              <Printer size={16} strokeWidth={2.5} />
+              <span>{t("printBarcode")}</span>
+            </button>
+            <button
+              className={styles.addBtn}
+              onClick={() => setOpenModal(true)}
+            >
+              <Plus size={16} strokeWidth={2.5} />
+              <span>{t("batches.add")}</span>
+            </button>
+          </div>
         </div>
 
         {/* ── Search ── */}

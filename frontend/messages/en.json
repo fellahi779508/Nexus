@@ -36,7 +36,8 @@
       "stock": "Stock",
       "lossReason": {
         "damaged": "DAMAGED",
-        "expired": "EXPIRED"
+        "expired": "EXPIRED",
+        "loss": "LOSS"
       }
     },
     "empty": {
@@ -372,8 +373,10 @@
     "emptySearchSubtitle": "No results for \"{query}\"",
     "pageInfo": "Page {page} of {pages}",
     "totalTable": "Total per page",
+    "totalInventoryTable": "Total Inventory",
     "batchStatus": {
       "all": "All",
+      "sellable": "Sellable",
       "expiring": "Expiring",
       "expired": "Expired",
       "low": "Low",
@@ -400,6 +403,7 @@
   },
   "variantDetails": {
     "loading": "Loading variant…",
+    "printBarcode": "Print Barcode",
     "errorLoad": "Failed to load variant",
     "pageInfo": "Page {page} of {pages}",
     "breadcrumb": {
@@ -531,7 +535,8 @@
       "damage": "Damaged goods",
       "loss": "Loss / Shrinkage",
       "correction": "Inventory correction",
-      "transfer": "Transfer"
+      "transfer": "Transfer",
+      "expired": "Expired"
     },
     "toast": {
       "success": "Stock adjusted successfully!",
@@ -1262,6 +1267,7 @@
       "adjustment": "Adjustment",
       "add": "Add",
       "new purchase": "New Purchase",
+      "new sale": "New Sale",
       "remove": "Remove",
       "new credit": "New Credit"
     },

@@ -16,7 +16,7 @@ import getAllSallableVariants, {
 } from "@/api/variant-api";
 import PrintModal from "@/components/sale/printModal";
 import CreditModal from "@/components/sale/creditModal";
-import updateSaleByid, { createSale } from "@/api/sale-api";
+import updateSaleByid, { createSale, printSale } from "@/api/sale-api";
 import { toast, ToastContainer } from "react-toastify";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
@@ -405,6 +405,9 @@ export default function Sale() {
     if (res.status === 1) {
       toast.success(t("successSale"));
       alert(t("successSale"));
+      if (paperType) {
+        await printSale(res.response.id, paperType);
+      }
       fetchVariants();
       resetStatus();
     } else {
@@ -429,7 +432,7 @@ export default function Sale() {
           : cart.total,
       remise: isRemiseActivated,
       remiseAmount: isRemiseActivated ? remise : 0,
-      printType: paperType,
+
       isDetailed: false,
       timbre,
       payment_methode: "cash",
@@ -447,6 +450,9 @@ export default function Sale() {
     if (res.status === 1) {
       toast.success(t("successSaleUpdate"));
       alert(t("successSaleUpdate"));
+      if (paperType) {
+        await printSale(res.response.id, paperType);
+      }
       fetchVariants();
       resetStatus();
     } else {

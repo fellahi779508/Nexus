@@ -142,6 +142,11 @@ export class OwnerService {
           reason: Reasons.DAMAGED,
           timestamp: ILike(`%${today}%`),
         },
+        {
+          entityType: Types.STOCK,
+          reason: Reasons.LOSS,
+          timestamp: ILike(`%${today}%`),
+        },
       ],
       relations: ['stock', 'stock.batch', 'stock.batch.variant'],
       select: {

@@ -9,7 +9,7 @@ import { UpdateStockDto } from './dto/update-stock.dto';
 import { Batch } from 'src/batch/entities/batch.entity';
 import { Stock } from './entities/stock.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, ILike, LessThan, Like, Repository } from 'typeorm';
+import { DataSource, ILike, LessThan, Like, Not, Repository } from 'typeorm';
 import { Log } from 'src/logs/entities/log.entity';
 import { Types, Actions, Reasons } from 'src/utils/actions';
 import { BatchService } from 'src/batch/batch.service';
@@ -232,4 +232,46 @@ export class StockService {
     });
     return stocks;
   }
+async getSellableStock(
+  page: number,
+  limit: number,
+  search?: string,
+) {
+  const query = this.stockRepository
+    .createQueryBuilder('stock')
+    .leftJoinAndSelect('stock.batch', 'batch')
+    .leftJoinAndSelect('batch.variant', 'variant')
+    .leftJoinAndSelect('batch.supplier', 'supplier')
+    .leftJoinAndSelect('variant.product', 'product')
+    .where('batch.status != :expired', {
+      expired: 'expired',
+    })
+    .andWhere('batch.stockQTYStatus != :empty', {
+      empty: 'empty',
+    });
+
+  if (search) {
+    query.andWhere(
+      '(variant.name ILIKE :search OR variant.barcode ILIKE :search)',
+      {
+        search: `%${search}%`,
+      },
+    );
+  }
+
+  const [items, count] = await query
+    .skip((page - 1) * limit)
+    .take(limit)
+    .getManyAndCount();
+
+  return {
+    data: items,
+    meta: {
+      total: count,
+      page,
+      limit,
+      pages: Math.ceil(count / limit),
+    },
+  };
+}
 }

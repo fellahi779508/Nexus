@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { CreateProductVariantDto } from './dto/create-product_variant.dto';
 import { UpdateProductVariantDto } from './dto/update-product_variant.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -9,6 +9,7 @@ import { Batch } from 'src/batch/entities/batch.entity';
 import { Stock } from 'src/stock/entities/stock.entity';
 import { Product } from 'src/product/entities/product.entity';
 import { Supplier } from 'src/supplier/entities/supplier.entity';
+import * as bwipjs from 'bwip-js';
 
 @Injectable()
 export class ProductVariantService {
@@ -334,4 +335,18 @@ export class ProductVariantService {
 
     return code;
   }
+  async generateBarcodeBuffer(text: string): Promise<Buffer> {
+  try {
+    return await bwipjs.toBuffer({
+      bcid: 'code128',
+      text: text,
+      scale: 3,
+      height: 15,
+      includetext: true,
+      textxalign: 'center',
+    });
+  } catch (error) {
+    throw new InternalServerErrorException(`Barcode error: ${error.message}`);
+  }
+}
 }

@@ -17,6 +17,7 @@ export enum Reasons {
   NEW = 'new',
   PAID = 'paid',
   DAMAGED = 'damaged',
+  LOSS = 'loss',
 }
 export enum Types {
   STOCK = 'stock',

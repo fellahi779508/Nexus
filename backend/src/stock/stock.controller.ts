@@ -32,6 +32,10 @@ export class StockController {
   getStockByBarcode(@Param('barcode') barcode: string) {
     return this.stockService.getStockByBarcode(barcode);
   }
+  @Get('sellable')
+  getSellableStock(@Query('page') page: number, @Query('limit') limit: number, @Query('search') search?: string) {
+    return this.stockService.getSellableStock(page, limit, search);
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {

@@ -36,7 +36,8 @@
       "stock": "Stock",
       "lossReason": {
         "damaged": "ENDOMMAGÉ",
-        "expired": "EXPIRÉ"
+        "expired": "EXPIRÉ",
+        "loss": "PERDU"
       }
     },
     "empty": {
@@ -370,8 +371,10 @@
     "emptySearchSubtitle": "Aucun résultat pour \"{query}\"",
     "pageInfo": "Page {page} sur {pages}",
     "totalTable": "Total par page",
+    "totalInventoryTable": "Inventaire Total",
     "batchStatus": {
       "all": "Tous",
+      "sellable": "Vendable",
       "expiring": "Expire bientôt",
       "expired": "Expiré",
       "low": "Bas",
@@ -398,6 +401,7 @@
   },
   "variantDetails": {
     "loading": "Chargement de la variante…",
+    "printBarcode": "Imprimer le code-barres",
     "errorLoad": "Échec du chargement de la variante",
     "pageInfo": "Page {page} sur {pages}",
     "breadcrumb": {
@@ -529,7 +533,8 @@
       "damage": "Marchandise endommagée",
       "loss": "Perte / Démarque",
       "correction": "Correction d'inventaire",
-      "transfer": "Transfert"
+      "transfer": "Transfert",
+      "expired": "Expiré"
     },
     "toast": {
       "success": "Stock ajusté avec succès !",
@@ -1256,6 +1261,7 @@
       "adjustment": "Ajustement",
       "add": "Ajouter",
       "new purchase": "Nouvelle commande",
+      "new sale": "Nouvelle vente",
       "remove": "Retirer",
       "new credit": "Nouveau crédit"
     },

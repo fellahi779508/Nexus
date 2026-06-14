@@ -7,6 +7,8 @@ import {
   Delete,
   Query,
   Put,
+  Res,
+  Response,
 } from '@nestjs/common';
 import { ProductVariantService } from './product_variant.service';
 import { CreateProductVariantDto } from './dto/create-product_variant.dto';
@@ -28,6 +30,15 @@ export class ProductVariantController {
     @Query('search') search?: string,
   ) {
     return this.productVariantService.findAll(page, limit, search);
+  }
+  @Get('print')
+  async printBarcode(@Query('text') text: string, @Res() res: any) {
+    const buffer = await this.productVariantService.generateBarcodeBuffer(text);
+    
+    // Set the headers so the browser renders it natively as an image
+    res.setHeader('Content-Type', 'image/png');
+    res.setHeader('Content-Length', buffer.length.toString());
+    res.send(buffer);
   }
   @Get('barcode')
   createBarcode() {

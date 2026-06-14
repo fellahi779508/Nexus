@@ -15,7 +15,11 @@ import { useTranslations } from "next-intl";
 import { useState, useEffect, useCallback } from "react";
 import { ToastContainer } from "react-toastify";
 import styles from "./stock.module.css";
-import { getAllStocks } from "@/api/stock-api";
+import {
+  getAllStocks,
+  getInventoryValue,
+  getSellableStock,
+} from "@/api/stock-api";
 import { useRouter } from "next/navigation";
 
 /* helpers */
@@ -34,8 +38,10 @@ export default function StockPage() {
   const g = useTranslations();
 
   const [stocks, setStocks] = useState<Stock[]>([]);
+  const [inventory, setInventory] = useState(0);
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [sellableTab, setSellableTab] = useState(false);
   const [page, setPage] = useState(1);
   const [totalInventory, setTotalInventory] = useState(0);
   const [meta, setMeta] = useState<Meta>({
@@ -52,11 +58,19 @@ export default function StockPage() {
   const [stockStatus, setStockStatus] = useState<string>("");
   const availableStatus = {
     all: t("batchStatus.all"),
+    sellable: t("batchStatus.sellable"),
     expiring: t("batchStatus.expiring"),
     expired: t("batchStatus.expired"),
     low: t("batchStatus.low"),
     empty: t("batchStatus.empty"),
   };
+  useEffect(() => {
+    getInventoryValue().then((response) => {
+      if (response.status === 1) {
+        setInventory(response.response.inventoryValue);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -107,6 +121,25 @@ export default function StockPage() {
     });
     setTotalInventory(total);
   }, [stocks]);
+  async function fetchSellaStock() {
+    const res = await getSellableStock(
+      page,
+      debouncedSearch,
+      status,
+      stockStatus,
+    );
+    if (res.status === 1) {
+      setStocks(res.response.data);
+      setMeta(res.response.meta);
+    } else {
+      setError(res.response?.message || t("errorLoad"));
+    }
+  }
+  useEffect(() => {
+    if (sellableTab) {
+      fetchSellaStock();
+    }
+  }, [sellableTab]);
 
   return (
     <div className={styles.page}>
@@ -151,14 +184,23 @@ export default function StockPage() {
             <span
               key={key}
               className={
-                status === key || stockStatus === key
+                status === key ||
+                stockStatus === key ||
+                (key === "sellable" &&
+                  sellableTab === true &&
+                  status === "" &&
+                  stockStatus === "")
                   ? `${styles.statusItem} ${styles.active}`
                   : styles.statusItem
               }
-              onClick={() =>
+              onClick={async () =>
                 key === "empty" || key === "low"
-                  ? (setStockStatus(key), setStatus(""))
-                  : (setStatus(key), setStockStatus(""))
+                  ? (setStockStatus(key), setStatus(""), setSellableTab(false))
+                  : key === "sellable"
+                    ? (setSellableTab(true), setStatus(""), setStockStatus(""))
+                    : (setSellableTab(false),
+                      setStatus(key),
+                      setStockStatus(""))
               }
             >
               {value}
@@ -378,6 +420,27 @@ export default function StockPage() {
                   <td></td>
                   <td className={styles.td}>
                     {t("totalTable")} : {totalInventory.toFixed(2)}{" "}
+                    {g("currency")}
+                  </td>
+                </tr>
+                <tr>
+                  <td className={styles.tdEmpty}></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td className={styles.tdTotal}>
+                    {t("totalInventoryTable")} : {inventory.toFixed(2)}{" "}
                     {g("currency")}
                   </td>
                 </tr>

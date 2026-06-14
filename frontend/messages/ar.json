@@ -36,7 +36,8 @@
       "stock": "المخزون",
       "lossReason": {
         "damaged": "تالف",
-        "expired": "منتهي الصلاحية"
+        "expired": "منتهي الصلاحية",
+        "loss": "مفقود"
       }
     },
     "empty": {
@@ -370,8 +371,10 @@
     "emptySearchSubtitle": "لا توجد نتائج لـ \"{query}\"",
     "pageInfo": "صفحة {page} من {pages}",
     "totalTable": "الإجمالي للصفحة",
+    "totalInventoryTable": "المخزون الإجمالي",
     "batchStatus": {
       "all": "الكل",
+      "sellable": "قابل للبيع",
       "expiring": "قيد الانتهاء",
       "expired": "منتهي الصلاحية",
       "low": "منخفض",
@@ -398,6 +401,7 @@
   },
   "variantDetails": {
     "loading": "جاري تحميل المتغير…",
+    "printBarcode": "طباعة الباركود",
     "errorLoad": "فشل تحميل المتغير",
     "pageInfo": "صفحة {page} من {pages}",
     "breadcrumb": {
@@ -529,7 +533,8 @@
       "damage": "بضائع تالفة",
       "loss": "فقدان / نقص",
       "correction": "تصحيح جرد",
-      "transfer": "تحويل"
+      "transfer": "تحويل",
+      "expired": "منتهي الصلاحية"
     },
     "toast": {
       "success": "تم تعديل المخزون بنجاح!",
@@ -1256,6 +1261,7 @@
       "adjustment": "تعديل",
       "add": "إضافة",
       "new purchase": "أمر شراء جديد",
+      "new sale": "أمر بيع جديد",
       "remove": "إزالة",
       "new credit": "جديد رصيدs"
     },

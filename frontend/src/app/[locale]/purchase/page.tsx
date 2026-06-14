@@ -29,7 +29,11 @@ import { useState, useEffect, useCallback } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import ProductModal from "@/components/products/add-product";
 import AddBatchModal from "@/components/batches/add-batch";
-import { createPurchase, updatePurchaseById } from "@/api/purchase-api";
+import {
+  createPurchase,
+  printPurchase,
+  updatePurchaseById,
+} from "@/api/purchase-api";
 import { selectStyles } from "@/components/products/selectStyles";
 import { getAllSuppliers, updateSupplier } from "@/api/supplier-api";
 import AddSupllierModal from "@/components/suppliers/add-supplier";
@@ -408,7 +412,7 @@ export default function Purchase() {
           ? remiseAmount + (timbre ?? 0)
           : totalTTC,
       remise: isRemiseActivated,
-      payment_method: "cash",
+      payment_method: paymentMethod,
       timbre,
       remiseAmount: isRemiseActivated ? remise : 0,
       isDetailed: false,
@@ -426,6 +430,9 @@ export default function Purchase() {
     if (res.status === 1) {
       toast.success(t("successPurchase"));
       alert(t("successPurchase"));
+      if (paperType) {
+        await printPurchase(res.response.id, paperType);
+      }
       fetchVariants();
       resetStatus();
     } else {
@@ -473,6 +480,9 @@ export default function Purchase() {
     if (res.status === 1) {
       toast.success(t("successPurchaseUpdate"));
       alert(t("successPurchaseUpdate"));
+      if (paperType) {
+        await printPurchase(res.response.id, paperType);
+      }
       fetchVariants();
       resetStatus();
     } else {
@@ -495,6 +505,7 @@ export default function Purchase() {
     setIsHistoryLoaded(false);
     setSelectedPurchasedItem(null);
     setPurchaseId(null);
+    setPaymentMethode(null);
   }
   // 1. Define the specific function you want to call on a successful scan
   const handleScannedItem = async (barcode: string) => {
