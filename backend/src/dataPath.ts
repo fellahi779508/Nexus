@@ -5,34 +5,29 @@ import * as os from 'os';
 /**
  * Returns the path to StockData.sqlite.
  *
- * When packaged as Electron (backend is inside an .asar archive):
- *   Windows → %APPDATA%\StockManager\StockData.sqlite
- *   macOS   → ~/Library/Application Support/StockManager/StockData.sqlite
- *   Linux   → ~/.config/StockManager/StockData.sqlite
- *
- * During development (plain `nest start`):
- *   → <project root>/StockData.sqlite  (original behaviour)
- *
- * The folder is created automatically if it does not exist.
+ * DEFAULT (Production/Safe Mode):
+ * Windows → %APPDATA%\StockManager\StockData.sqlite
+ * * ONLY during local development (plain `nest start` with NODE_ENV=development):
+ * → <project root>/StockData.sqlite
  */
 export function getDatabasePath(): string {
-  // __dirname is inside app.asar only when running from a packaged Electron app.
-  // This is the most reliable signal — no env variables needed.
-  const isPackaged = __dirname.includes('app.asar');
+  // Check if we are explicitly in development mode
+  const isDevelopment = process.env.NODE_ENV === 'development';
 
-  if (isPackaged) {
-    const appDataDir = getAppDataDir();
-    const dbDir = path.join(appDataDir, 'StockManager');
-
-    if (!fs.existsSync(dbDir)) {
-      fs.mkdirSync(dbDir, { recursive: true });
-    }
-
-    return path.join(dbDir, 'StockData.sqlite');
+  if (isDevelopment) {
+    // Development: keep the database next to the project root for easy viewing
+    return path.join(process.cwd(), 'StockData.sqlite');
   }
 
-  // Development: keep the database next to the project root
-  return path.join(process.cwd(), 'StockData.sqlite');
+  // PRODUCTION FALLBACK (Safe Default): Always write to user's writable AppData directory
+  const appDataDir = getAppDataDir();
+  const dbDir = path.join(appDataDir, 'StockManager');
+
+  if (!fs.existsSync(dbDir)) {
+    fs.mkdirSync(dbDir, { recursive: true });
+  }
+
+  return path.join(dbDir, 'StockData.sqlite');
 }
 
 /**

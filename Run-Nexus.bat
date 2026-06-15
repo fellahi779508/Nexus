@@ -14,6 +14,7 @@ set "NODE_BIN=%~dp0resources\node\node.exe"
 set "CHROME_PROFILE=%~dp0resources\win_profile"
 
 :: 2. Launch your compiled background servers silently
+set NODE_ENV=production
 start /b "" "%NODE_BIN%" "%~dp0backend\dist\main.js"
 set PORT=3000
 set HOSTNAME=127.0.0.1
