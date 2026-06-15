@@ -383,7 +383,7 @@ export class StockPaymentService {
       `${(amount ?? 0).toFixed(2)} DZD`;
 
     // ------------------------------------------------------------
-    // TICKET DESIGN – Clean, monospaced cash-register style
+    // TICKET DESIGN – Style ticket de caisse, monospace, épuré
     // ------------------------------------------------------------
     if (isTicket) {
       const ticketWidth = pageWidth - margin * 2;
@@ -392,7 +392,7 @@ export class StockPaymentService {
         doc
           .font('Helvetica-Bold')
           .fontSize(11)
-          .text(owner.name || 'YOUR SHOP', { align: 'center' });
+          .text(owner.name || 'VOTRE BOUTIQUE', { align: 'center' });
         if (owner.address)
           doc
             .font('Helvetica')
@@ -402,7 +402,7 @@ export class StockPaymentService {
           doc
             .font('Helvetica')
             .fontSize(8)
-            .text(`Tel: ${owner.phone}`, { align: 'center' });
+            .text(`Tél: ${owner.phone}`, { align: 'center' });
         doc.moveDown(0.3);
         doc
           .moveTo(margin, doc.y)
@@ -415,20 +415,20 @@ export class StockPaymentService {
         doc.moveDown(0.4);
       }
 
-      // Title
+      // Titre
       doc
         .font('Helvetica-Bold')
         .fontSize(11)
-        .text(`PURCHASE ORDER #${purchase.id}`, { align: 'center' });
+        .text(`BON DE COMMANDE N°${purchase.id}`, { align: 'center' });
       doc.moveDown(0.3);
 
-      // Date & payment
+      // Date et paiement
       doc.font('Helvetica').fontSize(8);
       doc.text(
-        `Date: ${purchase.date ? new Date(purchase.date).toLocaleString() : 'N/A'}`,
+        `Date: ${purchase.date ? new Date(purchase.date).toLocaleString('fr-FR') : 'N/D'}`,
         { align: 'center' },
       );
-      doc.text(`Payment: ${purchase.payment_method || 'N/A'}`, {
+      doc.text(`Paiement: ${purchase.payment_method || 'N/D'}`, {
         align: 'center',
       });
       if (purchase.timbre)
@@ -436,7 +436,7 @@ export class StockPaymentService {
           align: 'center',
         });
       if (purchase.remise)
-        doc.text(`Discount: -${formatCurrency(purchase.remiseAmount ?? 0)}`, {
+        doc.text(`Remise: -${formatCurrency(purchase.remiseAmount ?? 0)}`, {
           align: 'center',
         });
       doc.moveDown(0.3);
@@ -450,17 +450,17 @@ export class StockPaymentService {
         .undash();
       doc.moveDown(0.3);
 
-      // Supplier
+      // Fournisseur
       if (purchase.supplier) {
         doc
           .font('Helvetica-Bold')
           .fontSize(8)
-          .text('SUPPLIER', { align: 'center' });
+          .text('FOURNISSEUR', { align: 'center' });
         doc.font('Helvetica').fontSize(8);
         doc.text(purchase.supplier.name || '', { align: 'center' });
         if (purchase.supplier.address)
           doc.text(purchase.supplier.address, { align: 'center' });
-        doc.text(`Tel: ${purchase.supplier.phone || ''}`, { align: 'center' });
+        doc.text(`Tél: ${purchase.supplier.phone || ''}`, { align: 'center' });
         doc.moveDown(0.3);
         doc
           .moveTo(margin, doc.y)
@@ -473,8 +473,11 @@ export class StockPaymentService {
         doc.moveDown(0.3);
       }
 
-      // Items
-      doc.font('Helvetica-Bold').fontSize(8).text('ITEMS', { align: 'center' });
+      // Articles
+      doc
+        .font('Helvetica-Bold')
+        .fontSize(8)
+        .text('ARTICLES', { align: 'center' });
       doc.moveDown(0.2);
       doc.font('Helvetica').fontSize(8);
 
@@ -485,7 +488,7 @@ export class StockPaymentService {
 
         const quantity = item.quantity ?? 0;
         const unit =
-          item.unit === 'package' ? `pack (${item.qtePerUnit ?? 0} pcs)` : 'pc';
+          item.unit === 'package' ? `lot (${item.qtePerUnit ?? 0} u)` : 'u';
         const unitPrice = item.sellingPrice ?? 0;
         const lineTotal = quantity * unitPrice;
 
@@ -510,7 +513,7 @@ export class StockPaymentService {
         .stroke();
       doc.moveDown(0.3);
 
-      // Totals
+      // Totaux
       const subtotal =
         (purchase.total ?? 0) -
         (purchase.timbre ?? 0) +
@@ -518,9 +521,9 @@ export class StockPaymentService {
       const dueAmount = (purchase.total ?? 0) - (purchase.paid ?? 0);
 
       doc.font('Helvetica').fontSize(8);
-      doc.text(`Subtotal: ${formatCurrency(subtotal)}`, { align: 'right' });
+      doc.text(`Sous-total: ${formatCurrency(subtotal)}`, { align: 'right' });
       if (purchase.remise)
-        doc.text(`Discount: -${formatCurrency(purchase.remiseAmount ?? 0)}`, {
+        doc.text(`Remise: -${formatCurrency(purchase.remiseAmount ?? 0)}`, {
           align: 'right',
         });
       if (purchase.timbre)
@@ -544,12 +547,12 @@ export class StockPaymentService {
           align: 'right',
         });
       doc.font('Helvetica').fontSize(8);
-      doc.text(`Paid: ${formatCurrency(purchase.paid ?? 0)}`, {
+      doc.text(`Payé: ${formatCurrency(purchase.paid ?? 0)}`, {
         align: 'right',
       });
       doc
         .font('Helvetica-Bold')
-        .text(`Due to supplier: ${formatCurrency(dueAmount)}`, {
+        .text(`Dû au fournisseur: ${formatCurrency(dueAmount)}`, {
           align: 'right',
         });
 
@@ -557,7 +560,7 @@ export class StockPaymentService {
       doc
         .font('Helvetica-Oblique')
         .fontSize(8)
-        .text('Thank you for your supply!', { align: 'center' });
+        .text('Merci pour votre approvisionnement !', { align: 'center' });
 
       doc.end();
       return new Promise((resolve) => {
@@ -566,12 +569,12 @@ export class StockPaymentService {
     }
 
     // ------------------------------------------------------------
-    // A4 DESIGN – Clean, professional, black-bordered containers
+    // A4 DESIGN – Sobre, professionnel, conteneurs encadrés
     // ------------------------------------------------------------
 
     const pageContentWidth = doc.page.width - margin * 2;
 
-    // Helper: draw bordered box (no fill)
+    // Helper: dessine un cadre (sans remplissage)
     const drawBox = (
       x: number,
       y: number,
@@ -584,7 +587,7 @@ export class StockPaymentService {
       doc.restore();
     };
 
-    // Helper: horizontal rule
+    // Helper: ligne horizontale
     const hr = (y: number, lineWidth: number = 1) => {
       doc
         .moveTo(margin, y)
@@ -594,7 +597,7 @@ export class StockPaymentService {
         .stroke();
     };
 
-    // ----- HEADER -----
+    // ----- EN-TÊTE -----
     const headerY = doc.y;
     const logoSize = 55;
 
@@ -613,7 +616,7 @@ export class StockPaymentService {
       doc
         .fontSize(20)
         .font('Helvetica-Bold')
-        .text(owner.name || 'YOUR SHOP', { align: 'right' });
+        .text(owner.name || 'VOTRE BOUTIQUE', { align: 'right' });
       if (owner.description)
         doc
           .fontSize(9)
@@ -637,8 +640,8 @@ export class StockPaymentService {
           .text(reg.join('   |   '), { align: 'right' })
           .fillColor('#000000');
       const contacts: string[] = [];
-      if (owner.phone) contacts.push(`Tel: ${owner.phone}`);
-      if (owner.email) contacts.push(`Email: ${owner.email}`);
+      if (owner.phone) contacts.push(`Tél: ${owner.phone}`);
+      if (owner.email) contacts.push(`E-mail: ${owner.email}`);
       if (contacts.length)
         doc.fontSize(9).text(contacts.join('   |   '), { align: 'right' });
     }
@@ -647,38 +650,38 @@ export class StockPaymentService {
     hr(doc.y, 1.5);
     doc.moveDown(0.8);
 
-    // ----- TITLE & METADATA -----
+    // ----- TITRE & MÉTADONNÉES -----
     doc
       .fontSize(26)
       .font('Helvetica-Bold')
-      .text('PURCHASE ORDER', { align: 'center' });
+      .text('BON DE COMMANDE', { align: 'center' });
     doc
       .fontSize(12)
       .font('Helvetica')
       .fillColor('#555555')
-      .text(`No. ${purchase.id}`, { align: 'center' })
+      .text(`N° ${purchase.id}`, { align: 'center' })
       .fillColor('#000000');
     doc.moveDown(0.7);
 
-    // Meta row: Date / Payment on left, fiscal info on right
+    // Ligne méta: Date / Paiement à gauche, infos fiscales à droite
     const metaY = doc.y;
     doc.fontSize(9).font('Helvetica-Bold');
     doc.text('Date', margin, metaY);
-    doc.text('Payment Method', margin, metaY + 14);
+    doc.text('Mode de Paiement', margin, metaY + 14);
     doc.font('Helvetica');
     doc.text(
-      purchase.date ? new Date(purchase.date).toLocaleString() : 'N/A',
+      purchase.date ? new Date(purchase.date).toLocaleString('fr-FR') : 'N/D',
       margin + 100,
       metaY,
     );
-    doc.text(purchase.payment_method || 'N/A', margin + 100, metaY + 14);
+    doc.text(purchase.payment_method || 'N/D', margin + 100, metaY + 14);
 
     let rightMetaY = metaY;
     doc.font('Helvetica-Bold').fontSize(9);
 
     doc.y = Math.max(metaY + 14 * 2, rightMetaY) + 12;
 
-    // ----- SUPPLIER CARD -----
+    // ----- ENCADRÉ FOURNISSEUR -----
     if (purchase.supplier) {
       const cardX = margin;
       const cardY = doc.y;
@@ -690,7 +693,7 @@ export class StockPaymentService {
         .fontSize(9)
         .font('Helvetica-Bold')
         .fillColor('#555555')
-        .text('SUPPLIER', cardX + 12, cardY + 10)
+        .text('FOURNISSEUR', cardX + 12, cardY + 10)
         .fillColor('#000000');
       doc
         .font('Helvetica-Bold')
@@ -700,7 +703,7 @@ export class StockPaymentService {
       if (purchase.supplier.address)
         doc.text(purchase.supplier.address, cardX + 12, cardY + 42);
       doc.text(
-        `Tel: ${purchase.supplier.phone || ''}${purchase.supplier.email ? `   |   Email: ${purchase.supplier.email}` : ''}`,
+        `Tél: ${purchase.supplier.phone || ''}${purchase.supplier.email ? `   |   E-mail: ${purchase.supplier.email}` : ''}`,
         cardX + 12,
         cardY + 56,
       );
@@ -708,7 +711,7 @@ export class StockPaymentService {
       doc.y = cardY + cardH + 18;
     }
 
-    // ----- ITEMS TABLE -----
+    // ----- TABLEAU DES ARTICLES -----
     const startX = margin;
     const tableTop = doc.y;
     const colWidths = [pageContentWidth - 230, 70, 80, 80];
@@ -719,16 +722,16 @@ export class StockPaymentService {
       startX + colWidths[0] + colWidths[1] + colWidths[2],
     ];
 
-    // Table header
+    // En-tête du tableau
     const headerH = 26;
     drawBox(startX, tableTop, pageContentWidth, headerH, 1.5);
     doc.fontSize(9).font('Helvetica-Bold');
-    doc.text('ITEM', colPos[0] + 10, tableTop + 9);
-    doc.text('QTY', colPos[1] + 10, tableTop + 9, {
+    doc.text('ARTICLE', colPos[0] + 10, tableTop + 9);
+    doc.text('QTÉ', colPos[1] + 10, tableTop + 9, {
       width: colWidths[1] - 10,
       align: 'center',
     });
-    doc.text('UNIT PRICE', colPos[2] + 5, tableTop + 9, {
+    doc.text('PRIX UNITAIRE', colPos[2] + 5, tableTop + 9, {
       width: colWidths[2] - 10,
       align: 'right',
     });
@@ -737,7 +740,7 @@ export class StockPaymentService {
       align: 'right',
     });
 
-    // Vertical column separators in header
+    // Séparateurs verticaux des colonnes dans l'en-tête
     for (let i = 1; i < colPos.length; i++) {
       doc
         .moveTo(colPos[i], tableTop)
@@ -754,18 +757,18 @@ export class StockPaymentService {
       const variant = item?.batch?.variant;
       const productName = `${variant.product.name} - ${variant.name ?? ''}`;
       const variantAttrs: string[] = [];
-      if (variant?.size) variantAttrs.push(`Size: ${variant.size}`);
-      if (variant?.color) variantAttrs.push(`Color: ${variant.color}`);
-      if (variant?.weight) variantAttrs.push(`Weight: ${variant.weight}`);
-      if (variant?.height) variantAttrs.push(`Height: ${variant.height}`);
-      if (variant?.flavor) variantAttrs.push(`Flavor: ${variant.flavor}`);
+      if (variant?.size) variantAttrs.push(`Taille: ${variant.size}`);
+      if (variant?.color) variantAttrs.push(`Couleur: ${variant.color}`);
+      if (variant?.weight) variantAttrs.push(`Poids: ${variant.weight}`);
+      if (variant?.height) variantAttrs.push(`Hauteur: ${variant.height}`);
+      if (variant?.flavor) variantAttrs.push(`Saveur: ${variant.flavor}`);
       const variantText = variantAttrs.length ? variantAttrs.join('  ·  ') : '';
 
       const batchDetails: string[] = [];
       if (item?.batch?.nLot) batchDetails.push(`Lot: ${item.batch.nLot}`);
       if (item?.batch?.expirationDate)
         batchDetails.push(
-          `Exp: ${new Date(item.batch.expirationDate).toLocaleDateString()}`,
+          `Exp: ${new Date(item.batch.expirationDate).toLocaleDateString('fr-FR')}`,
         );
       const batchText = batchDetails.length ? batchDetails.join('  ·  ') : '';
 
@@ -797,7 +800,7 @@ export class StockPaymentService {
       doc.fillColor('#000000');
 
       const unitLabel =
-        item.unit === 'package' ? `pack(${item.qtePerUnit ?? 0})` : 'pc';
+        item.unit === 'package' ? `lot(${item.qtePerUnit ?? 0})` : 'u';
       const quantityText = `${item.quantity ?? 0} ${unitLabel}`;
       const unitPrice = item.sellingPrice ?? 0;
       const lineTotal = (item.quantity ?? 0) * unitPrice;
@@ -824,7 +827,7 @@ export class StockPaymentService {
 
     doc.y = currentRowY + 18;
 
-    // ----- TOTALS BOX (right-aligned) -----
+    // ----- ENCADRÉ DES TOTAUX (aligné à droite) -----
     const subtotal =
       (purchase.total ?? 0) -
       (purchase.timbre ?? 0) +
@@ -833,10 +836,10 @@ export class StockPaymentService {
 
     const totalsWidth = 230;
     const lineH = 20;
-    let totalsLineCount = 2; // subtotal + total (always shown)
+    let totalsLineCount = 2; // sous-total + total (toujours affichés)
     if (purchase.remise) totalsLineCount++;
     if (purchase.timbre) totalsLineCount++;
-    totalsLineCount += 2; // paid + due
+    totalsLineCount += 2; // payé + dû
     const totalsHeight = totalsLineCount * lineH + 16;
     const totalsX = margin + pageContentWidth - totalsWidth;
     const totalsY = doc.y;
@@ -849,7 +852,7 @@ export class StockPaymentService {
     const totalsValueW = totalsWidth - 30 - totalsLabelW;
 
     doc.font('Helvetica').fontSize(9);
-    doc.text('Subtotal', totalsX + 15, yOff, { width: totalsLabelW });
+    doc.text('Sous-total', totalsX + 15, yOff, { width: totalsLabelW });
     doc.text(formatCurrency(subtotal), totalsValueX, yOff, {
       width: totalsValueW,
       align: 'right',
@@ -857,7 +860,7 @@ export class StockPaymentService {
     yOff += lineH;
 
     if (purchase.remise) {
-      doc.text('Discount', totalsX + 15, yOff, { width: totalsLabelW });
+      doc.text('Remise', totalsX + 15, yOff, { width: totalsLabelW });
       doc.text(
         `-${formatCurrency(purchase.remiseAmount ?? 0)}`,
         totalsValueX,
@@ -875,9 +878,6 @@ export class StockPaymentService {
       yOff += lineH;
     }
 
-    hr(yOff + 2, 1);
-    yOff += 8;
-
     doc.font('Helvetica-Bold').fontSize(11);
     doc.text('TOTAL', totalsX + 15, yOff, { width: totalsLabelW });
     doc.text(formatCurrency(purchase.total ?? 0), totalsValueX, yOff, {
@@ -887,7 +887,7 @@ export class StockPaymentService {
     yOff += lineH + 2;
 
     doc.font('Helvetica').fontSize(9);
-    doc.text('Paid', totalsX + 15, yOff, { width: totalsLabelW });
+    doc.text('Payé', totalsX + 15, yOff, { width: totalsLabelW });
     doc.text(formatCurrency(purchase.paid ?? 0), totalsValueX, yOff, {
       width: totalsValueW,
       align: 'right',
@@ -895,7 +895,7 @@ export class StockPaymentService {
     yOff += lineH;
 
     doc.font('Helvetica-Bold').fontSize(10);
-    doc.text('Due to Supplier', totalsX + 15, yOff, { width: totalsLabelW });
+    doc.text('Dû au Fournisseur', totalsX + 15, yOff, { width: totalsLabelW });
     doc.text(formatCurrency(dueAmount), totalsValueX, yOff, {
       width: totalsValueW,
       align: 'right',
@@ -903,19 +903,19 @@ export class StockPaymentService {
 
     doc.y = totalsY + totalsHeight + 30;
 
-    // ----- FOOTER -----
+    // ----- PIED DE PAGE -----
     hr(doc.y, 1);
     doc.moveDown(0.6);
     doc
       .font('Helvetica-Bold')
       .fontSize(10)
-      .text('Thank you for your supply!', { align: 'center' });
+      .text('Merci pour votre approvisionnement !', { align: 'center' });
     doc.moveDown(0.4);
     doc
       .font('Helvetica')
       .fontSize(8)
       .fillColor('#666666')
-      .text('Payment terms: Net 30 days.', { align: 'center' });
+      .text('Conditions de paiement : Net 30 jours.', { align: 'center' });
     doc.fillColor('#000000');
 
     doc.end();

@@ -277,9 +277,11 @@ export default function StockPage() {
                     <tr
                       key={stock.id}
                       className={`${styles.row} ${
-                        expired || empty
+                        stock.batch.status === "expired" ||
+                        stock.batch.stockQTYStatus === "empty"
                           ? styles.rowExpired
-                          : expiring || lowStock
+                          : stock.batch.status === "expiring" ||
+                              stock.batch.stockQTYStatus === "low"
                             ? styles.rowExpiring
                             : ""
                       }`}

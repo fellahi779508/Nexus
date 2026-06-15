@@ -375,7 +375,7 @@ export class SaleService {
       `${(amount ?? 0).toFixed(2)} DZD`;
 
     // ------------------------------------------------------------
-    // TICKET DESIGN – Clean, monospaced cash-register style
+    // TICKET DESIGN – Style ticket de caisse, monospace, épuré
     // ------------------------------------------------------------
     if (isTicket) {
       const ticketWidth = pageWidth - margin * 2;
@@ -384,7 +384,7 @@ export class SaleService {
         doc
           .font('Helvetica-Bold')
           .fontSize(11)
-          .text(owner.name || 'YOUR SHOP', { align: 'center' });
+          .text(owner.name || 'VOTRE BOUTIQUE', { align: 'center' });
         if (owner.address)
           doc
             .font('Helvetica')
@@ -394,7 +394,7 @@ export class SaleService {
           doc
             .font('Helvetica')
             .fontSize(8)
-            .text(`Tel: ${owner.phone}`, { align: 'center' });
+            .text(`Tél: ${owner.phone}`, { align: 'center' });
         doc.moveDown(0.3);
         doc
           .moveTo(margin, doc.y)
@@ -407,20 +407,20 @@ export class SaleService {
         doc.moveDown(0.4);
       }
 
-      // Invoice title
+      // Titre de la facture
       doc
         .font('Helvetica-Bold')
         .fontSize(11)
-        .text(`INVOICE #${sale.id}`, { align: 'center' });
+        .text(`FACTURE N°${sale.id}`, { align: 'center' });
       doc.moveDown(0.3);
 
-      // Date & payment
+      // Date et mode de paiement
       doc.font('Helvetica').fontSize(8);
       doc.text(
-        `Date: ${sale.date ? new Date(sale.date).toLocaleString() : 'N/A'}`,
+        `Date: ${sale.date ? new Date(sale.date).toLocaleString('fr-FR') : 'N/D'}`,
         { align: 'center' },
       );
-      doc.text(`Payment: ${sale.payment_methode || 'N/A'}`, {
+      doc.text(`Paiement: ${sale.payment_methode || 'N/D'}`, {
         align: 'center',
       });
 
@@ -445,7 +445,7 @@ export class SaleService {
         doc.text(sale.client.name || '', { align: 'center' });
         if (sale.client.address)
           doc.text(sale.client.address, { align: 'center' });
-        doc.text(`Tel: ${sale.client.phone || ''}`, { align: 'center' });
+        doc.text(`Tél: ${sale.client.phone || ''}`, { align: 'center' });
         doc.moveDown(0.3);
         doc
           .moveTo(margin, doc.y)
@@ -458,8 +458,11 @@ export class SaleService {
         doc.moveDown(0.3);
       }
 
-      // Items
-      doc.font('Helvetica-Bold').fontSize(8).text('ITEMS', { align: 'center' });
+      // Articles
+      doc
+        .font('Helvetica-Bold')
+        .fontSize(8)
+        .text('ARTICLES', { align: 'center' });
       doc.moveDown(0.2);
       doc.font('Helvetica').fontSize(8);
 
@@ -468,7 +471,7 @@ export class SaleService {
         const productName = `${variant.product.name} - ${variant.name ?? ''}`;
         const quantity = item.quantity ?? 0;
         const unit =
-          item.unit === 'package' ? `pack (${item.qtePerUnit ?? 0} pcs)` : 'pc';
+          item.unit === 'package' ? `lot (${item.qtePerUnit ?? 0} u)` : 'u';
         const sellingPrice = item.sellingPrice ?? 0;
         const lineTotal = quantity * sellingPrice;
 
@@ -493,19 +496,21 @@ export class SaleService {
         .stroke();
       doc.moveDown(0.3);
 
-      // Totals
+      // Totaux
       const subtotal =
         (sale.total ?? 0) - (sale.timbre ?? 0) + (sale.remiseAmount ?? 0);
       const dueAmount = (sale.total ?? 0) - (sale.paid ?? 0);
 
       doc.font('Helvetica').fontSize(8);
-      doc.text(`Subtotal: ${formatCurrency(subtotal)}`, { align: 'right' });
+      doc.text(`Sous-total: ${formatCurrency(subtotal)}`, { align: 'right' });
       if (sale.remise)
-        doc.text(`Discount: -${formatCurrency(sale.remiseAmount ?? 0)}`, {
+        doc.text(`Remise: -${formatCurrency(sale.remiseAmount ?? 0)}`, {
           align: 'right',
         });
       if (sale.timbre)
-        doc.text(`Timbre: +${formatCurrency(sale.timbre)}`, { align: 'right' });
+        doc.text(`Timbre Fiscal: +${formatCurrency(sale.timbre)}`, {
+          align: 'right',
+        });
       doc.moveDown(0.2);
 
       doc
@@ -521,16 +526,18 @@ export class SaleService {
         .fontSize(10)
         .text(`TOTAL: ${formatCurrency(sale.total ?? 0)}`, { align: 'right' });
       doc.font('Helvetica').fontSize(8);
-      doc.text(`Paid: ${formatCurrency(sale.paid ?? 0)}`, { align: 'right' });
+      doc.text(`Payé: ${formatCurrency(sale.paid ?? 0)}`, { align: 'right' });
       doc
         .font('Helvetica-Bold')
-        .text(`Due: ${formatCurrency(dueAmount)}`, { align: 'right' });
+        .text(`Reste à Payer: ${formatCurrency(dueAmount)}`, {
+          align: 'right',
+        });
 
       doc.moveDown(0.6);
       doc
         .font('Helvetica-Oblique')
         .fontSize(8)
-        .text('Thank you!', { align: 'center' });
+        .text('Merci pour votre achat !', { align: 'center' });
 
       doc.end();
       return new Promise((resolve) => {
@@ -539,12 +546,12 @@ export class SaleService {
     }
 
     // ------------------------------------------------------------
-    // A4 DESIGN – Clean, professional, black-bordered containers
+    // A4 DESIGN – Sobre, professionnel, conteneurs encadrés
     // ------------------------------------------------------------
 
     const pageContentWidth = doc.page.width - margin * 2;
 
-    // Helper: draw bordered box (no fill)
+    // Helper: dessine un cadre (sans remplissage)
     const drawBox = (
       x: number,
       y: number,
@@ -557,7 +564,7 @@ export class SaleService {
       doc.restore();
     };
 
-    // Helper: horizontal rule
+    // Helper: ligne horizontale
     const hr = (y: number, lineWidth: number = 1) => {
       doc
         .moveTo(margin, y)
@@ -567,7 +574,7 @@ export class SaleService {
         .stroke();
     };
 
-    // ----- HEADER -----
+    // ----- EN-TÊTE -----
     const headerY = doc.y;
     const logoSize = 55;
 
@@ -586,7 +593,7 @@ export class SaleService {
       doc
         .fontSize(20)
         .font('Helvetica-Bold')
-        .text(owner.name || 'YOUR SHOP', { align: 'right' });
+        .text(owner.name || 'VOTRE BOUTIQUE', { align: 'right' });
       if (owner.description)
         doc
           .fontSize(9)
@@ -610,8 +617,8 @@ export class SaleService {
           .text(reg.join('   |   '), { align: 'right' })
           .fillColor('#000000');
       const contacts: string[] = [];
-      if (owner.phone) contacts.push(`Tel: ${owner.phone}`);
-      if (owner.email) contacts.push(`Email: ${owner.email}`);
+      if (owner.phone) contacts.push(`Tél: ${owner.phone}`);
+      if (owner.email) contacts.push(`E-mail: ${owner.email}`);
       if (contacts.length)
         doc.fontSize(9).text(contacts.join('   |   '), { align: 'right' });
     }
@@ -620,38 +627,38 @@ export class SaleService {
     hr(doc.y, 1.5);
     doc.moveDown(0.8);
 
-    // ----- INVOICE TITLE & METADATA -----
+    // ----- TITRE & MÉTADONNÉES DE LA FACTURE -----
     doc
       .fontSize(26)
       .font('Helvetica-Bold')
-      .text('INVOICE', { align: 'center' });
+      .text('FACTURE', { align: 'center' });
     doc
       .fontSize(12)
       .font('Helvetica')
       .fillColor('#555555')
-      .text(`No. ${sale.id}`, { align: 'center' })
+      .text(`N° ${sale.id}`, { align: 'center' })
       .fillColor('#000000');
     doc.moveDown(0.7);
 
-    // Meta row: Date / Payment on left, fiscal info on right
+    // Ligne méta: Date / Paiement à gauche, infos fiscales à droite
     const metaY = doc.y;
     doc.fontSize(9).font('Helvetica-Bold');
     doc.text('Date', margin, metaY);
-    doc.text('Payment Method', margin, metaY + 14);
+    doc.text('Mode de Paiement', margin, metaY + 14);
     doc.font('Helvetica');
     doc.text(
-      sale.date ? new Date(sale.date).toLocaleString() : 'N/A',
+      sale.date ? new Date(sale.date).toLocaleString('fr-FR') : 'N/D',
       margin + 100,
       metaY,
     );
-    doc.text(sale.payment_methode || 'N/A', margin + 100, metaY + 14);
+    doc.text(sale.payment_methode || 'N/D', margin + 100, metaY + 14);
 
     let rightMetaY = metaY;
     doc.font('Helvetica-Bold').fontSize(9);
 
     doc.y = Math.max(metaY + 14 * 2, rightMetaY) + 12;
 
-    // ----- CLIENT CARD -----
+    // ----- ENCADRÉ CLIENT -----
     if (sale.client) {
       const cardX = margin;
       const cardY = doc.y;
@@ -663,7 +670,7 @@ export class SaleService {
         .fontSize(9)
         .font('Helvetica-Bold')
         .fillColor('#555555')
-        .text('BILL TO', cardX + 12, cardY + 10)
+        .text('FACTURÉ À', cardX + 12, cardY + 10)
         .fillColor('#000000');
       doc
         .font('Helvetica-Bold')
@@ -673,7 +680,7 @@ export class SaleService {
       if (sale.client.address)
         doc.text(sale.client.address, cardX + 12, cardY + 42);
       doc.text(
-        `Tel: ${sale.client.phone || ''}${sale.client.email ? `   |   Email: ${sale.client.email}` : ''}`,
+        `Tél: ${sale.client.phone || ''}${sale.client.email ? `   |   E-mail: ${sale.client.email}` : ''}`,
         cardX + 12,
         cardY + 56,
       );
@@ -681,7 +688,7 @@ export class SaleService {
       doc.y = cardY + cardH + 18;
     }
 
-    // ----- ITEMS TABLE -----
+    // ----- TABLEAU DES ARTICLES -----
     const startX = margin;
     const tableTop = doc.y;
     const colWidths = [pageContentWidth - 230, 70, 80, 80];
@@ -692,16 +699,16 @@ export class SaleService {
       startX + colWidths[0] + colWidths[1] + colWidths[2],
     ];
 
-    // Table header
+    // En-tête du tableau
     const headerH = 26;
     drawBox(startX, tableTop, pageContentWidth, headerH, 1.5);
     doc.fontSize(9).font('Helvetica-Bold');
-    doc.text('ITEM', colPos[0] + 10, tableTop + 9);
-    doc.text('QTY', colPos[1] + 10, tableTop + 9, {
+    doc.text('ARTICLE', colPos[0] + 10, tableTop + 9);
+    doc.text('QTÉ', colPos[1] + 10, tableTop + 9, {
       width: colWidths[1] - 10,
       align: 'center',
     });
-    doc.text('UNIT PRICE', colPos[2] + 5, tableTop + 9, {
+    doc.text('PRIX UNITAIRE', colPos[2] + 5, tableTop + 9, {
       width: colWidths[2] - 10,
       align: 'right',
     });
@@ -710,7 +717,7 @@ export class SaleService {
       align: 'right',
     });
 
-    // Vertical column separators in header
+    // Séparateurs verticaux des colonnes dans l'en-tête
     for (let i = 1; i < colPos.length; i++) {
       doc
         .moveTo(colPos[i], tableTop)
@@ -727,18 +734,18 @@ export class SaleService {
       const variant = item?.batch?.variant;
       const productName = `${variant.product.name} - ${variant.name ?? ''}`;
       const variantAttrs: string[] = [];
-      if (variant?.size) variantAttrs.push(`Size: ${variant.size}`);
-      if (variant?.color) variantAttrs.push(`Color: ${variant.color}`);
-      if (variant?.weight) variantAttrs.push(`Weight: ${variant.weight}`);
-      if (variant?.height) variantAttrs.push(`Height: ${variant.height}`);
-      if (variant?.flavor) variantAttrs.push(`Flavor: ${variant.flavor}`);
+      if (variant?.size) variantAttrs.push(`Taille: ${variant.size}`);
+      if (variant?.color) variantAttrs.push(`Couleur: ${variant.color}`);
+      if (variant?.weight) variantAttrs.push(`Poids: ${variant.weight}`);
+      if (variant?.height) variantAttrs.push(`Hauteur: ${variant.height}`);
+      if (variant?.flavor) variantAttrs.push(`Saveur: ${variant.flavor}`);
       const variantText = variantAttrs.length ? variantAttrs.join('  ·  ') : '';
 
       const batchDetails: string[] = [];
       if (item?.batch?.nLot) batchDetails.push(`Lot: ${item.batch.nLot}`);
       if (item?.batch?.expirationDate)
         batchDetails.push(
-          `Exp: ${new Date(item.batch.expirationDate).toLocaleDateString()}`,
+          `Exp: ${new Date(item.batch.expirationDate).toLocaleDateString('fr-FR')}`,
         );
       const batchText = batchDetails.length ? batchDetails.join('  ·  ') : '';
 
@@ -770,7 +777,7 @@ export class SaleService {
       doc.fillColor('#000000');
 
       const unitLabel =
-        item.unit === 'package' ? `pack(${item.qtePerUnit ?? 0})` : 'pc';
+        item.unit === 'package' ? `lot(${item.qtePerUnit ?? 0})` : 'u';
       const quantityText = `${item.quantity ?? 0} ${unitLabel}`;
       const sellingPrice = item.sellingPrice ?? 0;
       const lineTotal = (item.quantity ?? 0) * sellingPrice;
@@ -797,17 +804,17 @@ export class SaleService {
 
     doc.y = currentRowY + 18;
 
-    // ----- TOTALS BOX (right-aligned) -----
+    // ----- ENCADRÉ DES TOTAUX (aligné à droite) -----
     const subtotal =
       (sale.total ?? 0) - (sale.timbre ?? 0) + (sale.remiseAmount ?? 0);
     const dueAmount = (sale.total ?? 0) - (sale.paid ?? 0);
 
     const totalsWidth = 230;
     const lineH = 20;
-    let totalsLineCount = 2; // subtotal + total (always shown)
+    let totalsLineCount = 2; // sous-total + total (toujours affichés)
     if (sale.remise) totalsLineCount++;
     if (sale.timbre) totalsLineCount++;
-    totalsLineCount += 2; // paid + due
+    totalsLineCount += 2; // payé + reste à payer
     const totalsHeight = totalsLineCount * lineH + 16;
     const totalsX = margin + pageContentWidth - totalsWidth;
     const totalsY = doc.y;
@@ -820,7 +827,7 @@ export class SaleService {
     const totalsValueW = totalsWidth - 30 - totalsLabelW;
 
     doc.font('Helvetica').fontSize(9);
-    doc.text('Subtotal', totalsX + 15, yOff, { width: totalsLabelW });
+    doc.text('Sous-total', totalsX + 15, yOff, { width: totalsLabelW });
     doc.text(formatCurrency(subtotal), totalsValueX, yOff, {
       width: totalsValueW,
       align: 'right',
@@ -828,7 +835,7 @@ export class SaleService {
     yOff += lineH;
 
     if (sale.remise) {
-      doc.text('Discount', totalsX + 15, yOff, { width: totalsLabelW });
+      doc.text('Remise', totalsX + 15, yOff, { width: totalsLabelW });
       doc.text(
         `-${formatCurrency(sale.remiseAmount ?? 0)}`,
         totalsValueX,
@@ -846,9 +853,6 @@ export class SaleService {
       yOff += lineH;
     }
 
-    hr(yOff + 2, 1);
-    yOff += 8;
-
     doc.font('Helvetica-Bold').fontSize(11);
     doc.text('TOTAL', totalsX + 15, yOff, { width: totalsLabelW });
     doc.text(formatCurrency(sale.total ?? 0), totalsValueX, yOff, {
@@ -858,7 +862,7 @@ export class SaleService {
     yOff += lineH + 2;
 
     doc.font('Helvetica').fontSize(9);
-    doc.text('Paid', totalsX + 15, yOff, { width: totalsLabelW });
+    doc.text('Payé', totalsX + 15, yOff, { width: totalsLabelW });
     doc.text(formatCurrency(sale.paid ?? 0), totalsValueX, yOff, {
       width: totalsValueW,
       align: 'right',
@@ -866,7 +870,7 @@ export class SaleService {
     yOff += lineH;
 
     doc.font('Helvetica-Bold').fontSize(10);
-    doc.text('Balance Due', totalsX + 15, yOff, { width: totalsLabelW });
+    doc.text('Reste à Payer', totalsX + 15, yOff, { width: totalsLabelW });
     doc.text(formatCurrency(dueAmount), totalsValueX, yOff, {
       width: totalsValueW,
       align: 'right',
@@ -874,24 +878,26 @@ export class SaleService {
 
     doc.y = totalsY + totalsHeight + 30;
 
-    // ----- FOOTER -----
+    // ----- PIED DE PAGE -----
     hr(doc.y, 1);
     doc.moveDown(0.6);
     doc
       .font('Helvetica-Bold')
       .fontSize(10)
-      .text('Thank you for your business!', { align: 'center' });
+      .text('Merci pour votre confiance !', { align: 'center' });
     doc.moveDown(0.4);
     doc
       .font('Helvetica')
       .fontSize(8)
       .fillColor('#666666')
-      .text('Payment due within 30 days. Returns accepted within 7 days.', {
-        align: 'center',
-      });
-    doc.text('This is a computer-generated invoice – no signature required.', {
-      align: 'center',
-    });
+      .text(
+        'Paiement dû dans un délai de 30 jours. Retours acceptés sous 7 jours.',
+        { align: 'center' },
+      );
+    doc.text(
+      'Ceci est une facture générée par ordinateur – signature non requise.',
+      { align: 'center' },
+    );
     doc.fillColor('#000000');
 
     doc.end();

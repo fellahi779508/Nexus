@@ -265,7 +265,7 @@
 }
 
 .rowExpired {
-  background: var(--danger-bg);
+  background-color: var(--danger-bg);
 }
 
 .rowExpired:hover {
@@ -287,7 +287,6 @@
   white-space: nowrap;
   font-size: large;
   border: 1px solid var(--border);
-  background-color: var(--surface);
 }
 .tdTotal {
   padding: 11px 14px;

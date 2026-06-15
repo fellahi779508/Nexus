@@ -279,7 +279,7 @@ export class BatchService {
       } else if (expiration <= today) {
         batch.status = 'expired';
       } else {
-        const threshold = batch.alertPeriodPerDay ?? 7;
+        const threshold = batch.alertPeriodPerDay;
 
         // simple date-only difference (safe approach)
         const diffDays =
@@ -312,6 +312,12 @@ export class BatchService {
         } else {
           batch.stockQTYStatus = 'ok';
         }
+      }
+      if (updateBatchDto.alertPeriodPerDay == null) {
+        batch.status = 'ok';
+      }
+      if (updateBatchDto.alertPeriodPerStock == null) {
+        batch.stockQTYStatus = 'ok';
       }
       if (updateBatchDto.primary) {
         await this.updateBatchPrimaryStatus(batch.variant.id);

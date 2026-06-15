@@ -97,6 +97,20 @@ export class Batch {
       this.stockQTYStatus = 'ok';
       return;
     }
+    if (this.alertPeriodPerStock === null) {
+      this.stockQTYStatus = 'ok';
+      if (this.alertPeriodPerDay === null) {
+        this.status = 'ok';
+        return;
+      }
+    }
+    if (this.alertPeriodPerDay == null) {
+      this.status = 'ok';
+      if (this.alertPeriodPerStock == null) {
+        this.stockQTYStatus = 'ok';
+        return;
+      }
+    }
 
     const currentStockQTY = this.stock.quantity;
 

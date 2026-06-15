@@ -14,11 +14,11 @@ export class CreateBatchDto {
 
   @IsDateString()
   @IsOptional()
-  @Transform(({ value }) => (value === '' ? undefined : value))
+  @Transform(({ value }) => (value === '' ? null : value))
   fabricationDate?: string;
   @IsDateString()
   @IsOptional()
-  @Transform(({ value }) => (value === '' ? undefined : value))
+  @Transform(({ value }) => (value === '' ? null : value))
   expirationDate?: string;
 
   @IsNumber()
@@ -29,12 +29,12 @@ export class CreateBatchDto {
 
   @IsNumber()
   @IsOptional()
-  @Transform(({ value }) => (value === 0 ? undefined : value))
+  @Transform(({ value }) => (value === 0 ? null : value))
   alertPeriodPerDay?: number;
 
   @IsNumber()
   @IsOptional()
-  @Transform(({ value }) => (value === 0 ? undefined : value))
+  @Transform(({ value }) => (value === 0 ? null : value))
   alertPeriodPerStock?: number;
 
   @IsNumber()
