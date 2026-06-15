@@ -11,7 +11,7 @@ for /f "tokens=5" %%a in ('netstat -aon ^| findstr :3001') do taskkill /f /pid %
 
 :: Define paths
 set "NODE_BIN=%~dp0resources\node\node.exe"
-set "CHROME_PROFILE=%~dp0resources\win_profile"
+
 
 :: 2. Launch your compiled background servers silently
 set NODE_ENV=production
@@ -44,7 +44,7 @@ if exist "C:\Program Files\Google\Chrome\Application\chrome.exe" (
 
 :launch
 :: Launch in Normal Maximized App Mode and WAIT for the user to close it.
-start /wait "" "%TARGET_BROWSER%" --app=http://127.0.0.1:3000/fr --start-maximized --window-size=1280,800 --user-data-dir="%CHROME_PROFILE%"
+start /wait "" "%TARGET_BROWSER%" --app=http://127.0.0.1:3000/fr --start-maximized --window-size=1920,1080 --user-data-dir="%CHROME_PROFILE%"
 
 :: =====================================================================
 :: 🚀 LIFECYCLE CLEANUP TRIGGERED

@@ -49,6 +49,7 @@ Source: "C:\Users\Dell\Documents\WebProjects\Nexus\frontend\.next\standalone\*";
 
 ; 4. The Embedded Execution Environments (Node runtime binaries)
 Source: "C:\Users\Dell\Documents\WebProjects\Nexus\resources\node\*"; DestDir: "{app}\resources\node"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\Dell\Documents\WebProjects\Nexus\resources\win_profile\*"; DestDir: "{app}\resources\win_profile"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 ; Create Start Menu entries pointing to the native launcher executable

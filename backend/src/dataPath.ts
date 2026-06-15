@@ -21,7 +21,7 @@ export function getDatabasePath(): string {
 
   // PRODUCTION FALLBACK (Safe Default): Always write to user's writable AppData directory
   const appDataDir = getAppDataDir();
-  const dbDir = path.join(appDataDir, 'StockManager');
+  const dbDir = path.join(appDataDir, 'Nexus-data');
 
   if (!fs.existsSync(dbDir)) {
     fs.mkdirSync(dbDir, { recursive: true });
