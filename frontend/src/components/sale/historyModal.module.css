@@ -26,6 +26,8 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 18px;
+  color: var(--foreground);
+  font-size: large;
   padding: 28px 24px 20px;
   width: 100%;
   max-width: 540px;
