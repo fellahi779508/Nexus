@@ -61,3 +61,24 @@ export async function deleteDataBase() {
     return { error: error.response.data.message, status: 0 };
   }
 }
+export async function getAllCredits(
+  page: number,
+  limit: number,
+  search?: string,
+  type?: string,
+  date?: string,
+) {
+  console.log(page, limit, search, type, date);
+
+  try {
+    const response = await api
+      .get(
+        `/${type}/credit?page=${page}&limit=${limit}&search=${search}&date=${date}`,
+      )
+      .then((res) => res.data);
+    console.log(response);
+    return { response, status: 1 };
+  } catch (error: any) {
+    return { error: error.response.data.message, status: 0 };
+  }
+}

@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { CreditService } from './credit.service';
 import { CreateCreditDto } from './dto/create-credit.dto';
@@ -21,8 +22,14 @@ export class CreditController {
   }
 
   @Get()
-  findAll() {
-    return this.creditService.findAll();
+  findAll(
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+    @Query('search') search?: string,
+    @Query('type') type?: string,
+    @Query('date') date?: string,
+  ) {
+    return this.creditService.findAll(page, limit, search, type, date);
   }
 
   @Get(':id')

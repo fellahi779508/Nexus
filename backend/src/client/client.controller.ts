@@ -30,7 +30,15 @@ export class ClientController {
   ) {
     return this.clientService.findAll(page, limit, search);
   }
-
+  @Get('credit')
+  getCredit(
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+    @Query('search') search?: string,
+    @Query('date') date?: string,
+  ) {
+    return this.clientService.getCredits(page, limit, search);
+  }
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.clientService.findOne(+id);

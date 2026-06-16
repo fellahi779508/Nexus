@@ -4,7 +4,7 @@ import { UpdateSupplierDto } from './dto/update-supplier.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Supplier } from './entities/supplier.entity';
 import { privateDecrypt } from 'crypto';
-import { DataSource, ILike, Repository } from 'typeorm';
+import { DataSource, ILike, MoreThan, Repository } from 'typeorm';
 import { CreditService } from 'src/credit/credit.service';
 import { Actions, Types } from 'src/utils/actions';
 import { Log } from 'src/logs/entities/log.entity';
@@ -99,5 +99,35 @@ export class SupplierService {
     const supplier = await this.findOne(id);
     await this.supplierRepository.remove(supplier);
     return 'success';
+  }
+  async getCredits(
+    page: number,
+    limit: number,
+    search?: string,
+    date?: string,
+  ) {
+    const [items, total] = await this.supplierRepository.findAndCount({
+      where: {
+        creditTTC: MoreThan(0),
+        name: ILike(`%${search}%`),
+        createdAt: date ? ILike(`%${date}%`) : undefined,
+      },
+      take: limit,
+      skip: (page - 1) * limit,
+    });
+    let totalCredit = 0;
+    for (const supplier of items) {
+      totalCredit += supplier.creditTTC;
+    }
+    return {
+      data: items,
+      meta: {
+        total,
+        page,
+        limit,
+        pages: limit > 0 ? Math.ceil(total / limit) : 1,
+      },
+      totalCredit,
+    };
   }
 }

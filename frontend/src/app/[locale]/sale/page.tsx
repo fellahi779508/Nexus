@@ -128,7 +128,8 @@ export default function Sale() {
               ? {
                   ...i,
                   quantity: i.quantity + 1,
-                  total: i.total + item.sellingPriceTTC,
+                  total:
+                    i.total + (item.promotionPrice ?? item.sellingPriceTTC),
                 }
               : i,
           ),
@@ -222,7 +223,7 @@ export default function Sale() {
             ...i,
             quantity: newQuantity,
             qtePerUnit: newQtePerUnit,
-            total: newQuantity * i.sellingPriceTTC,
+            total: newQuantity * newQtePerUnit * i.sellingPriceTTC,
           }
         : i,
     );
@@ -276,7 +277,7 @@ export default function Sale() {
             ...i,
             quantity: newQuantity,
             qtePerUnit: newQtePerUnit,
-            total: newQuantity * i.sellingPriceTTC,
+            total: newQtePerUnit * i.sellingPriceTTC,
           }
         : i,
     );
@@ -592,7 +593,9 @@ export default function Sale() {
                   key={item.id}
                   onDoubleClick={() => addToCart(item)}
                 >
-                  <td className={styles.tableCell}>{item.name}</td>
+                  <td className={styles.tableCell}>
+                    {item.product.name} - {item.name}
+                  </td>
 
                   <td className={styles.tableCell}>{item.barcode}</td>
                   <td className={styles.tableCell}>

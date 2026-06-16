@@ -243,7 +243,19 @@ export default function ZakatPage() {
 
   // ─── Render ──────────────────────────────────────────────────────────────────
   if (!locked)
-    return <PasswordGate ns="settings" onSuccess={() => setLocked(true)} />;
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          width: "100%",
+        }}
+      >
+        <PasswordGate ns="settings" onSuccess={() => setLocked(true)} />;
+      </div>
+    );
 
   return (
     <div className={styles.root}>

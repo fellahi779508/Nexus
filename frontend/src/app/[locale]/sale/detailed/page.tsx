@@ -154,7 +154,7 @@ export default function DetailedSale() {
             ? {
                 ...i,
                 quantity: i.quantity + 1,
-                total: i.total + item.sellingPriceTTC,
+                total: i.total + (item.promotionPrice ?? item.sellingPriceTTC),
               }
             : i,
         ),
@@ -167,10 +167,10 @@ export default function DetailedSale() {
           {
             batchId: batch.id,
             quantity: 1,
-            total: item.sellingPriceTTC,
+            total: item.promotionPrice ?? item.sellingPriceTTC,
             name: item.name,
             barcode: item.barcode,
-            sellingPriceTTC: item.sellingPriceTTC,
+            sellingPriceTTC: item.promotionPrice ?? item.sellingPriceTTC,
             maxStock:
               item.batches.find((b) => b.id === batch.id)?.stock.quantity || 0, // ← added
             unit: "piece", // ← added
@@ -617,7 +617,10 @@ export default function DetailedSale() {
                     key={batch.id}
                     onDoubleClick={() => addToCart(item, batch)}
                   >
-                    <td className={styles.tableCell}>{item.name}</td>
+                    <td className={styles.tableCell}>
+                      {" "}
+                      {item.product.name} - {item.name}
+                    </td>
                     <td className={styles.tableCell}>{batch.id}</td>
                     <td className={styles.tableCell}>{batch.nLot}</td>
                     <td className={styles.tableCell}>{item.barcode}</td>
