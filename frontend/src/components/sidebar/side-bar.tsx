@@ -19,6 +19,7 @@ import {
   Settings,
   AlertCircle,
   HandHeartIcon,
+  Coins,
 } from "lucide-react";
 import styles from "./side-bar.module.css";
 import { getExpiredBatches, getExpiringBatches } from "@/api/batch-api";
@@ -32,6 +33,7 @@ const NAV_ITEMS = [
   { key: "suppliers", href: "/suppliers", icon: Truck },
   { key: "sales", href: "/sales", icon: CircleDollarSign },
   { key: "purchases", href: "/purchases", icon: CircleDollarSign },
+  { key: "credits", href: "/credits", icon: Coins },
 ];
 
 const LOG_ITEMS = [

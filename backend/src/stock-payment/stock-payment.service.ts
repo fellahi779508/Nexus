@@ -195,17 +195,21 @@ export class StockPaymentService {
       const purchasedItemRepo = manager.getRepository(PurchasedItem);
       const creditRepo = manager.getRepository(Credit);
       const logRepo = manager.getRepository(Log);
-      const supplierRepo = manager.getRepository(Supplier); // Added Supplier Repo
+      const supplierRepo = manager.getRepository(Supplier);
 
-      // 1. Fetch the purchase normally, including the supplier relation
+      // 1. Fetch the purchase, including BOTH supplier and credit relations
       const stockPayment = await stockPaymentRepo.findOne({
         where: { id },
-        relations: ['purchasedItems', 'purchasedItems.batch', 'supplier'],
+        relations: [
+          'purchasedItems',
+          'purchasedItems.batch',
+          'supplier',
+          'credit',
+        ],
       });
       if (!stockPayment) throw new NotFoundException('Stock payment not found');
 
       // 2. Return previous quantities back to stock ATOMICALLY
-      // Note: Reverting a purchase means DECREMENTING stock
       for (const item of stockPayment.purchasedItems) {
         await stockRepo.decrement(
           { batch: { id: item.batch.id } },
@@ -224,7 +228,6 @@ export class StockPaymentService {
           where: { id: stockPayment.supplier.id },
         });
 
-        // BULLETPROOF FIX: Calculate old credit directly from the payment totals
         const oldCreditAmount =
           Number(stockPayment.total) - Number(stockPayment.paid);
 
@@ -233,10 +236,10 @@ export class StockPaymentService {
             Number(oldSupplier.creditTTC) - oldCreditAmount;
           await supplierRepo.save(oldSupplier);
         }
-
-        // Wipe the old credit records
-        await creditRepo.delete({ stockPayment: { id: stockPayment.id } });
       }
+
+      // FIX 1: Always wipe old credit records cleanly outside the conditional block
+      await creditRepo.delete({ stockPayment: { id: stockPayment.id } });
 
       // 4. Update basic purchase properties (Cast to Numbers)
       stockPayment.paid = Number(dto.paid ?? stockPayment.paid);
@@ -266,23 +269,28 @@ export class StockPaymentService {
         const creditAmount = stockPayment.total - stockPayment.paid;
 
         if (creditAmount > 0) {
-          await creditRepo.save(
-            creditRepo.create({
-              stockPayment: { id: stockPayment.id },
-              amount: creditAmount,
-            }),
-          );
+          const newCredit = creditRepo.create({
+            stockPayment: { id: stockPayment.id },
+            amount: creditAmount,
+          });
+
+          const savedCredit = await manager.save(newCredit);
+
+          // FIX 2: Explicitly link the saved credit instance back to the entity memory reference
+          stockPayment.credit = savedCredit;
 
           // Force Number casting to prevent string concatenation errors
           supplier.creditTTC = Number(supplier.creditTTC) + creditAmount;
           await supplierRepo.save(supplier);
+        } else {
+          stockPayment.credit = null as any;
         }
       } else {
         stockPayment.supplier = null as any;
-        // Credit was already deleted in Step 3, so no need to delete again
+        stockPayment.credit = null as any;
       }
 
-      // Save basic Purchase info inside the transaction
+      // Save basic Purchase info inside the transaction safely now
       const savedStockPayment = await stockPaymentRepo.save(stockPayment);
 
       // 6. Bulk Insert new purchased items & Add to Stock Atomically
@@ -299,11 +307,8 @@ export class StockPaymentService {
           }),
         );
 
-        // Bulk save new items in 1 trip
         await purchasedItemRepo.save(purchasedItemsToCreate);
 
-        // Bulk add stock atomically directly in the DB engine
-        // Note: Applying a new purchase means INCREMENTING stock
         for (const item of dto.purchasedItems) {
           await stockRepo.increment(
             { batch: { id: item.batchId } },
@@ -911,12 +916,6 @@ export class StockPaymentService {
       .fontSize(10)
       .text('Merci pour votre approvisionnement !', { align: 'center' });
     doc.moveDown(0.4);
-    doc
-      .font('Helvetica')
-      .fontSize(8)
-      .fillColor('#666666')
-      .text('Conditions de paiement : Net 30 jours.', { align: 'center' });
-    doc.fillColor('#000000');
 
     doc.end();
     return new Promise((resolve) => {

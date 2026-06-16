@@ -30,6 +30,14 @@ export class SupplierController {
   ) {
     return this.supplierService.findAll(page, limit, search);
   }
+  @Get('credit')
+  getCredit(
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+    @Query('search') search?: string,
+  ) {
+    return this.supplierService.getCredits(page, limit, search);
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {

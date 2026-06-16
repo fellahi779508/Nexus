@@ -67,6 +67,7 @@
     "settingsDescription": "System configuration",
     "dashboard": "Dashboard",
     "categories": "Categories",
+    "credits": "Credits",
     "zakat": "Zakat",
     "alert": {
       "title": "Alert",
@@ -984,7 +985,7 @@
     "total": "Total",
     "paid": "Paid",
     "remaining": "Remaining",
-    "fullyPaid": "Fully paid",
+    "fullyPaid": "Fully p4aid",
     "partiallyPaid": "Partially paid",
     "unpaid": "Unpaid",
     "paymentMethod": "Payment method",
@@ -1269,7 +1270,18 @@
       "new purchase": "New Purchase",
       "new sale": "New Sale",
       "remove": "Remove",
-      "new credit": "New Credit"
+      "new credit": "New Credit",
+      "remove credit": "Remove Credit"
+    },
+    "reasons": {
+      "sold": "Sold",
+      "returned": "Returned",
+      "expired": "Expired",
+      "refilled": "Refilled",
+      "new": "New",
+      "paid": "Paid",
+      "damaged": "Damaged",
+      "loss": "Loss"
     },
     "errors": {
       "fetchFailed": "Failed to load logs. Make sure the backend is running."
@@ -1340,5 +1352,24 @@
     "deleteConfigBtn": "Delete config",
     "deleting": "Deleting…",
     "saveChangesBtn": "Save changes"
+  },
+  "creditsPage": {
+    "title": "Debt Balance Sheets",
+    "subtitle": "Track active outstanding debt claims and liabilities dynamically.",
+    "totalClientCredit": "Total Outstanding Claims",
+    "totalSupplierCredit": "Total Supplier Debt Balance",
+    "clients": "Clients Balance",
+    "suppliers": "Suppliers Balance",
+    "searchClientPlaceholder": "Search customer directory...",
+    "searchSupplierPlaceholder": "Search supplier directory...",
+    "id": "ID",
+    "clientName": "Client Name",
+    "supplierName": "Supplier Name",
+    "phone": "Phone Number",
+    "address": "Address Location",
+    "lastActivity": "Last Updated",
+    "outstandingCredit": "Balance Owed",
+    "noCreditsFound": "No outstanding active debt balance records found matching your selection criteria.",
+    "pageInfo": "Page {page} of {pages}"
   }
 }

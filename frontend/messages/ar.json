@@ -66,6 +66,7 @@
     "settings": "الإعدادات",
     "settingsDescription": "إعدادات النظام",
     "dashboard": "لوحة القيادة",
+    "credits": "الديون",
     "categories": "الفئات",
     "zakat": "زكاة",
     "alert": {
@@ -1076,6 +1077,7 @@
     "recordPaymentError": "فشل تسجيل الدفعة."
   },
   "settings": {
+    "deletionConfirmation": "هل أنت متأكد من حذف قاعدة البيانات؟",
     "eyebrow": "الإعدادات",
     "title": "الإعدادات",
     "desc": "إدارة ملف الشركة، اللغة، المظهر، ونسخ البيانات الاحتياطي.",
@@ -1263,7 +1265,18 @@
       "new purchase": "أمر شراء جديد",
       "new sale": "أمر بيع جديد",
       "remove": "إزالة",
-      "new credit": "جديد رصيدs"
+      "new credit": "جديد رصيدs",
+      "remove credit": "إزالة رصيد"
+    },
+    "reasons": {
+      "sold": "مبيع",
+      "returned": "مرتجع",
+      "expired": "منتهية الصلاحية",
+      "refilled": "ملء",
+      "new": "جديد",
+      "paid": "مدفوع",
+      "damaged": "معطل",
+      "loss": "خسارة"
     },
     "errors": {
       "fetchFailed": "فشل تحميل السجلات. تأكد من تشغيل الخادم الخلفي."
@@ -1335,5 +1348,24 @@
     "deleteConfigBtn": "حذف الإعدادات",
     "deleting": "جاري الحذف…",
     "saveChangesBtn": "حفظ التغييرات"
+  },
+  "creditsPage": {
+    "title": "إدارة الديون والقرورض",
+    "subtitle": "متابعة المبالغ المستحقة غير المدفوعة للعملاء والموردين بشكل حيوي.",
+    "totalClientCredit": "إجمالي ديون العملاء",
+    "totalSupplierCredit": "إجمالي ديون الموردين",
+    "clients": "مستحقات العملاء",
+    "suppliers": "مستحقات الموردين",
+    "searchClientPlaceholder": "بحث عن عميل...",
+    "searchSupplierPlaceholder": "بحث عن مورد...",
+    "id": "الرقم",
+    "clientName": "اسم العميل",
+    "supplierName": "اسم المورد",
+    "phone": "رقم الهاتف",
+    "address": "العنوان",
+    "lastActivity": "آخر تحديث",
+    "outstandingCredit": "المبلغ المتبقي",
+    "noCreditsFound": "لا توجد مستحقات مالية نشطة تطابق خيارات البحث.",
+    "pageInfo": "الصفحة {page} من {pages}"
   }
 }

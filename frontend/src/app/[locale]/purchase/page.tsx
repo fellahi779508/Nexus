@@ -640,7 +640,10 @@ export default function Purchase() {
                     key={batch.id}
                     onDoubleClick={() => addToCart(item, batch)}
                   >
-                    <td className={styles.tableCell}>{item.name}</td>
+                    <td className={styles.tableCell}>
+                      {" "}
+                      {item.product.name} - {item.name}
+                    </td>
                     <td className={styles.tableCell}>{batch.id}</td>
                     <td className={styles.tableCell}>{batch.nLot}</td>
                     <td className={styles.tableCell}>{item.barcode}</td>

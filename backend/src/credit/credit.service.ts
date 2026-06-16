@@ -3,7 +3,7 @@ import { CreateCreditDto } from './dto/create-credit.dto';
 import { UpdateCreditDto } from './dto/update-credit.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Credit } from './entities/credit.entity';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, ILike, IsNull, Not, Repository } from 'typeorm';
 import { Sale } from 'src/sale/entities/sale.entity';
 import { Client } from 'src/client/entities/client.entity';
 import { StockPayment } from 'src/stock-payment/entities/stock-payment.entity';
@@ -11,7 +11,7 @@ import { Supplier } from 'src/supplier/entities/supplier.entity';
 import { create } from 'domain';
 import { async } from 'rxjs';
 import { Log } from 'src/logs/entities/log.entity';
-import { Actions, Types } from 'src/utils/actions';
+import { Actions, Reasons, Types } from 'src/utils/actions';
 
 @Injectable()
 export class CreditService {
@@ -40,6 +40,7 @@ export class CreditService {
     await this.dataSource.manager.save(Log, {
       action: Actions.REMOVE_CREDIT,
       entityType: Types.CLIENT,
+      reason: Reasons.PAID,
       timestamp: new Date().toISOString(),
       client,
     });
@@ -66,6 +67,14 @@ export class CreditService {
       await this.dataSource.manager.save(purchase);
     }
     supplier.creditTTC = 0;
+    await this.dataSource.manager.save(Log, {
+      action: Actions.PAYMENT,
+      entityType: Types.SUPPLIER,
+      reason: Reasons.PAID,
+      timestamp: new Date().toISOString(),
+      supplier,
+    });
+
     await this.dataSource.manager.save(supplier);
     await this.creditRepo.remove(credits);
     return 'done';
@@ -75,8 +84,65 @@ export class CreditService {
     return 'This action adds a new credit';
   }
 
-  findAll() {
-    return `This action returns all credit`;
+  async findAll(
+    page: number,
+    limit: number,
+    search?: string,
+    type?: string,
+    date?: string,
+  ) {
+    // 1. Initialize a clean, dynamic where object
+    const whereCondition: any = {};
+
+    // 2. Apply the date filter safely if provided
+    if (date && date.trim() !== '') {
+      whereCondition.date = ILike(`%${date.split('T')[0]}%`);
+    }
+
+    // 3. Handle strict Type isolation using Not(IsNull()) instead of empty objects
+    if (type === 'client') {
+      if (search && search.trim() !== '') {
+        // If searching, dig into the nested relations
+        whereCondition.sale = { client: { name: ILike(`%${search}%`) } };
+      } else {
+        // FIX: Forces TypeORM to ensure the sale exists without breaking the join
+        whereCondition.sale = { id: Not(IsNull()) };
+      }
+    } else if (type === 'supplier') {
+      if (search && search.trim() !== '') {
+        // If searching, dig into the nested relations
+        whereCondition.stockPayment = {
+          supplier: { name: ILike(`%${search}%`) },
+        };
+      } else {
+        // FIX: Forces TypeORM to ensure the stockpayment exists without breaking the join
+        whereCondition.stockPayment = { id: Not(IsNull()) };
+      }
+    }
+
+    // 4. Execute using standard repository findAndCount
+    const [items, total] = await this.creditRepo.findAndCount({
+      where: whereCondition,
+      relations: [
+        'sale',
+        'sale.client',
+        'stockPayment',
+        'stockPayment.supplier',
+      ],
+      take: limit,
+      skip: (page - 1) * limit,
+      order: { id: 'DESC' },
+    });
+
+    return {
+      data: items,
+      meta: {
+        total,
+        page,
+        limit,
+        pages: limit > 0 ? Math.ceil(total / limit) : 1,
+      },
+    };
   }
 
   findOne(id: number) {

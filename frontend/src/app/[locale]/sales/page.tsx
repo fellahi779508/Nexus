@@ -19,6 +19,7 @@ import {
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import PasswordGate from "@/components/owner/passwordGate";
 
 export default function Sales() {
   const t = useTranslations("salesPage");
@@ -103,7 +104,7 @@ export default function Sales() {
         return styles.badgeDefault;
     }
   };
-
+  const [locked, setLocked] = useState(false);
   const totalRevenue = sales.reduce((sum, s) => sum + s.total, 0);
   const totalPaid = sales.reduce((sum, s) => sum + s.paid, 0);
   const uniqueClients = new Set(
@@ -117,6 +118,21 @@ export default function Sales() {
       acc.push(p);
       return acc;
     }, []);
+  if (!locked)
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          width: "100%",
+          scale: "1",
+        }}
+      >
+        <PasswordGate ns="settings" onSuccess={() => setLocked(true)} />;
+      </div>
+    );
 
   return (
     <div className={styles.container}>

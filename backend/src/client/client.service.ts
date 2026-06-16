@@ -2,11 +2,11 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, ILike, Repository } from 'typeorm';
+import { DataSource, ILike, MoreThan, Repository } from 'typeorm';
 import { Client } from './entities/client.entity';
 import { CreditService } from 'src/credit/credit.service';
 import { Log } from 'src/logs/entities/log.entity';
-import { Actions, Types } from 'src/utils/actions';
+import { Actions, Reasons, Types } from 'src/utils/actions';
 
 @Injectable()
 export class ClientService {
@@ -69,11 +69,22 @@ export class ClientService {
     if (!client) {
       throw new NotFoundException('Client not found');
     }
+    if (updateClientDto.creditTTC) {
+      await this.dataSource.manager.save(Log, {
+        action: Actions.PAYMENT,
+        entityType: Types.CLIENT,
+        reason: Reasons.PAID,
+
+        timestamp: new Date().toISOString(),
+        client,
+      });
+    }
     if (client.creditTTC === 0) {
       await this.creditService.removeCreditsOfClientById(client.id);
       await this.dataSource.manager.save(Log, {
         action: Actions.PAYMENT,
         entityType: Types.CLIENT,
+        reason: Reasons.PAID,
         timestamp: new Date().toISOString(),
         client,
       });
@@ -90,5 +101,35 @@ export class ClientService {
       timestamp: new Date().toISOString(),
     });
     return 'done';
+  }
+  async getCredits(
+    page: number,
+    limit: number,
+    search?: string,
+    date?: string,
+  ) {
+    const [items, total] = await this.clientRepository.findAndCount({
+      where: {
+        creditTTC: MoreThan(0),
+        name: ILike(`%${search}%`),
+        createdAt: date ? ILike(`%${date}%`) : undefined,
+      },
+      take: limit,
+      skip: (page - 1) * limit,
+    });
+    let totalCredit = 0;
+    for (const client of items) {
+      totalCredit += client.creditTTC;
+    }
+    return {
+      data: items,
+      meta: {
+        total,
+        page,
+        limit,
+        pages: limit > 0 ? Math.ceil(total / limit) : 1,
+      },
+      totalCredit,
+    };
   }
 }

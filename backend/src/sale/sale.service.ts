@@ -239,18 +239,17 @@ export class SaleService {
           where: { id: sale.client.id },
         });
 
-        // BULLETPROOF FIX: Calculate old credit directly from the sale totals
-        // This ignores the relation entirely and guarantees a real number.
         const oldCreditAmount = Number(sale.total) - Number(sale.paid);
 
         if (oldClient && oldCreditAmount > 0) {
           oldClient.creditTTC = Number(oldClient.creditTTC) - oldCreditAmount;
           await clientRepo.save(oldClient);
         }
-
-        // Wipe the old credit records
-        await creditRepo.delete({ sale: { id: sale.id } });
       }
+
+      // FIX 1: Move this outside the block so lingering credit links
+      // are ALWAYS wiped cleanly before rebuilding them
+      await creditRepo.delete({ sale: { id: sale.id } });
 
       // 4. Update basic sale properties (Cast to Numbers)
       sale.paid = Number(dto.paid ?? sale.paid);
@@ -260,38 +259,37 @@ export class SaleService {
       sale.date = dto.date ?? sale.date;
       sale.timbre = dto.timbre ?? sale.timbre;
 
-      // Determine which client ID we should be using
-      // If dto.clientId is provided, use it. Otherwise, keep the existing one.
-      const targetClientId =
-        dto.clientId !== undefined ? dto.clientId : sale.client?.id;
-
       // 5. Handle Client & Credit Assignment safely
-      if (targetClientId) {
+      if (dto.clientId) {
         const client = await clientRepo.findOne({
-          where: { id: targetClientId },
+          where: { id: dto.clientId },
         });
         if (!client) throw new NotFoundException('Client not found');
 
         sale.client = client;
 
-        // Calculate credit based on the verified sale properties, NOT the dto directly
         const creditAmount = sale.total - sale.paid;
 
         if (creditAmount > 0) {
-          await creditRepo.save(
-            creditRepo.create({
-              sale: { id: sale.id },
-              amount: creditAmount,
-            }),
-          );
+          const newCredit = creditRepo.create({
+            sale: { id: sale.id },
+            amount: creditAmount,
+          });
 
-          // Force Number casting to prevent string concatenation ("100" + 50 = "10050")
+          const savedCredit = await manager.save(newCredit);
+
+          // FIX 2: Bind the new credit back to the sale entity instance
+          // to stop TypeORM from overwriting it with NULL in the next line!
+          sale.credit = savedCredit;
+
           client.creditTTC = Number(client.creditTTC) + creditAmount;
           await clientRepo.save(client);
+        } else {
+          sale.credit = null as any;
         }
       } else {
         sale.client = null as any;
-        // Credit was already deleted in Step 3, so no need to delete again
+        sale.credit = null as any;
       }
 
       // Save basic Sale info inside the transaction
@@ -879,26 +877,12 @@ export class SaleService {
     doc.y = totalsY + totalsHeight + 30;
 
     // ----- PIED DE PAGE -----
-    hr(doc.y, 1);
     doc.moveDown(0.6);
     doc
       .font('Helvetica-Bold')
       .fontSize(10)
       .text('Merci pour votre confiance !', { align: 'center' });
     doc.moveDown(0.4);
-    doc
-      .font('Helvetica')
-      .fontSize(8)
-      .fillColor('#666666')
-      .text(
-        'Paiement dû dans un délai de 30 jours. Retours acceptés sous 7 jours.',
-        { align: 'center' },
-      );
-    doc.text(
-      'Ceci est une facture générée par ordinateur – signature non requise.',
-      { align: 'center' },
-    );
-    doc.fillColor('#000000');
 
     doc.end();
     return new Promise((resolve) => {

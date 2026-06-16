@@ -96,8 +96,29 @@ type ApiResponse = {
   meta: { total: number; page: number; limit: number; pages: number };
 };
 
-const ENTITY_TYPES = ["sale", "stock", "batch", "credit", "supplier", "client"];
-const ACTION_TYPES = ["create", "update", "delete", "payment", "adjustment"];
+const ENTITY_TYPES = [
+  "sale",
+  "stockPayment",
+  "stock",
+  "batch",
+  "credit",
+  "supplier",
+  "client",
+  "product",
+];
+const ACTION_TYPES = [
+  "create",
+  "update",
+  "delete",
+  "payment",
+  "adjustment",
+  "add",
+  "remove",
+  "new sale",
+  "new credit",
+  "remove credit",
+  "new purchase",
+];
 
 // Helper: get color class for action badge (CSS module classes)
 function getActionBadgeClass(action: string): string {
@@ -258,7 +279,19 @@ export default function LogsPage() {
   };
 
   if (!locked)
-    return <PasswordGate ns="settings" onSuccess={() => setLocked(true)} />;
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          width: "100%",
+        }}
+      >
+        <PasswordGate ns="settings" onSuccess={() => setLocked(true)} />;
+      </div>
+    );
 
   return (
     <>
@@ -505,8 +538,9 @@ export default function LogsPage() {
                         </span>
                       </td>
                       <td className={styles.descCell}>
-                        {log.reason ||
-                          `${t(`entities.${log.entityType}`)} — ${t(`actions.${log.action}`)}`}
+                        {log.reason
+                          ? t(`reasons.${log.reason}`)
+                          : `${t(`entities.${log.entityType}`)} — ${t(`actions.${log.action}`)}`}
                       </td>
                       <td>{formatDate(log.timestamp)}</td>
                       <td>

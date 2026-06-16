@@ -67,6 +67,7 @@
     "settingsDescription": "Configuration du système",
     "dashboard": "Tableau de Bord",
     "categories": "Catégories",
+    "credits": "Crédits",
     "zakat": "Zakat",
     "alert": {
       "title": "Alerte",
@@ -1076,6 +1077,7 @@
     "recordPaymentError": "Échec de l'enregistrement du paiement."
   },
   "settings": {
+    "deletionConfirmation": "Êtes-vous sûr de vouloir supprimer la base de données ?",
     "eyebrow": "Configuration",
     "title": "Paramètres",
     "desc": "Gérez votre profil d'entreprise, la langue, l'apparence et la sauvegarde des données.",
@@ -1263,7 +1265,18 @@
       "new purchase": "Nouvelle commande",
       "new sale": "Nouvelle vente",
       "remove": "Retirer",
-      "new credit": "Nouveau crédit"
+      "new credit": "Nouveau crédit",
+      "remove credit": "Retirer crédit"
+    },
+    "reasons": {
+      "sold": "Vendu",
+      "returned": "Retourné",
+      "expired": "Expiré",
+      "refilled": "Rechargé",
+      "new": "Nouveau",
+      "paid": "Payé",
+      "damaged": "Endommagé",
+      "loss": "Perte"
     },
     "errors": {
       "fetchFailed": "Échec du chargement des journaux. Vérifiez que le backend est en cours d'exécution."
@@ -1334,5 +1347,24 @@
     "deleteConfigBtn": "Supprimer la config",
     "deleting": "Suppression…",
     "saveChangesBtn": "Enregistrer les modifications"
+  },
+  "creditsPage": {
+    "title": "Gestion des Crédits",
+    "subtitle": "Suivez en temps réel les créances clients et les dettes fournisseurs.",
+    "totalClientCredit": "Total Créances Clients",
+    "totalSupplierCredit": "Total Dettes Fournisseurs",
+    "clients": "Balance Clients",
+    "suppliers": "Balance Fournisseurs",
+    "searchClientPlaceholder": "Rechercher un client...",
+    "searchSupplierPlaceholder": "Rechercher un fournisseur...",
+    "id": "Réf",
+    "clientName": "Nom du Client",
+    "supplierName": "Nom du Fournisseur",
+    "phone": "Téléphone",
+    "address": "Adresse",
+    "lastActivity": "Dernière Activité",
+    "outstandingCredit": "Montant Restant",
+    "noCreditsFound": "Aucun enregistrement de crédit en cours trouvé.",
+    "pageInfo": "Page {page} sur {pages}"
   }
 }

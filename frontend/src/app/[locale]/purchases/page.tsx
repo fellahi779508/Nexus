@@ -19,6 +19,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { clearAllPurchases, getAllPurchases } from "@/api/purchase-api";
+import PasswordGate from "@/components/owner/passwordGate";
 
 export default function Purchases() {
   const t = useTranslations("purchasesPage");
@@ -117,6 +118,21 @@ export default function Purchases() {
       alert(t("errorDeleteAllPurchases"));
     }
   }
+  const [locked, setLocked] = useState(false);
+  if (!locked)
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+          width: "100%",
+        }}
+      >
+        <PasswordGate ns="settings" onSuccess={() => setLocked(true)} />;
+      </div>
+    );
   return (
     <div className={styles.container}>
       <title>Nexus | Purchases</title>
