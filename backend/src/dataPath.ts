@@ -4,23 +4,17 @@ import * as os from 'os';
 
 /**
  * Returns the path to StockData.sqlite.
- *
- * DEFAULT (Production/Safe Mode):
- * Windows → %APPDATA%\StockManager\StockData.sqlite
- * * ONLY during local development (plain `nest start` with NODE_ENV=development):
- * → <project root>/StockData.sqlite
  */
 export function getDatabasePath(): string {
-  // Check if we are explicitly in development mode
   const isDevelopment = process.env.NODE_ENV === 'development';
 
   if (isDevelopment) {
-    // Development: keep the database next to the project root for easy viewing
+    // Development: Keep the database inside your backend project root for easy access
     return path.join(process.cwd(), 'StockData.sqlite');
   }
 
-  // PRODUCTION FALLBACK (Safe Default): Always write to user's writable AppData directory
-  const appDataDir = getAppDataDir();
+  // PRODUCTION FALLBACK: Use path handed down from Electron, otherwise fall back to manual lookup
+  const appDataDir = process.env.ELECTRON_USER_DATA ?? getAppDataDir();
   const dbDir = path.join(appDataDir, 'Nexus-data');
 
   if (!fs.existsSync(dbDir)) {
@@ -31,7 +25,7 @@ export function getDatabasePath(): string {
 }
 
 /**
- * Returns the OS user-data directory.
+ * Manual fallback function if the backend runs independently of Electron
  */
 function getAppDataDir(): string {
   switch (process.platform) {
