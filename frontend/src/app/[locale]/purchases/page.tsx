@@ -14,6 +14,7 @@ import {
   Package,
   ShoppingCart,
   DeleteIcon,
+  Coins,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -29,6 +30,7 @@ export default function Purchases() {
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [totalPurchases, setTotalPurchases] = useState(0);
   const [page, setPage] = useState(1);
   const [meta, setMeta] = useState<Meta>({
     total: 0,
@@ -44,6 +46,7 @@ export default function Purchases() {
     if (res.status === 1) {
       setPurchases(res.response.data);
       setMeta(res.response.meta);
+      setTotalPurchases(res.response.totalAmount);
     } else {
       setError(res.error.message);
     }
@@ -130,7 +133,7 @@ export default function Purchases() {
           width: "100%",
         }}
       >
-        <PasswordGate ns="settings" onSuccess={() => setLocked(true)} />;
+        <PasswordGate ns="settings" onSuccess={() => setLocked(true)} />
       </div>
     );
   return (
@@ -181,6 +184,15 @@ export default function Purchases() {
           </div>
         </div>
         <div className={styles.statCard}>
+          <div className={styles.statIcon} data-type="info">
+            <Coins size={16} />
+          </div>
+          <div>
+            <p className={styles.statLabel}>{t("stats.total")}</p>
+            <p className={styles.statValue}>{totalPurchases}</p>
+          </div>
+        </div>
+        <div className={styles.statCard}>
           <div className={styles.statIcon} data-type="success">
             <TrendingUp size={16} />
           </div>
@@ -196,15 +208,6 @@ export default function Purchases() {
           <div>
             <p className={styles.statLabel}>{t("stats.totalPaid")}</p>
             <p className={styles.statValue}>{formatCurrency(totalPaid)}</p>
-          </div>
-        </div>
-        <div className={styles.statCard}>
-          <div className={styles.statIcon} data-type="info">
-            <Users size={16} />
-          </div>
-          <div>
-            <p className={styles.statLabel}>{t("stats.suppliers")}</p>
-            <p className={styles.statValue}>{uniqueClients}</p>
           </div>
         </div>
       </div>

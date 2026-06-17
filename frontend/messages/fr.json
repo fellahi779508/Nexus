@@ -860,7 +860,7 @@
       "totalSales": "Total des Ventes",
       "totalRevenue": "Revenu (page)",
       "totalPaid": "Encaissé (page)",
-      "clients": "Clients (page)"
+      "total": "Total"
     },
     "table": {
       "id": "ID",
@@ -901,7 +901,8 @@
       "totalPurchases": "Total des Achats",
       "totalRevenue": "Coût (page)",
       "totalPaid": "Payé (page)",
-      "suppliers": "Fournisseurs (page)"
+      "suppliers": "Fournisseurs (page)",
+      "total": "Total"
     },
     "table": {
       "id": "ID",

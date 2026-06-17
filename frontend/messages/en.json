@@ -864,7 +864,7 @@
       "totalSales": "Total Sales",
       "totalRevenue": "Revenue (page)",
       "totalPaid": "Collected (page)",
-      "clients": "Clients (page)"
+      "total": "Total"
     },
     "table": {
       "id": "ID",
@@ -905,7 +905,8 @@
       "totalPurchases": "Total Purchases",
       "totalRevenue": "Cost (page)",
       "totalPaid": "Paied (page)",
-      "suppliers": "Suppliers (page)"
+      "suppliers": "Suppliers (page)",
+      "total": "Total"
     },
     "table": {
       "id": "ID",

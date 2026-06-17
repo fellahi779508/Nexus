@@ -3,4 +3,5 @@ node_modules/
 *.log
 out/
 release/
-resources/
+resources/node/
+resources/win_profile/

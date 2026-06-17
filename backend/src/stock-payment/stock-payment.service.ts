@@ -134,10 +134,33 @@ export class StockPaymentService {
       return savedPayment;
     });
   }
-  async findAll(page: number, limit: number, search: string) {
+  async findAll(page: number, limit: number, search?: string) {
+    const sumQuery = this.stockPaymentRepository.createQueryBuilder('payment');
+
     if (search) {
-      const [items, count] = await this.stockPaymentRepository.findAndCount({
-        where: { supplier: { name: `${ILike(search)}` } },
+      sumQuery
+        .leftJoin('payment.supplier', 'supplier')
+        .where('supplier.name ILIKE :search', {
+          search: `%${search}%`,
+        });
+    }
+
+    const sumResult = await sumQuery
+      .select('COALESCE(SUM(payment.total), 0)', 'totalAmount')
+      .getRawOne();
+
+    const totalAmount = Number(sumResult.totalAmount);
+
+    let items;
+    let count;
+
+    if (search) {
+      [items, count] = await this.stockPaymentRepository.findAndCount({
+        where: {
+          supplier: {
+            name: ILike(`%${search}%`),
+          },
+        },
         take: limit,
         skip: (page - 1) * limit,
         relations: [
@@ -148,29 +171,31 @@ export class StockPaymentService {
         ],
         order: { id: 'DESC' },
       });
-
-      return {
-        data: items,
-        meta: { total: count, page, limit, pages: Math.ceil(count / limit) },
-      };
+    } else {
+      [items, count] = await this.stockPaymentRepository.findAndCount({
+        take: limit,
+        skip: (page - 1) * limit,
+        relations: [
+          'supplier',
+          'credit',
+          'purchasedItems',
+          'purchasedItems.batch',
+        ],
+        order: { id: 'DESC' },
+      });
     }
-    const [items, count] = await this.stockPaymentRepository.findAndCount({
-      take: limit,
-      skip: (page - 1) * limit,
-      relations: [
-        'supplier',
-        'credit',
-        'purchasedItems',
-        'purchasedItems.batch',
-      ],
-      order: { id: 'DESC' },
-    });
+
     return {
       data: items,
-      meta: { total: count, page, limit, pages: Math.ceil(count / limit) },
+      meta: {
+        total: count,
+        page,
+        limit,
+        pages: Math.ceil(count / limit),
+      },
+      totalAmount,
     };
   }
-
   async findOne(id: number) {
     const stockPayment = await this.stockPaymentRepository.findOne({
       where: { id },

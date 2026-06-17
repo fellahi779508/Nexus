@@ -15,6 +15,7 @@ import {
   Package,
   ShoppingCart,
   DeleteIcon,
+  Coins,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -30,6 +31,7 @@ export default function Sales() {
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [page, setPage] = useState(1);
+  const [totalSales, setTotalSales] = useState(0);
   const [meta, setMeta] = useState<Meta>({
     total: 0,
     page: 1,
@@ -56,6 +58,7 @@ export default function Sales() {
     if (res.status === 1) {
       setSales(res.response.data);
       setMeta(res.response.meta);
+      setTotalSales(res.response.totalSales);
     } else {
       setError(res.error.message);
     }
@@ -189,6 +192,15 @@ export default function Sales() {
           </div>
         </div>
         <div className={styles.statCard}>
+          <div className={styles.statIcon} data-type="info">
+            <Coins size={16} />
+          </div>
+          <div>
+            <p className={styles.statLabel}>{t("stats.total")}</p>
+            <p className={styles.statValue}>{totalSales}</p>
+          </div>
+        </div>
+        <div className={styles.statCard}>
           <div className={styles.statIcon} data-type="success">
             <TrendingUp size={16} />
           </div>
@@ -204,15 +216,6 @@ export default function Sales() {
           <div>
             <p className={styles.statLabel}>{t("stats.totalPaid")}</p>
             <p className={styles.statValue}>{formatCurrency(totalPaid)}</p>
-          </div>
-        </div>
-        <div className={styles.statCard}>
-          <div className={styles.statIcon} data-type="info">
-            <Users size={16} />
-          </div>
-          <div>
-            <p className={styles.statLabel}>{t("stats.clients")}</p>
-            <p className={styles.statValue}>{uniqueClients}</p>
           </div>
         </div>
       </div>

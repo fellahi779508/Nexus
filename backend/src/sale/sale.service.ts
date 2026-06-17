@@ -127,28 +127,42 @@ export class SaleService {
   }
 
   async findAll(page: number, limit: number, search?: string) {
+    const totalSalesResult = await this.saleRepository
+      .createQueryBuilder('sale')
+      .select('COALESCE(SUM(sale.total), 0)', 'totalSales')
+      .getRawOne();
+
+    const totalSales = Number(totalSalesResult.totalSales);
+
+    let items;
+    let total;
+
     if (search) {
-      const [items, total] = await this.saleRepository.findAndCount({
+      [items, total] = await this.saleRepository.findAndCount({
         where: { client: { name: ILike(`%${search}%`) } },
         take: limit,
         skip: (page - 1) * limit,
         relations: ['client', 'soldItems', 'soldItems.batch', 'credit'],
         order: { date: 'DESC' },
       });
-      return {
-        data: items,
-        meta: { total, page, limit, pages: Math.ceil(total / limit) },
-      };
+    } else {
+      [items, total] = await this.saleRepository.findAndCount({
+        take: limit,
+        skip: (page - 1) * limit,
+        relations: ['client', 'soldItems', 'soldItems.batch', 'credit'],
+        order: { date: 'DESC' },
+      });
     }
-    const [items, total] = await this.saleRepository.findAndCount({
-      take: limit,
-      skip: (page - 1) * limit,
-      relations: ['client', 'soldItems', 'soldItems.batch', 'credit'],
-      order: { date: 'DESC' },
-    });
+
     return {
       data: items,
-      meta: { total, page, limit, pages: Math.ceil(total / limit) },
+      meta: {
+        total,
+        page,
+        limit,
+        pages: Math.ceil(total / limit),
+      },
+      totalSales,
     };
   }
   async getTodaysSales() {
