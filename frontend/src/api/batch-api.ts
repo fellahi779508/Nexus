@@ -47,7 +47,7 @@ export async function getExpiredBatches(page: number, limit: number) {
 export async function getExpiringBatches(page: number, limit: number) {
   try {
     const response = await api
-      .get(`/batch/alert?page=${page}&limit=${limit}`)
+      .get(`/batch/expiring?page=${page}&limit=${limit}`)
       .then((res) => res.data);
     console.log(response);
     return { response, status: 1 };
@@ -74,7 +74,9 @@ export async function updateBatchById(id: number, data: PostBatch) {
 }
 export async function getLowStockBatches() {
   try {
-    const response = await api.get(`/batch/low`).then((res) => res.data);
+    const response = await api
+      .get(`/batch/low?page=1&limit=10`)
+      .then((res) => res.data);
     console.log(response);
     return { response, status: 1 };
   } catch (error: any) {
@@ -113,6 +115,17 @@ export async function createBatch(dto: PostBatch) {
 export async function deleteBatch(id: number) {
   try {
     const response = await api.delete(`/batch/${id}`).then((res) => res.data);
+    console.log(response);
+    return { response, status: 1 };
+  } catch (error: any) {
+    console.log(error.response.data.message);
+
+    return { error: error.response.data.message, status: 0 };
+  }
+}
+export async function getAlert() {
+  try {
+    const response = await api.get(`/batch/alert`).then((res) => res.data);
     console.log(response);
     return { response, status: 1 };
   } catch (error: any) {

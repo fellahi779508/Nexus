@@ -39,8 +39,8 @@ export class BatchController {
     return this.batchService.getAllBatchesOfVariant(+id, page, limit, search);
   }
 
-  @Get('alert')
-  alert(@Query('page') page: number, @Query('limit') limit: number) {
+  @Get('expiring')
+  getExpiring(@Query('page') page: number, @Query('limit') limit: number) {
     return this.batchService.getExpiringBatches(page, limit);
   }
   @Get('expired')
@@ -58,6 +58,10 @@ export class BatchController {
   @Get('low')
   getLow(@Query('page') page: number, @Query('limit') limit: number) {
     return this.batchService.getLowStockBatches(page, limit);
+  }
+  @Get('alert')
+  alert() {
+    return this.batchService.alert();
   }
 
   @Get(':id')

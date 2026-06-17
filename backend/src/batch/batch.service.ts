@@ -508,4 +508,16 @@ export class BatchService {
     }
     await this.batchRepository.save(batch);
   }
+  async alert() {
+    const batches = await this.batchRepository.find({
+      where: [
+        { status: 'expiring' },
+        { stockQTYStatus: 'low' },
+        { status: 'expired' },
+      ],
+    });
+    console.log(batches);
+
+    return batches;
+  }
 }

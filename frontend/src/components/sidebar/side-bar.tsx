@@ -22,7 +22,12 @@ import {
   Coins,
 } from "lucide-react";
 import styles from "./side-bar.module.css";
-import { getExpiredBatches, getExpiringBatches } from "@/api/batch-api";
+import {
+  getAlert,
+  getExpiredBatches,
+  getExpiringBatches,
+  getLowStockBatches,
+} from "@/api/batch-api";
 
 const NAV_ITEMS = [
   { key: "dashboard", href: "/", icon: Activity },
@@ -45,21 +50,24 @@ export default function SideBar() {
   function handleOverlayClick(e: React.MouseEvent<HTMLDivElement>) {
     if (e.target === e.currentTarget) setMobileOpen(false);
   }
+  const [loadedAlert, setLoadedAlert] = useState(false);
+  useEffect(() => {
+    verifyAlert().then(() => setLoadedAlert(true));
+  }, []);
   const verifyAlert = useCallback(async () => {
-    const expiringBatches = await getExpiringBatches(1, 0);
-    const expiredBatches = await getExpiredBatches(1, 0);
-    if (
-      expiringBatches.response.data.length > 0 ||
-      expiredBatches.response.data.length > 0
-    ) {
+    const res = await getAlert();
+    if (res.response.length > 0) {
       setAlert(true);
     } else {
       setAlert(false);
     }
   }, []);
   useEffect(() => {
-    verifyAlert();
-  }, []);
+    if (loadedAlert) {
+      const interval = setInterval(verifyAlert, 60000);
+      return () => clearInterval(interval);
+    }
+  }, [loadedAlert, verifyAlert]);
   const t = useTranslations("sidebar");
   const [alert, setAlert] = useState(false);
   const pathname = usePathname();
