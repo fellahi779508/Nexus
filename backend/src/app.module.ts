@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductModule } from './product/product.module';
 import { CategoryModule } from './category/category.module';
@@ -20,6 +20,7 @@ import { PurchasedItemModule } from './purchased-item/purchased-item.module';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ZakatModule } from './zakat/zakat.module';
+import { LicenseGuardService } from './LicenseGuardService';
 
 @Module({
   imports: [
@@ -47,5 +48,6 @@ import { ZakatModule } from './zakat/zakat.module';
     PurchasedItemModule,
     ZakatModule,
   ],
+  providers: [LicenseGuardService],
 })
 export class AppModule {}

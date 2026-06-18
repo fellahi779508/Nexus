@@ -31,8 +31,8 @@
       "node_modules/**/*"
     ],
     "win": {
-      "target": "nsis",
-      "icon": "/resources/favicon.ico"
+      "target": "portable",
+      "icon": "electron/build/favicon.ico"
     },
     "appx": {
       "displayName": "Nexus",
