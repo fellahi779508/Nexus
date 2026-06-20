@@ -289,7 +289,7 @@ export default function LogsPage() {
           width: "100%",
         }}
       >
-        <PasswordGate ns="settings" onSuccess={() => setLocked(true)} />;
+        <PasswordGate ns="settings" onSuccess={() => setLocked(true)} />
       </div>
     );
 

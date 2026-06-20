@@ -253,7 +253,7 @@ export default function ZakatPage() {
           width: "100%",
         }}
       >
-        <PasswordGate ns="settings" onSuccess={() => setLocked(true)} />;
+        <PasswordGate ns="settings" onSuccess={() => setLocked(true)} />
       </div>
     );
 

@@ -133,7 +133,7 @@ export default function Sales() {
           scale: "1",
         }}
       >
-        <PasswordGate ns="settings" onSuccess={() => setLocked(true)} />;
+        <PasswordGate ns="settings" onSuccess={() => setLocked(true)} />
       </div>
     );
 
@@ -197,7 +197,7 @@ export default function Sales() {
           </div>
           <div>
             <p className={styles.statLabel}>{t("stats.total")}</p>
-            <p className={styles.statValue}>{totalSales}</p>
+            <p className={styles.statValue}>{totalSales.toFixed(2)}</p>
           </div>
         </div>
         <div className={styles.statCard}>

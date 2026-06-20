@@ -189,7 +189,7 @@ export default function Purchases() {
           </div>
           <div>
             <p className={styles.statLabel}>{t("stats.total")}</p>
-            <p className={styles.statValue}>{totalPurchases}</p>
+            <p className={styles.statValue}>{totalPurchases.toFixed(2)}</p>
           </div>
         </div>
         <div className={styles.statCard}>

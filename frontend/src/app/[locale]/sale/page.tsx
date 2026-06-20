@@ -602,16 +602,16 @@ export default function Sale() {
                     {item.batches?.[0]?.stock?.quantity}
                   </td>
                   <td className={styles.tableCell}>
-                    {item.purchasePrice} {t("currency")}
+                    {item.purchasePrice.toFixed(2)} {t("currency")}
                   </td>
                   <td className={styles.tableCell}>{item.vatRate} %</td>
                   <td className={styles.tableCell}>
                     {item.promotionPrice
-                      ? `${item.promotionPrice} ${t("currency")}`
+                      ? `${item.promotionPrice.toFixed(2)} ${t("currency")}`
                       : "-"}
                   </td>
                   <td className={styles.tableCell}>
-                    {item.sellingPriceTTC} {t("currency")}
+                    {item.sellingPriceTTC.toFixed(2)} {t("currency")}
                   </td>
                 </tr>
               ))}
@@ -777,9 +777,11 @@ export default function Sale() {
                         "-"
                       )}
                     </td>
-                    <td className={styles.tableCell}>{item.sellingPriceTTC}</td>
                     <td className={styles.tableCell}>
-                      {item.total} {t("currency")}
+                      {item.sellingPriceTTC.toFixed(2)}
+                    </td>
+                    <td className={styles.tableCell}>
+                      {item.total.toFixed(2)} {t("currency")}
                     </td>
                     <td className={styles.tableCell}>
                       <X
@@ -798,14 +800,14 @@ export default function Sale() {
           <div className={styles.totalSec_item}>
             <h2>{t("totalAmount")} :</h2>
             <h2 className={styles.total}>
-              {cart.total} {t("currency")}
+              {cart.total.toFixed(2)} {t("currency")}
             </h2>
           </div>
           {isRemiseActivated && (
             <div className={styles.totalSec_item}>
               <h2>{t("remise")} :</h2>
               <h2 className={styles.total}>
-                {remiseAmount} {t("currency")}
+                {remiseAmount.toFixed(2)} {t("currency")}
               </h2>
             </div>
           )}
@@ -813,7 +815,7 @@ export default function Sale() {
             <div className={styles.totalSec_item}>
               <h2>{t("totalPaid")} :</h2>
               <h2 className={styles.total}>
-                {paidAmount} {t("currency")}
+                {paidAmount.toFixed(2)} {t("currency")}
               </h2>
             </div>
           )}
@@ -822,15 +824,15 @@ export default function Sale() {
               <div className={styles.totalSec_item}>
                 <h2>{t("timbre")} :</h2>
                 <h2 className={styles.total}>
-                  {timbre} {t("currency")}
+                  {timbre.toFixed(2)} {t("currency")}
                 </h2>
               </div>
               <div className={styles.totalSec_item}>
                 <h2>{t("ttc")} :</h2>
                 <h2 className={styles.total}>
                   {isRemiseActivated
-                    ? remiseAmount + timbre
-                    : cart.total + timbre}{" "}
+                    ? remiseAmount.toFixed(2) + timbre.toFixed(2)
+                    : cart.total.toFixed(2) + timbre.toFixed(2)}{" "}
                   {t("currency")}
                 </h2>
               </div>

@@ -6,7 +6,7 @@
 ; App Metadata
 AppName=Nexus
 AppVersion=1.3.0
-AppPublisher=Duss Software Solutions
+AppPublisher=Nexus Software Solutions
 AppId={{8F5B2C9A-4D3E-4A1B-BC7D-2E9C3D8F5A6B}
 DefaultDirName={autopf}\Nexus
 DefaultGroupName=Nexus
@@ -18,7 +18,7 @@ WizardStyle=modern
 
 ; Output Build Settings
 OutputDir=C:\Nexus-Distributable
-OutputBaseFilename=Nexus-Setup
+OutputBaseFilename=Nexus-v1.3.0-Setup
 Compression=lzma2/max
 SolidCompression=yes
 
@@ -26,7 +26,7 @@ SolidCompression=yes
 PrivilegesRequired=admin
 
 ; Application Logo Icon
-SetupIconFile=C:\Users\Dell\Documents\WebProjects\Nexus\resources\favicon.ico
+SetupIconFile=E:\Stock-Manager-Electron\resources\favicon.ico
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -38,7 +38,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 ; 🚀 The Single Electron Payload
 ; This grabs the main Nexus.exe, along with all the packaged resources, locales, and chromium runtimes inside win-unpacked.
-Source: "C:\Users\Dell\Documents\WebProjects\Nexus\dist\win-unpacked\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "E:\Stock-Manager-Electron\dist\win-unpacked\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 ; Create Start Menu entries pointing to your new native Electron executable
