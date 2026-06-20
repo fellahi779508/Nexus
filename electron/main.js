@@ -22,6 +22,7 @@ console.log("NODE EXISTS:", fs.existsSync(nodeBinary));
 let backendProcess = null;
 let frontendProcess = null;
 let mainWindow = null;
+let isLicenseInvalid = false;
 
 // ----------------------------------------------------
 // NATIVE PORT CLEANUP (Awaited Asynchronously)
@@ -116,14 +117,24 @@ function startBackend() {
   }
 
   backendProcess = spawn(nodeBinary, [backendPath], {
-    cwd: backendDir, // Sets proper context for local DB paths or configurations
-    windowsHide: true, // Prevents sudden cmd window flashes
+    cwd: backendDir,
+    windowsHide: true,
     stdio: "pipe",
     env: {
       ...process.env,
       NODE_ENV: "production",
       PORT: "3001",
     },
+  });
+
+  // 🛡️ Monitor the process exit code directly
+  backendProcess.on("exit", (code) => {
+    if (code === 99) {
+      console.error(
+        "🔒 [SECURITY] Electron caught backend license lockout code (99).",
+      );
+      isLicenseInvalid = true;
+    }
   });
 
   backendProcess.stdout.on("data", (d) =>
@@ -193,8 +204,12 @@ function startFrontend() {
 async function waitForBackend() {
   console.log("Checking backend synchronization status...");
   for (let i = 0; i < 60; i++) {
+    // 🛡️ CRUCIAL: Drop out of the 30-second loop immediately if license check fails
+    if (isLicenseInvalid) {
+      throw new Error("LICENSE_LOCKOUT");
+    }
+
     try {
-      // Added an explicit short timeout duration to prevent HTTP request hanging
       await axios.get("http://127.0.0.1:3001/category", { timeout: 1000 });
       console.log("✅ Backend connection established.");
       return;
@@ -281,9 +296,19 @@ app.whenReady().then(async () => {
 
     console.log("READY");
   } catch (err) {
-    console.error("FATAL STARTUP ERROR:", err);
+    console.error("FATAL STARTUP ERROR:", err.message);
+
+    // Purge any ghost frontend servers that might have spun up before the backend crashed
+    await cleanup();
+
     if (mainWindow) {
-      mainWindow.loadFile(path.join(__dirname, "loader.html"));
+      if (err.message === "LICENSE_LOCKOUT") {
+        // Switch the view to your local self-contained lockout file immediately
+        mainWindow.loadFile(path.join(__dirname, "lock.html"));
+      } else {
+        // Fallback to loader or general error screen for structural crashes
+        mainWindow.loadFile(path.join(__dirname, "loader.html"));
+      }
     }
   }
 });
