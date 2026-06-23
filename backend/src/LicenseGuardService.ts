@@ -59,7 +59,7 @@ export class LicenseGuardService implements OnModuleInit {
     } catch (error) {
       console.error('PIRACY DETECTED OR CORRUPT LICENSE:', error.message);
       // Forcefully kill the process with exit code 99 to trigger Electron's lock.html viewport
-      // process.exit(99);
+      process.exit(99);
     }
   }
 }
