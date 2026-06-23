@@ -277,7 +277,7 @@ export default function Sale() {
             ...i,
             quantity: newQuantity,
             qtePerUnit: newQtePerUnit,
-            total: newQtePerUnit * i.sellingPriceTTC,
+            total: newQtePerUnit * newQuantity * i.sellingPriceTTC,
           }
         : i,
     );
@@ -330,7 +330,11 @@ export default function Sale() {
         }
       }
     } else if (numPad_option === "QteUnit") {
-      newQtePerUnit = inputValue === 0 ? 1 : inputValue;
+      if (currentCartItem.unit === "piece") {
+        newQtePerUnit = 1;
+      } else {
+        newQtePerUnit = inputValue === 0 ? 1 : inputValue;
+      }
 
       // If Total pieces (Qty * PackSize) > physical stock
       if (newQuantity * newQtePerUnit > maxStock) {
@@ -353,14 +357,14 @@ export default function Sale() {
             ...i,
             quantity: newQuantity,
             qtePerUnit: newQtePerUnit,
-            total: newQuantity * i.sellingPriceTTC,
+            total: newQuantity * newQtePerUnit * i.sellingPriceTTC,
           };
         } else {
           // Handle Price Modifications
           return {
             ...i,
             sellingPriceTTC: inputValue,
-            total: i.quantity * inputValue,
+            total: i.quantity * i.qtePerUnit * inputValue,
           };
         }
       }

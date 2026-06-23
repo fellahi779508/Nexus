@@ -135,7 +135,7 @@ export default function HistoryModal({
           unit: item.unit,
           qtePerUnit: item.qtePerUnit || 1,
           name: item.batch?.variant?.name || "",
-          total: item.quantity * item.sellingPrice,
+          total: item.quantity * item.qtePerUnit * item.sellingPrice,
           barcode: item.batch?.variant?.barcode || "",
           sellingPriceTTC: item.sellingPrice,
         })) || [];
@@ -181,7 +181,7 @@ export default function HistoryModal({
           unit: item.unit,
           qtePerUnit: item.qtePerUnit || 1,
           name: item.batch?.variant?.name || "",
-          total: item.quantity * item.sellingPrice,
+          total: item.quantity * item.qtePerUnit * item.sellingPrice,
           barcode: item.batch?.variant?.barcode || "",
           sellingPriceTTC: item.sellingPrice,
         })) || [];

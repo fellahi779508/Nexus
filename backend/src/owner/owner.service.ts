@@ -59,8 +59,8 @@ export class OwnerService {
     let totalSaleProfit = 0;
     for (const sale of sales) {
       for (const item of sale.soldItems) {
-        const baseProfit = item.sellingPrice - item.batch.variant.purchasePrice;
-        const total = baseProfit * item.quantity;
+        const baseProfit = item.batch.variant.profit;
+        const total = baseProfit * (item.qtePerUnit * item.quantity);
         totalSaleProfit += total;
       }
     }

@@ -60,6 +60,7 @@
     "clients": "Clients",
     "suppliers": "Suppliers",
     "sales": "Sales",
+    "services": "Services",
     "purchases": "Purchases",
     "history": "History",
     "logs": "Activity Logs",

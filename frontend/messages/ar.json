@@ -60,6 +60,7 @@
     "clients": "العملاء",
     "suppliers": "الموردين",
     "sales": "المبيعات",
+    "services": "الخدمات",
     "purchases": "المشتريات",
     "history": "السجل",
     "logs": "سجلات النشاط",
@@ -693,7 +694,7 @@
       "cash": "نقدًا",
       "card": "بطاقة ائتمان",
       "bank": "تحويل بنكي",
-      "ccp": "حوالة بريدية"
+      "ccp": "CCP / BaridiMob"
     },
     "currency": "دج",
     "transactionOptions": {

@@ -288,7 +288,7 @@ export default function Purchase() {
             ...i,
             quantity: newQuantity,
             qtePerUnit: newQtePerUnit,
-            total: newQuantity * i.sellingPriceTTC,
+            total: newQuantity * newQtePerUnit * i.sellingPriceTTC,
           }
         : i,
     );
@@ -328,7 +328,7 @@ export default function Purchase() {
             ...i,
             quantity: newQuantity,
             qtePerUnit: newQtePerUnit,
-            total: newQuantity * i.sellingPriceTTC,
+            total: newQtePerUnit * newQuantity * i.sellingPriceTTC,
           }
         : i,
     );
@@ -359,7 +359,11 @@ export default function Purchase() {
     if (numPad_option === "Quantity") {
       newQuantity = inputValue === 0 ? 1 : inputValue;
     } else if (numPad_option === "QteUnit") {
-      newQtePerUnit = inputValue === 0 ? 1 : inputValue;
+      if (currentCartItem.unit === "piece") {
+        newQtePerUnit = 1;
+      } else {
+        newQtePerUnit = inputValue === 0 ? 1 : inputValue;
+      }
     }
 
     // 3. Map over items and apply changes

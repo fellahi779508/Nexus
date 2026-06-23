@@ -6,15 +6,8 @@
 ; App Metadata
 AppName=Nexus
 AppVersion=1.3.0
-<<<<<<< HEAD
 AppPublisher=Nexus Software Solutions
-AppId={{8F5B2C9A-4D3E-4A1B-BC7D-2E9C3D8F5A6B}
-=======
-AppPublisher=Duss Software Solutions
 AppId={{8F5B2C9A-4D3E-4A1B-BC7D-2E9C3D8F5A6B}}
->>>>>>> 4bcc8df4307e681ff3cd2c38fcb76fc1132aca87
-DefaultDirName={autopf}\Nexus
-DefaultGroupName=Nexus
 
 ; Design & Styling Configurations
 DisableProgramGroupPage=yes
@@ -36,19 +29,16 @@ SetupIconFile=E:\Stock-Manager-Electron\resources\favicon.ico
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "french"; MessagesFile: "compiler:Languages\French.isl"
+Name: "arabic"; MessagesFile: "compiler:Languages\Arabic.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-; 🚀 The Single Electron Payload
-<<<<<<< HEAD
-; This grabs the main Nexus.exe, along with all the packaged resources, locales, and chromium runtimes inside win-unpacked.
+; 🚀 The Single Electron Payload (Resolved local path conflict)
 Source: "E:\Stock-Manager-Electron\dist\win-unpacked\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-=======
-Source: "C:\Users\Dell\Documents\WebProjects\Nexus\dist\win-unpacked\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+; Keeps a backup copy of the initial license file template in your app resources if needed
 Source: "{src}\license.dat"; DestDir: "{app}\resources\"; Flags: external onlyifdoesntexist
->>>>>>> 4bcc8df4307e681ff3cd2c38fcb76fc1132aca87
 
 [Icons]
 Name: "{group}\Nexus"; Filename: "{app}\Nexus.exe"; IconFilename: "{app}\Nexus.exe"
@@ -57,6 +47,22 @@ Name: "{autodesktop}\Nexus"; Filename: "{app}\Nexus.exe"; Tasks: desktopicon; Ic
 
 [Run]
 Description: "{cm:LaunchProgram,Nexus}"; Flags: nowait postinstall skipifsilent; Filename: "{app}\Nexus.exe"
+
+[CustomMessages]
+; --- English ---
+en.LicensingMissing=Critical Error: Licensing module missing. Run setup directly from the authorized USB.
+en.UnauthorizedCopy=Unauthorized copy detected. You must run this installer from the physical USB drive provided.
+en.HardwareMismatch=License Error: This USB stick is already registered to a different computer motherboard.
+
+; --- French ---
+fr.LicensingMissing=Erreur critique : Module de licence manquant. Lancez l'installation directement depuis la clé USB autorisée.
+fr.UnauthorizedCopy=Copie non autorisée détectée. Vous devez exécuter ce programme d'installation à partir de la clé USB physique fournie.
+fr.HardwareMismatch=Erreur de licence : Cette clé USB est déjà enregistrée sur la carte mère d'un autre ordinateur.
+
+; --- Arabic ---
+ar.LicensingMissing=خطأ فادح: وحدة الترخيص مفقودة. يرجى تشغيل برنامج التثبيت مباشرة من ذاكرة USB المصرح بها.
+ar.UnauthorizedCopy=تم اكتشاف نسخة غير مصرح بها. يجب تشغيل برنامج التثبيت هذا من ذاكرة USB الفعلية المرفقة.
+ar.HardwareMismatch=خطأ في التعريف: ذاكرة USB هذه مسجلة بالفعل للوحة أم (Motherboard) لجهاز كمبيوتر آخر.
 
 [Code]
 function GetDriveSerial(DriveLetter: String): String;
@@ -75,7 +81,7 @@ begin
     end;
   except
   end;
-end; // The rogue extra end; right below this line was removed!
+end;
 
 function GetMotherboardUUID(): String;
 var
@@ -100,14 +106,14 @@ var
   LicensePath, LicenseContent, CurrentDrive, CurrentSerial, UsbSerial, AppState, BoardUUID: String;
   FileLines: TArrayOfString;
 begin
-  Result := False; // Assume failure by default
+  Result := False; 
   LicensePath := ExpandConstant('{src}\license.dat');
-  CurrentDrive := Copy(ExpandConstant('{src}'), 1, 2); // Gets 'E:'
+  CurrentDrive := Copy(ExpandConstant('{src}'), 1, 2); 
 
   // 1. Check if file exists (Fail-Closed)
   if not FileExists(LicensePath) then
   begin
-    MsgBox('Critical Error: Licensing module missing. Run setup directly from the authorized USB.', mbError, MB_OK);
+    MsgBox(CustomMessage('LicensingMissing'), mbError, MB_OK);
     Exit;
   end;
 
@@ -123,7 +129,7 @@ begin
   CurrentSerial := GetDriveSerial(CurrentDrive);
   if CurrentSerial <> UsbSerial then
   begin
-    MsgBox('Unauthorized copy detected. You must run this installer from the physical USB drive provided.', mbError, MB_OK);
+    MsgBox(CustomMessage('UnauthorizedCopy'), mbError, MB_OK);
     Exit;
   end;
 
@@ -132,19 +138,16 @@ begin
   
   if AppState = 'UNBOUND' then
   begin
-    // Blow the fuse: rewrite file with Motherboard UUID
     SaveStringToFile(LicensePath, UsbSerial + ':' + BoardUUID, False);
     Result := True;
   end
   else if AppState = BoardUUID then
   begin
-    // Allow reinstall on the SAME machine
     Result := True;
   end
   else
   begin
-    // Block install on a new machine
-    MsgBox('License Error: This USB stick is already registered to a different computer motherboard.', mbError, MB_OK);
+    MsgBox(CustomMessage('HardwareMismatch'), mbError, MB_OK);
     Exit;
   end;
 end;

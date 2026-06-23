@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateProductVariantDto } from './dto/create-product_variant.dto';
 import { UpdateProductVariantDto } from './dto/update-product_variant.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -336,17 +340,29 @@ export class ProductVariantService {
     return code;
   }
   async generateBarcodeBuffer(text: string): Promise<Buffer> {
-  try {
-    return await bwipjs.toBuffer({
-      bcid: 'code128',
-      text: text,
-      scale: 3,
-      height: 15,
-      includetext: true,
-      textxalign: 'center',
-    });
-  } catch (error) {
-    throw new InternalServerErrorException(`Barcode error: ${error.message}`);
+    try {
+      return await new Promise<Buffer>((resolve, reject) => {
+        bwipjs.toBuffer(
+          {
+            bcid: 'code128',
+            text: text,
+            includetext: true,
+            textxalign: 'center',
+
+            width: 45, // Width in mm (adjust to match your label paper)
+            height: 15, // Height in mm
+          },
+          (err, buf) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(buf);
+            }
+          },
+        );
+      });
+    } catch (error) {
+      throw new InternalServerErrorException(`Barcode error: ${error.message}`);
+    }
   }
-}
 }

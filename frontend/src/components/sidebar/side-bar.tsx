@@ -20,6 +20,7 @@ import {
   AlertCircle,
   HandHeartIcon,
   Coins,
+  Workflow,
 } from "lucide-react";
 import styles from "./side-bar.module.css";
 import {

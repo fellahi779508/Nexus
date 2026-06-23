@@ -38,7 +38,8 @@ export class CreateSaleDto {
   date: string;
 
   @IsArray()
-  soldItems: {
+  @IsOptional()
+  soldItems?: {
     batchId: number;
     quantity: number;
     unit: string;

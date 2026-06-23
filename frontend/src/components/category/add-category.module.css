@@ -10,6 +10,7 @@
   z-index: 999;
   padding: 16px;
   animation: overlayIn 0.2s ease;
+  font-size: large;
 }
 
 @keyframes overlayIn {
@@ -27,6 +28,8 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 18px;
+  font-size: 11px;
+
   padding: 32px 28px 24px;
   width: 100%;
   max-width: 700px;
@@ -125,6 +128,7 @@
   color: var(--foreground);
   margin: 0 0 4px;
   letter-spacing: -0.3px;
+  font-size: large;
 }
 
 .subtitle {
@@ -142,7 +146,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 11px;
+  font-size: large;
   font-weight: 600;
   color: var(--foreground-muted);
   margin-bottom: 6px;
@@ -153,7 +157,7 @@
 .input {
   width: 100%;
   padding: 10px 13px;
-  border: 1.5px solid var(--border);
+  border: 1.5px solid var(--foreground);
   border-radius: 10px;
   font-size: 13.5px;
   color: var(--foreground);

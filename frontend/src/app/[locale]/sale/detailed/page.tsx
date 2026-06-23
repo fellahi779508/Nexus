@@ -249,7 +249,7 @@ export default function DetailedSale() {
             ...i,
             quantity: newQuantity,
             qtePerUnit: newQtePerUnit,
-            total: newQuantity * i.sellingPriceTTC,
+            total: newQtePerUnit * newQuantity * i.sellingPriceTTC,
           }
         : i,
     );
@@ -302,7 +302,7 @@ export default function DetailedSale() {
             ...i,
             quantity: newQuantity,
             qtePerUnit: newQtePerUnit,
-            total: newQuantity * i.sellingPriceTTC,
+            total: newQtePerUnit * newQuantity * i.sellingPriceTTC,
           }
         : i,
     );
@@ -315,51 +315,66 @@ export default function DetailedSale() {
 
   // ── applyNumPadModifications — now handles QteUnit case ─────────────────
   function applyNumPadModifications() {
-    const verify = variants?.find((v) =>
-      v.batches.find((b) => b.id === selectedSoldItem?.batchId),
+    // 1. Find the inventory batch verification info (True piece stock)
+    const verify = variants?.find(
+      (v) => v.batches[0].id === selectedSoldItem?.batchId,
     );
     if (!verify || !selectedSoldItem) return;
 
+    // Use the actual batch quantity as maxStock, fallback to maxStock property
     const maxStock =
-      verify.batches.find((b) => b.id === selectedSoldItem.batchId)?.stock
-        ?.quantity ||
-      selectedSoldItem.maxStock ||
-      0;
-    if (maxStock <= 0) return;
+      verify?.batches[0]?.stock?.quantity || selectedSoldItem.maxStock || 0;
+    if (maxStock <= 0) return; // Safety check: can't calculate if stock is 0
 
+    // 2. Find the live item from the cart array (Source of Truth for current quantities)
     const currentCartItem = cart.soldItems.find(
       (i) => i.batchId === selectedSoldItem.batchId,
     );
     if (!currentCartItem) return;
 
+    // 3. Parse the numpad input
     let inputValue = Number(numPad_value);
     if (isNaN(inputValue) || inputValue < 0) inputValue = 0;
 
     let newQuantity = currentCartItem.quantity;
     let newQtePerUnit = currentCartItem.qtePerUnit || 1;
 
+    // 4. Run Relative Calculations
     if (numPad_option === "Quantity") {
       newQuantity = inputValue === 0 ? 1 : inputValue;
 
+      // If Total pieces (Qty * PackSize) > physical stock
       if (newQuantity * newQtePerUnit > maxStock) {
+        // Demote the Package Size (QtePerUnit) down to fit the new Quantity
         newQtePerUnit = Math.floor(maxStock / newQuantity);
+
+        // If the typed Quantity is so huge that QtePerUnit drops below 1
         if (newQtePerUnit < 1) {
           newQtePerUnit = 1;
-          newQuantity = maxStock;
+          newQuantity = maxStock; // Cap Quantity at absolute max stock instead
         }
       }
     } else if (numPad_option === "QteUnit") {
-      newQtePerUnit = inputValue === 0 ? 1 : inputValue;
+      if (currentCartItem.unit === "piece") {
+        newQtePerUnit = 1;
+      } else {
+        newQtePerUnit = inputValue === 0 ? 1 : inputValue;
+      }
 
+      // If Total pieces (Qty * PackSize) > physical stock
       if (newQuantity * newQtePerUnit > maxStock) {
+        // Demote the Quantity down to fit the new Package Size
         newQuantity = Math.floor(maxStock / newQtePerUnit);
+
+        // If the typed Package Size is so huge that Quantity drops below 1
         if (newQuantity < 1) {
           newQuantity = 1;
-          newQtePerUnit = maxStock;
+          newQtePerUnit = maxStock; // Cap Package Size at absolute max stock instead
         }
       }
     }
 
+    // 5. Map and Update Cart State
     const newSoldItems = cart.soldItems.map((i) => {
       if (i.batchId === selectedSoldItem.batchId) {
         if (numPad_option === "Quantity" || numPad_option === "QteUnit") {
@@ -367,13 +382,14 @@ export default function DetailedSale() {
             ...i,
             quantity: newQuantity,
             qtePerUnit: newQtePerUnit,
-            total: newQuantity * i.sellingPriceTTC,
+            total: newQuantity * newQtePerUnit * i.sellingPriceTTC,
           };
         } else {
+          // Handle Price Modifications
           return {
             ...i,
             sellingPriceTTC: inputValue,
-            total: i.quantity * inputValue,
+            total: i.quantity * i.qtePerUnit * inputValue,
           };
         }
       }
@@ -411,7 +427,7 @@ export default function DetailedSale() {
       payment_methode: "cash",
       timbre,
       remiseAmount: isRemiseActivated ? remise : 0,
-      isDetailed: false,
+      isDetailed: true,
       soldItems: cart.soldItems.map((item) => ({
         batchId: item.batchId,
         quantity: item.quantity,

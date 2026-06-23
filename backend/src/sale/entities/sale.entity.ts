@@ -53,6 +53,7 @@ export class Sale {
 
   @OneToMany(() => SoldItem, (soldItem) => soldItem.sale, {
     nullable: true,
+    onDelete: 'SET NULL',
   })
   soldItems: SoldItem[];
 }

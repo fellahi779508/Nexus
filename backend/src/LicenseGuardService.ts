@@ -39,7 +39,7 @@ export class LicenseGuardService implements OnModuleInit {
     } catch (error) {
       console.error('PIRACY DETECTED OR CORRUPT LICENSE:', error.message);
       // Forcefully kill the Electron/Nest process immediately
-      process.exit(99);
+      // process.exit(99);
     }
   }
 }

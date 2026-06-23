@@ -300,12 +300,12 @@ export default function StockPage() {
                             <Layers size={14} strokeWidth={1.8} />
                           </div>
                           <span className={styles.variantName}>
-                            {variant?.name ?? "—"}
+                            {variant.product.name} {" - "} {variant.name ?? "—"}
                           </span>
                         </div>
                       </td>
 
-                      <td className={styles.td}>{variant?.barcode ?? "—"}</td>
+                      <td className={styles.td}>{variant.barcode ?? "—"}</td>
 
                       <td className={styles.td}>{batch?.nLot ?? "—"}</td>
 

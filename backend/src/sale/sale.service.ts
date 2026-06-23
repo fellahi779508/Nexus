@@ -48,7 +48,7 @@ export class SaleService {
         sale.client = client;
       }
       const savedSale = await saleRepo.save(sale);
-      for (const item of createSaleDto.soldItems) {
+      for (const item of createSaleDto.soldItems!) {
         const batch = await bacthRepo.findOne({
           where: { id: item.batchId },
           relations: ['stock', 'variant'],
