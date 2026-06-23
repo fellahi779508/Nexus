@@ -46,7 +46,7 @@ Name: "{group}\{cm:UninstallProgram,Nexus}"; Filename: "{uninstallexe}"
 Name: "{autodesktop}\Nexus"; Filename: "{app}\Nexus.exe"; Tasks: desktopicon; IconFilename: "{app}\Nexus.exe"
 
 [Run]
-Description: "{cm:LaunchProgram,Nexus}"; Flags: nowait postinstall skipifsilent; Filename: "{app}\Nexus.exe"
+Description: "{cm:LaunchProgram,Nexus}"; Filename: "{app}\Nexus.exe"; Flags: nowait postinstall skipifsilent runasoriginaluser
 
 [CustomMessages]
 ; --- English ---

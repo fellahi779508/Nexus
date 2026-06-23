@@ -24,6 +24,18 @@ export default async function LocaleLayout({ children, params }: Props) {
           <ThemeScript />
           <SideBar />
           <main style={{ flex: 1 }}>{children}</main>
+          <p
+            style={{
+              position: "absolute",
+              bottom: 0,
+              right: 25,
+              padding: "10px",
+              opacity: 0.5,
+              color: "var(--foreground)",
+            }}
+          >
+            Nexus v1.4.0 © 2026
+          </p>
         </body>
       </NextIntlClientProvider>
     </html>

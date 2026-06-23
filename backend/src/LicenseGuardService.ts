@@ -3,20 +3,40 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import * as si from 'systeminformation';
 import * as fs from 'fs';
 import * as path from 'path';
+import * as os from 'os'; // Imported for robust cross-platform fallback path matching
 
 @Injectable()
 export class LicenseGuardService implements OnModuleInit {
   async onModuleInit() {
     try {
-      // 1. Try checking the current working directory first (Works for Local Dev)
-      let licensePath = path.join(process.cwd(), 'license.dat');
+      let licensePath: string;
 
-      // 2. If not found, escape the deep Electron production folders (Go up 3 levels)
-      if (!fs.existsSync(licensePath)) {
-        licensePath = path.join(__dirname, '..', '..', 'license.dat');
+      // 1. Resolve the system AppData/Roaming path safely
+      const roamingPath =
+        process.env.APPDATA || path.join(os.homedir(), 'AppData', 'Roaming');
+      const targetFolder = path.join(roamingPath, 'Nexus-data');
+      const prodLicensePath = path.join(targetFolder, 'license.dat');
+
+      // 2. Check if we are running in local development or production mode
+      if (process.env.NODE_ENV !== 'production') {
+        // Local Dev: Look inside the project root folder first
+        const devLicensePath = path.join(process.cwd(), 'license.dat');
+
+        if (fs.existsSync(devLicensePath)) {
+          licensePath = devLicensePath;
+        } else {
+          licensePath = prodLicensePath; // Fallback to Roaming even in dev if local file isn't there
+        }
+      } else {
+        // Production: Force check inside AppData/Roaming/Nexus-data/license.dat
+        licensePath = prodLicensePath;
       }
 
-      // Log the path for debugging visibility in your Electron/Nest logs
+      // Defensive tracking: Ensure folder container structurally exists
+      if (!fs.existsSync(targetFolder) && licensePath === prodLicensePath) {
+        fs.mkdirSync(targetFolder, { recursive: true });
+      }
+
       console.log(`Checking license at: ${licensePath}`);
 
       if (!fs.existsSync(licensePath)) {
@@ -38,7 +58,7 @@ export class LicenseGuardService implements OnModuleInit {
       console.log('Hardware verification passed. Booting POS system...');
     } catch (error) {
       console.error('PIRACY DETECTED OR CORRUPT LICENSE:', error.message);
-      // Forcefully kill the Electron/Nest process immediately
+      // Forcefully kill the process with exit code 99 to trigger Electron's lock.html viewport
       // process.exit(99);
     }
   }

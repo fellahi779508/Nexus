@@ -37,7 +37,12 @@ function killPorts() {
     const killPromises = [];
 
     try {
-      const stdout = execSync(`netstat -ano -p tcp`, { encoding: "utf8" });
+      // Wrapped tightly within a selective platform invocation context block
+      const stdout = execSync(`netstat -ano -p tcp`, {
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "ignore"], // Suppress standard error pipes
+      });
+
       const lines = stdout.split("\n");
 
       ports.forEach((port) => {
@@ -63,13 +68,17 @@ function killPorts() {
         }
       });
     } catch (err) {
-      // Ports are already clear
+      console.log("[PORT CLEANUP] Netstat command context bypassed safely.");
     }
 
-    // Wait until all processes are confirmed terminated before proceeding
-    Promise.all(killPromises).then(() => {
-      setTimeout(resolve, 500);
-    });
+    // Always resolve the main chain execution pipeline safely
+    Promise.all(killPromises)
+      .then(() => {
+        setTimeout(resolve, 500);
+      })
+      .catch(() => {
+        resolve();
+      });
   });
 }
 
