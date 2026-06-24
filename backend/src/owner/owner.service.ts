@@ -74,7 +74,12 @@ export class OwnerService {
       where: {
         date: ILike(`%${today}%`),
       },
-      relations: ['soldItems', 'soldItems.batch', 'soldItems.batch.variant'],
+      relations: [
+        'soldItems',
+        'soldItems.batch',
+        'soldItems.batch.variant',
+        'soldItems.batch.variant.product',
+      ],
       take: 3,
       order: {
         id: 'DESC',
@@ -95,6 +100,7 @@ export class OwnerService {
         'purchasedItems',
         'purchasedItems.batch',
         'purchasedItems.batch.variant',
+        'purchasedItems.batch.variant.product',
         'supplier',
       ],
       select: {

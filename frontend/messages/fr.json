@@ -374,6 +374,7 @@
     "pageInfo": "Page {page} sur {pages}",
     "totalTable": "Total par page",
     "totalInventoryTable": "Inventaire Total",
+    "totalEquityTable": "Équité Totale",
     "batchStatus": {
       "all": "Tous",
       "sellable": "Vendable",
@@ -398,7 +399,8 @@
       "barcode": "Code-barres",
       "lot": "Lot #",
       "alertStock": "Alerte Stock",
-      "totalInventory": "Inventaire Total (qte * PrixVenteTTC)"
+      "totalInventory": "Inventaire Total (qte * PrixVenteTTC)",
+      "totalEquity": "Équité Totale (qte * PrixAchat)"
     }
   },
   "variantDetails": {
@@ -761,7 +763,8 @@
     },
     "items": "articles",
     "paid": "Payé",
-    "remise": "Remise"
+    "remise": "Remise",
+    "more": "plus"
   },
   "purchase": {
     "title": "Tableau de Bord des Achats",
@@ -1318,7 +1321,7 @@
     "statusDescNotReached": "Une année s'est écoulée, mais votre inventaire ({value} DZD) est inférieur au Nisab ({nisab} DZD). Aucune Zakat n'est due.",
     "statusDescPending": "{count, plural, =1 {# jour restant} other {# jours restants}} avant la fin de l'année. Inventaire actuel : {value} DZD.",
     "statLabelInventory": "Valeur de l'inventaire",
-    "statSubInventory": "DZD (stock × prix de vente)",
+    "statSubInventory": "DZD (stock × prix de vente + crédits totaux des clients)",
     "statLabelNisab": "Seuil du Nisab",
     "statSubNisab": "DZD · taux {rate}%",
     "statLabelAmount": "Montant de la Zakat",

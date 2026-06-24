@@ -21,7 +21,7 @@ export async function getProduct(id: number) {
 export async function getAllProducts(page: number, search: string) {
   try {
     const response = await api
-      .get(`/product?page=${page}&limit=12&search=${search}`)
+      .get(`/product?page=${page}&limit=15&search=${search}`)
       .then((res) => res.data);
     return { response, status: 1 };
   } catch (error: any) {

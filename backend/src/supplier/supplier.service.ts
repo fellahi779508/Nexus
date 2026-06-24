@@ -90,6 +90,7 @@ export class SupplierService {
       action: Actions.PAYMENT,
       entityType: Types.SUPPLIER,
       timestamp: new Date().toISOString(),
+      quantity: updateSupplierDto.creditTTC,
       supplier,
     });
     return this.supplierRepository.save(supplier);

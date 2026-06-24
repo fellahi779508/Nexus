@@ -145,7 +145,7 @@ export default function Sale() {
               maxStock: item.batches[0].stock.quantity,
               quantity: 1,
               total: item.promotionPrice ?? item.sellingPriceTTC,
-              name: item.name,
+              name: `${item.product.name} - ${item.name}`,
               barcode: item.barcode,
               sellingPriceTTC: item.promotionPrice ?? item.sellingPriceTTC,
               unit: "piece",

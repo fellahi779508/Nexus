@@ -87,7 +87,7 @@ export default function Products() {
 
   useEffect(() => {
     fetchProducts();
-  }, [search, successToast, page]);
+  }, [debouncedSearch, successToast, page]);
 
   return (
     <div className={styles.page}>

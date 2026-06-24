@@ -134,7 +134,7 @@ export default function HistoryModal({
           quantity: item.quantity,
           unit: item.unit,
           qtePerUnit: item.qtePerUnit || 1,
-          name: item.batch?.variant?.name || "",
+          name: `${item.batch.variant.product.name} - ${item.batch.variant.name}`,
           total: item.quantity * item.qtePerUnit * item.sellingPrice,
           barcode: item.batch?.variant?.barcode || "",
           sellingPriceTTC: item.sellingPrice,
@@ -180,7 +180,7 @@ export default function HistoryModal({
           quantity: item.quantity,
           unit: item.unit,
           qtePerUnit: item.qtePerUnit || 1,
-          name: item.batch?.variant?.name || "",
+          name: `${item.batch.variant.product.name} - ${item.batch.variant.name}`,
           total: item.quantity * item.qtePerUnit * item.sellingPrice,
           barcode: item.batch?.variant?.barcode || "",
           sellingPriceTTC: item.sellingPrice,
@@ -290,15 +290,22 @@ export default function HistoryModal({
                       <div className={styles.saleTopRow}>
                         <span className={styles.saleId}>#{sale.id}</span>
                         <div className={styles.saleItems}>
-                          {sale.soldItems.map((si) => (
+                          {sale.soldItems.slice(0, 3).map((si) => (
                             <span key={si.id} className={styles.itemChip}>
                               <Tag size={9} strokeWidth={2} />
+                              {si.batch?.variant?.product.name} -{" "}
                               {si.batch?.variant?.name}
                               <span className={styles.itemQty}>
                                 ×{si.quantity}
                               </span>
                             </span>
                           ))}
+                          {sale.soldItems.length > 3 && (
+                            <span className={styles.itemChip}>
+                              <Tag size={9} strokeWidth={2} />
+                              ...{t("more")}
+                            </span>
+                          )}
                         </div>
                       </div>
 
@@ -358,15 +365,22 @@ export default function HistoryModal({
                       <div className={styles.saleTopRow}>
                         <span className={styles.saleId}>#{purchase.id}</span>
                         <div className={styles.saleItems}>
-                          {purchase.purchasedItems.map((si) => (
+                          {purchase.purchasedItems.slice(0, 3).map((si) => (
                             <span key={si.id} className={styles.itemChip}>
                               <Tag size={9} strokeWidth={2} />
+                              {si.batch?.variant?.product.name} -{" "}
                               {si.batch?.variant?.name}
                               <span className={styles.itemQty}>
                                 ×{si.quantity}
                               </span>
                             </span>
                           ))}
+                          {purchase.purchasedItems.length > 3 && (
+                            <span className={styles.itemChip}>
+                              <Tag size={9} strokeWidth={2} />
+                              ...{t("more")}
+                            </span>
+                          )}
                         </div>
                       </div>
 

@@ -374,6 +374,7 @@
     "pageInfo": "صفحة {page} من {pages}",
     "totalTable": "الإجمالي للصفحة",
     "totalInventoryTable": "المخزون الإجمالي",
+    "totalEquityTable": "الإجمالي  رأس المال",
     "batchStatus": {
       "all": "الكل",
       "sellable": "قابل للبيع",
@@ -398,7 +399,8 @@
       "barcode": "الباركود",
       "lot": "الدفعة #",
       "alertStock": "تنبيه المخزون",
-      "totalInventory": "المخزون الإجمالي (الكمية * سعر البيع )"
+      "totalInventory": "المخزون الإجمالي (الكمية * سعر البيع )",
+      "totalEquity": "الإجمالي  رأس المال (الكمية * سعر الشراء)"
     }
   },
   "variantDetails": {
@@ -761,7 +763,8 @@
     },
     "items": "عناصر",
     "paid": "المدفوع",
-    "remise": "الخصم"
+    "remise": "الخصم",
+    "more": "المزيد"
   },
   "purchase": {
     "title": "لوحة المشتريات",
@@ -1318,7 +1321,7 @@
     "statusDescNotReached": "لقد مر عام كامل، ولكن قيمة مخزونك ({value} د.ج) أقل من حد النصاب ({nisab} د.ج). لا توجد زكاة مستحقة.",
     "statusDescPending": "متبقي {count} يوم على اكتمال الحول. المخزون الحالي: {value} د.ج.",
     "statLabelInventory": "قيمة المخزون",
-    "statSubInventory": "د.ج (المخزون × سعر البيع)",
+    "statSubInventory": "د.ج (المخزون × سعر البيع + المديونيات الإجمالية للعملاء)",
     "statLabelNisab": "حد النصاب",
     "statSubNisab": "د.ج · النسبة {rate}%",
     "statLabelAmount": "مقدار الزكاة",

@@ -5,9 +5,11 @@
 [Setup]
 ; App Metadata
 AppName=Nexus
-AppVersion=1.3.0
-AppPublisher=Nexus Software Solutions
+AppVersion=1.4.0
+AppPublisher=Duss Software Solutions
 AppId={{8F5B2C9A-4D3E-4A1B-BC7D-2E9C3D8F5A6B}}
+DefaultDirName={autopf}\Nexus
+DefaultGroupName=Nexus
 
 ; Design & Styling Configurations
 DisableProgramGroupPage=yes
@@ -16,7 +18,7 @@ WizardStyle=modern
 
 ; Output Build Settings
 OutputDir=C:\Nexus-Distributable
-OutputBaseFilename=Nexus-v1.3.0-Setup
+OutputBaseFilename=Nexus-Setup
 Compression=lzma2/max
 SolidCompression=yes
 
@@ -25,6 +27,7 @@ PrivilegesRequired=admin
 
 ; Application Logo Icon
 SetupIconFile=E:\Stock-Manager-Electron\resources\favicon.ico
+
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -49,20 +52,20 @@ Name: "{autodesktop}\Nexus"; Filename: "{app}\Nexus.exe"; Tasks: desktopicon; Ic
 Description: "{cm:LaunchProgram,Nexus}"; Filename: "{app}\Nexus.exe"; Flags: nowait postinstall skipifsilent runasoriginaluser
 
 [CustomMessages]
-; --- English ---
-en.LicensingMissing=Critical Error: Licensing module missing. Run setup directly from the authorized USB.
-en.UnauthorizedCopy=Unauthorized copy detected. You must run this installer from the physical USB drive provided.
-en.HardwareMismatch=License Error: This USB stick is already registered to a different computer motherboard.
+; --- English (Changed from en. to english.) ---
+english.LicensingMissing=Critical Error: Licensing module missing. Run setup directly from the authorized USB.
+english.UnauthorizedCopy=Unauthorized copy detected. You must run this installer from the physical USB drive provided.
+english.HardwareMismatch=License Error: This USB stick is already registered to a different computer motherboard.
 
-; --- French ---
-fr.LicensingMissing=Erreur critique : Module de licence manquant. Lancez l'installation directement depuis la clé USB autorisée.
-fr.UnauthorizedCopy=Copie non autorisée détectée. Vous devez exécuter ce programme d'installation à partir de la clé USB physique fournie.
-fr.HardwareMismatch=Erreur de licence : Cette clé USB est déjà enregistrée sur la carte mère d'un autre ordinateur.
+; --- French (Changed from fr. to french.) ---
+french.LicensingMissing=Erreur critique : Module de licence manquant. Lancez l'installation directement depuis la clé USB autorisée.
+french.UnauthorizedCopy=Copie non autorisée détectée. Vous devez exécuter ce programme d'installation à partir de la clé USB physique fournie.
+french.HardwareMismatch=Erreur de licence : Cette clé USB est déjà enregistrée sur la carte mère d'un autre ordinateur.
 
-; --- Arabic ---
-ar.LicensingMissing=خطأ فادح: وحدة الترخيص مفقودة. يرجى تشغيل برنامج التثبيت مباشرة من ذاكرة USB المصرح بها.
-ar.UnauthorizedCopy=تم اكتشاف نسخة غير مصرح بها. يجب تشغيل برنامج التثبيت هذا من ذاكرة USB الفعلية المرفقة.
-ar.HardwareMismatch=خطأ في التعريف: ذاكرة USB هذه مسجلة بالفعل للوحة أم (Motherboard) لجهاز كمبيوتر آخر.
+; --- Arabic (Changed from ar. to arabic.) ---
+arabic.LicensingMissing=خطأ فادح: وحدة الترخيص مفقودة. يرجى تشغيل برنامج التثبيت مباشرة من ذاكرة USB المصرح بها.
+arabic.UnauthorizedCopy=تم اكتشاف نسخة غير مصرح بها. يجب تشغيل برنامج التثبيت هذا من ذاكرة USB الفعلية المرفقة.
+arabic.HardwareMismatch=خطأ في التعريف: ذاكرة USB هذه مسجلة بالفعل للوحة أم (Motherboard) لجهاز كمبيوتر آخر.
 
 [Code]
 function GetDriveSerial(DriveLetter: String): String;

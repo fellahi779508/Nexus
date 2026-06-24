@@ -345,7 +345,7 @@ export default function DetailedSale() {
                   <tr key={item.id ?? index} className={styles.tableRow}>
                     <td>
                       {item.batch?.variant
-                        ? `${item.batch.variant.name ?? `#${item.batch.variant.id}`}`
+                        ? `${item.batch.variant.product.name + " - " + item.batch.variant.name}`
                         : t("unknownItem")}
                     </td>
                     <td>{item.batch?.nLot || "—"}</td>

@@ -12,6 +12,7 @@ import { Zakat } from './entities/zakat.entity';
 import { Stock } from '../stock/entities/stock.entity';
 import { CreateZakatDto, UpdateZakatDto } from './dto/create-zakat.dto';
 import { Sale } from 'src/sale/entities/sale.entity';
+import { Client } from 'src/client/entities/client.entity';
 
 /**
  * One Hijri year ≈ 354 days, 8 hours, 48 minutes in milliseconds.
@@ -83,15 +84,36 @@ export class ZakatService implements OnApplicationBootstrap {
    * Returns the current total value of all stock items in inventory.
    * value = SUM(quantity × sellPrice) for items with quantity > 0.
    */
-  async getInventoryValue(date?: string): Promise<number> {
+  async getInventoryValue(type?: string): Promise<number> {
     const stockRepo = this.dataSource.getRepository(Stock);
+    const clientRepo = this.dataSource.getRepository(Client);
     const stocks = await stockRepo.find({
       where: { quantity: MoreThan(0), batch: { status: Not('expired') } },
       relations: ['batch', 'batch.variant'],
     });
     let result = 0;
-    for (const stock of stocks) {
-      result += stock.quantity * stock.batch.variant.sellingPriceTTC;
+    if (type === 'stockPrice') {
+      for (const stock of stocks) {
+        result += stock.quantity * stock.batch.variant.sellingPriceTTC;
+      }
+      return result;
+    } else if (type === 'stockPurchase') {
+      for (const stock of stocks) {
+        result += stock.quantity * stock.batch.variant.purchasePrice;
+      }
+      return result;
+    }
+    if (type === 'zakat') {
+      for (const stock of stocks) {
+        result += stock.quantity * stock.batch.variant.sellingPriceTTC;
+      }
+      const clients = await clientRepo.find({
+        where: { creditTTC: MoreThan(0) },
+      });
+      for (const client of clients) {
+        result += client.creditTTC;
+      }
+      return result;
     }
     return result;
   }
@@ -102,7 +124,7 @@ export class ZakatService implements OnApplicationBootstrap {
    * Internal verify — mutates and saves the entity, then returns a rich result.
    */
   private async _runVerify(zakat: Zakat): Promise<ZakatVerifyResult> {
-    const inventoryValue = await this.getInventoryValue(zakat.startDate);
+    const inventoryValue = await this.getInventoryValue('zakat');
     const nisab = Number(zakat.nisab);
     const rate = Number(zakat.rate);
 

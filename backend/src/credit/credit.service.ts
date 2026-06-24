@@ -36,11 +36,13 @@ export class CreditService {
       sale.paid = sale.total;
       await this.dataSource.manager.save(sale);
     }
+    const oldCredit = client.creditTTC;
     client.creditTTC = 0;
     await this.dataSource.manager.save(Log, {
       action: Actions.REMOVE_CREDIT,
       entityType: Types.CLIENT,
       reason: Reasons.PAID,
+      quantity: oldCredit,
       timestamp: new Date().toISOString(),
       client,
     });
@@ -66,11 +68,13 @@ export class CreditService {
       purchase.paid = purchase.total;
       await this.dataSource.manager.save(purchase);
     }
+    const oldCredit = supplier.creditTTC;
     supplier.creditTTC = 0;
     await this.dataSource.manager.save(Log, {
       action: Actions.PAYMENT,
       entityType: Types.SUPPLIER,
       reason: Reasons.PAID,
+      quantity: oldCredit,
       timestamp: new Date().toISOString(),
       supplier,
     });

@@ -383,6 +383,7 @@ export class StockPaymentService {
         'purchasedItems',
         'purchasedItems.batch',
         'purchasedItems.batch.variant',
+        'purchasedItems.batch.variant.product',
         'credit',
       ],
       order: { id: 'DESC' },

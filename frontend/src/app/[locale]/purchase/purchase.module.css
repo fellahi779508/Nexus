@@ -192,16 +192,22 @@
   gap: 0.5rem;
   padding: 2rem;
   border-radius: 10px;
+  font-size: larger;
+  font-weight: bold;
 }
 .totalSec_item {
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
+  font-size: larger;
+  font-weight: bold;
   align-items: center;
   width: 100%;
 }
 .total {
   color: var(--success);
+  font-size: larger;
+  font-weight: bold;
 }
 .quantityControl {
   display: flex;

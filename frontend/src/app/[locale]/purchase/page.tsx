@@ -215,7 +215,7 @@ export default function Purchase() {
             batchId: batch.id,
             quantity: 1,
             total: item.purchasePrice,
-            name: item.name,
+            name: `${item.product.name} - ${item.name}`,
             barcode: item.barcode,
             sellingPriceTTC: item.purchasePrice,
             maxStock:

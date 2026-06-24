@@ -72,7 +72,7 @@ export default function Categories() {
 
   useEffect(() => {
     loadCategories();
-  }, [page, successToast, search]);
+  }, [page, successToast, debouncedSearch]);
 
   return (
     <>

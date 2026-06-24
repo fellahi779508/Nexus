@@ -18,6 +18,7 @@ import {
   ShoppingCart,
   Package,
   AlertTriangle,
+  Tag,
 } from "lucide-react";
 import styles from "./dashboard.module.css";
 import Link from "next/link";
@@ -44,6 +45,10 @@ interface Variant {
   PPA: string;
   createdAt: string;
   updatedAt: string;
+  product: Product;
+}
+interface Product {
+  name: string;
 }
 
 interface Batch {
@@ -94,6 +99,7 @@ interface PurchasedItem {
       id: number;
       name: string;
       purchasePrice: number;
+      product: Product;
     };
   };
 }
@@ -407,13 +413,20 @@ export default function Dashboard() {
                           </strong>
                         </div>
                         <div className={styles.listItemItems}>
-                          {sale.soldItems.map((item) => (
+                          {sale.soldItems.slice(0, 3).map((item) => (
                             <span key={item.id} className={styles.itemChip}>
                               {item.quantity}×{" "}
                               {item.qtePerUnit ? item.qtePerUnit : ""}x{" "}
+                              {item.batch.variant.product.name} -{" "}
                               {item.batch.variant.name}
                             </span>
                           ))}
+                          {sale.soldItems.length > 3 && (
+                            <span className={styles.itemChip}>
+                              <Tag size={9} strokeWidth={2} />
+                              ...
+                            </span>
+                          )}
                         </div>
                       </Link>
                     ))}
@@ -466,11 +479,18 @@ export default function Dashboard() {
                           {p.supplier ? p.supplier.name : "-"}
                         </div>
                         <div className={styles.listItemItems}>
-                          {p.purchasedItems?.map((item) => (
+                          {p.purchasedItems?.slice(0, 3).map((item) => (
                             <span key={item.id} className={styles.itemChip}>
-                              {item.quantity}× {item.batch.variant.name}
+                              {item.quantity}× {item.batch.variant.product.name}{" "}
+                              - {item.batch.variant.name}
                             </span>
                           ))}
+                          {p.purchasedItems.length > 3 && (
+                            <span className={styles.itemChip}>
+                              <Tag size={9} strokeWidth={2} />
+                              ...
+                            </span>
+                          )}
                         </div>
                       </Link>
                     ))}

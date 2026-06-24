@@ -74,7 +74,7 @@ export class ClientService {
         action: Actions.PAYMENT,
         entityType: Types.CLIENT,
         reason: Reasons.PAID,
-
+        quantity: updateClientDto.creditTTC,
         timestamp: new Date().toISOString(),
         client,
       });

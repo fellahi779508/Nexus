@@ -9,6 +9,7 @@ import {
   ParseIntPipe,
   HttpCode,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 
 import { ZakatService } from './zakat.service';
@@ -48,9 +49,9 @@ export class ZakatController {
    * Returns the current total inventory value (stock × sellPrice).
    */
   @Get('inventory')
-  getInventoryValue() {
+  getInventoryValue(@Query('type') type: string) {
     return this.zakatService
-      .getInventoryValue()
+      .getInventoryValue(type)
       .then((value) => ({ inventoryValue: value }));
   }
 

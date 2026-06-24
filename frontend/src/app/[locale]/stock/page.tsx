@@ -44,6 +44,7 @@ export default function StockPage() {
   const [sellableTab, setSellableTab] = useState(false);
   const [page, setPage] = useState(1);
   const [totalInventory, setTotalInventory] = useState(0);
+  const [totalEquity, setTotalEquity] = useState(0);
   const [meta, setMeta] = useState<Meta>({
     total: 0,
     page: 1,
@@ -56,6 +57,7 @@ export default function StockPage() {
   const [successToast, setSuccessToast] = useState(false);
   const [status, setStatus] = useState<string>("");
   const [stockStatus, setStockStatus] = useState<string>("");
+  const [equity, setEquity] = useState(0);
   const availableStatus = {
     all: t("batchStatus.all"),
     sellable: t("batchStatus.sellable"),
@@ -65,9 +67,14 @@ export default function StockPage() {
     empty: t("batchStatus.empty"),
   };
   useEffect(() => {
-    getInventoryValue().then((response) => {
+    getInventoryValue("stockPrice").then((response) => {
       if (response.status === 1) {
         setInventory(response.response.inventoryValue);
+      }
+    });
+    getInventoryValue("stockPurchase").then((response) => {
+      if (response.status === 1) {
+        setEquity(response.response.inventoryValue);
       }
     });
   }, []);
@@ -121,6 +128,16 @@ export default function StockPage() {
     });
     setTotalInventory(total);
   }, [stocks]);
+
+  useEffect(() => {
+    let total = 0;
+    stocks.map((stock) => {
+      const batch = stock.batch;
+      total += stock.quantity * batch.variant.purchasePrice;
+    });
+    setTotalEquity(total);
+  }, [stocks]);
+
   async function fetchSellaStock() {
     const res = await getSellableStock(
       page,
@@ -259,6 +276,7 @@ export default function StockPage() {
                   <th className={styles.th}>{t("col.alert")}</th>
                   <th className={styles.th}>{t("col.alertStock")}</th>
                   <th className={styles.th}>{t("col.totalInventory")}</th>
+                  <th className={styles.th}>{t("col.totalEquity")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -401,10 +419,20 @@ export default function StockPage() {
                         ).toFixed(2)}{" "}
                         {g("currency")}
                       </td>
+                      <td className={styles.td}>
+                        {(
+                          stock.quantity * batch?.variant.purchasePrice
+                        ).toFixed(2)}{" "}
+                        {g("currency")}
+                      </td>
                     </tr>
                   );
                 })}
                 <tr>
+                  <td className={styles.tdEquity}>
+                    {t("totalEquityTable")} : {equity.toFixed(2)}{" "}
+                    {g("currency")}
+                  </td>
                   <td className={styles.tdTotal}>
                     {t("totalInventoryTable")} : {inventory.toFixed(2)}{" "}
                     {g("currency")}
@@ -422,10 +450,12 @@ export default function StockPage() {
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td></td>
                   <td className={styles.tdP}>
                     {t("totalTable")} : {totalInventory.toFixed(2)}{" "}
                     {g("currency")}
+                  </td>
+                  <td className={styles.tdP}>
+                    {t("totalTable")} : {totalEquity.toFixed(2)} {g("currency")}
                   </td>
                 </tr>
               </tbody>

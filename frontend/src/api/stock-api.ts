@@ -44,9 +44,11 @@ export async function removeFromStock(
     return { error: error.response.data.message, status: 0 };
   }
 }
-export async function getInventoryValue() {
+export async function getInventoryValue(type?: string) {
   try {
-    const response = await api.get(`/zakat/inventory`).then((res) => res.data);
+    const response = await api
+      .get(`/zakat/inventory?${type ? `type=${type}` : ""}`)
+      .then((res) => res.data);
     console.log(response);
     return { response, status: 1 };
   } catch (error: any) {
