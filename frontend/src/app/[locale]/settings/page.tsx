@@ -24,6 +24,7 @@ import OwnerProfile from "@/components/owner/ownerProfile";
 import PasswordGate from "@/components/owner/passwordGate";
 import { deleteDataBase } from "@/api/owner-api";
 import { Metadata } from "next";
+import axios from "axios";
 // adjust to your path
 
 /* ── Types ──────────────────────────────────────────────────────────────── */
@@ -105,47 +106,15 @@ export default function SettingsPage() {
   }
 
   /* ── Export ── */
+  // Inside your Frontend Component / Service
   async function handleExport() {
-    setExporting(true);
-    try {
-      const res = await fetch(`${API}/backup/export`);
-      if (!res.ok) {
-        toast.error(t("toast.exportError"));
-        return;
-      }
+    // 1. Tell backend to create the temporary file copy
+    const response = await axios.get("http://localhost:3001/backup/export");
+    const { backupFilePath } = response.data;
 
-      const blob = await res.blob();
-      const filename = `StockData-backup-${Date.now()}.sqlite`;
-
-      if ("showSaveFilePicker" in window) {
-        const handle = await (window as any).showSaveFilePicker({
-          suggestedName: filename,
-          types: [
-            {
-              description: "SQLite Database",
-              accept: { "application/octet-stream": [".sqlite"] },
-            },
-          ],
-        });
-        const writable = await handle.createWritable();
-        await writable.write(blob);
-        await writable.close();
-      } else {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = filename;
-        a.click();
-        URL.revokeObjectURL(url);
-      }
-
-      toast.success(t("toast.exportSuccess"));
-    } catch (err: any) {
-      if (err?.name === "AbortError") return;
-      toast.error(t("toast.exportError"));
-    } finally {
-      setExporting(false);
-    }
+    // 2. Pass the path to Electron Main Process via your IPC bridge
+    // (Assuming you have a 'save-database-file' listener in main.js)
+    (window as any).electronAPI.saveDatabaseFile(backupFilePath);
   }
 
   /* ── Import ── */

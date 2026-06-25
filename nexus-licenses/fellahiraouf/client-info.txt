@@ -1,4 +1,0 @@
-Client Identity: fellahiraouf
-Allocated USB Serial: 46668C15
-Production Timestamp: 6/18/2026, 10:59:19 AM
-Activation Lifecycle State: UNBOUND (Awaiting First Boot Installation)

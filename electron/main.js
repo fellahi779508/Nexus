@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { spawn, execSync } = require("child_process");
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, dialog, ipcMain } = require("electron");
 const axios = require("axios");
 const treeKill = require("tree-kill");
 
@@ -162,19 +162,12 @@ function startBackend() {
 // ----------------------------------------------------
 function startFrontend() {
   const serverPath = app.isPackaged
-    ? path.join(
-        process.resourcesPath,
-        "frontend",
-        ".next",
-        "standalone",
-        "frontend",
-        "server.js",
-      )
+    ? path.join(process.resourcesPath, "frontend", "frontend", "server.js")
     : path.join(__dirname, "../frontend/.next/standalone/frontend/server.js");
 
   // Next.js Standalone requires its base execution directory context to map internal server assets
   const frontendCwd = app.isPackaged
-    ? path.join(process.resourcesPath, "frontend", ".next", "standalone")
+    ? path.join(process.resourcesPath, "frontend", "frontend")
     : path.join(__dirname, "../frontend/.next/standalone");
 
   console.log("Frontend path:", serverPath);
@@ -289,6 +282,26 @@ async function cleanup() {
 // ----------------------------------------------------
 // START
 // ----------------------------------------------------
+ipcMain.handle("save-database-file", async (event, tempPath) => {
+  const { filePath } = await dialog.showSaveDialog({
+    title: "Export Database Backup",
+    defaultPath: `StockData-backup-${Date.now()}.sqlite`,
+    filters: [{ name: "SQLite Database", extensions: ["sqlite"] }],
+  });
+
+  if (filePath) {
+    // Safely copy the file from the OS temp directory to the user's chosen location
+    fs.copyFileSync(tempPath, filePath);
+    // Clean up the temp file
+    fs.unlinkSync(tempPath);
+    return { success: true };
+  }
+
+  // Clean up if they hit cancel
+  fs.unlinkSync(tempPath);
+  return { success: false };
+});
+
 app.whenReady().then(async () => {
   try {
     createWindow();

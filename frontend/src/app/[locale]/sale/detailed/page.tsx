@@ -18,7 +18,7 @@ import getAllSallableVariants, {
 } from "@/api/variant-api";
 import PrintModal from "@/components/sale/printModal";
 import CreditModal from "@/components/sale/creditModal";
-import updateSaleByid, { createSale } from "@/api/sale-api";
+import updateSaleByid, { createSale, printSale } from "@/api/sale-api";
 import { toast, ToastContainer } from "react-toastify";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
@@ -168,7 +168,7 @@ export default function DetailedSale() {
             batchId: batch.id,
             quantity: 1,
             total: item.promotionPrice ?? item.sellingPriceTTC,
-            name: item.name,
+            name: `${item.product.name} - ${item.name}`,
             barcode: item.barcode,
             sellingPriceTTC: item.promotionPrice ?? item.sellingPriceTTC,
             maxStock:
@@ -441,6 +441,9 @@ export default function DetailedSale() {
     if (res.status === 1) {
       toast.success(t("successSale"));
       alert(t("successSale"));
+      if (paperType) {
+        await printSale(res.response.id, paperType);
+      }
       fetchVariants();
       resetStatus();
     } else {
@@ -563,6 +566,7 @@ export default function DetailedSale() {
   }, [isBarcodeToggled]); // Triggers whenever this state changes
   return (
     <div className={styles.container}>
+      <title>Nexus | Detailed POS</title>
       <section className={styles.sect1}>
         <div className={styles.title}>
           <h2>{t("title")}</h2>

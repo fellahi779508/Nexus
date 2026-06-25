@@ -23,71 +23,40 @@ export class BackupController {
 
   /* ── GET /backup/export ─────────────────────────────────────────────── */
   @Get('export')
-  async exportDatabase(@Res() res: express.Response) {
+  async exportDatabase() {
     const dbPath = getDatabasePath();
+
+    // Create a temporary backup file on the operating system
     const tempBackupPath = path.join(
       os.tmpdir(),
-      `backup-${Date.now()}.sqlite`,
+      `StockData-backup-${Date.now()}.sqlite`,
     );
 
     if (!fs.existsSync(dbPath)) {
-      throw new HttpException('Database file not found', HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        `Database file not found at: ${dbPath}`,
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     try {
-      // 1. Force a WAL checkpoint to sync all lingering transactions to disk
+      // 1. Flush active WAL logs to the database file
       await this.dataSource.query('PRAGMA wal_checkpoint(TRUNCATE)');
 
-      // 2. 🛡️ Use SQLite's native VACUUM INTO to create an unlocked snapshot file safely
-      // This bypasses Windows file locking entirely!
+      // 2. Safely snapshot the database to a temporary location
       await this.dataSource.query(
         `VACUUM INTO '${tempBackupPath.replace(/\\/g, '\\\\')}'`,
       );
 
-      const filename = `StockData-backup-${Date.now()}.sqlite`;
-      res.setHeader('Content-Type', 'application/octet-stream');
-      res.setHeader(
-        'Content-Disposition',
-        `attachment; filename="${filename}"`,
-      );
-
-      // 3. Stream the temporary backup file to the user
-      const readStream = fs.createReadStream(tempBackupPath);
-
-      readStream.on('error', (streamErr) => {
-        console.error('Streaming error:', streamErr);
-        if (!res.headersSent) {
-          res
-            .status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .send('Error streaming backup file');
-        }
-      });
-
-      // 4. Once streaming finishes, clean up the temporary file from the PC
-      res.on('finish', () => {
-        try {
-          if (fs.existsSync(tempBackupPath)) {
-            fs.unlinkSync(tempBackupPath);
-            console.log('✅ Temporary backup file cleaned up.');
-          }
-        } catch (cleanupErr) {
-          console.error('Failed to delete temporary backup file:', cleanupErr);
-        }
-      });
-
-      readStream.pipe(res);
+      // 3. Return the absolute path of the backup file to Electron
+      return {
+        success: true,
+        backupFilePath: tempBackupPath,
+      };
     } catch (error) {
-      console.error('Database export routine failed:', error);
-
-      // Safety cleanup if vacuum succeeded but streaming crashed early
-      if (fs.existsSync(tempBackupPath)) {
-        try {
-          fs.unlinkSync(tempBackupPath);
-        } catch {}
-      }
-
+      console.error('Export failed:', error);
       throw new HttpException(
-        `Backup creation failed: ${error.message}`,
+        `Backup failed: ${error.message}`,
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }

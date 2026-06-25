@@ -349,8 +349,10 @@ export class ProductVariantService {
             includetext: true,
             textxalign: 'center',
 
-            width: 45, // Width in mm (adjust to match your label paper)
-            height: 15, // Height in mm
+            // 🛠️ The Fix for Label Printers:
+            scale: 3, // Scales up the image resolution (makes the bars crisp/high-density)
+            height: 15, // Height of the bars alone in millimeters (this property is safe)
+            textsize: 10, // Crisp size for the human-readable text below the bars
           },
           (err, buf) => {
             if (err) {
