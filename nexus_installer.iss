@@ -41,7 +41,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 ; 🚀 The Single Electron Payload (Resolved local path conflict)
 Source: "E:\Stock-Manager-Electron\dist\win-unpacked\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; Keeps a backup copy of the initial license file template in your app resources if needed
-Source: "{src}\license.dat"; DestDir: "{app}\resources\"; Flags: external onlyifdoesntexist
+Source: "{src}\license.dat"; DestDir: "{userappdata}\Nexus-data"; Flags: external uninsneveruninstall
 
 [Icons]
 Name: "{group}\Nexus"; Filename: "{app}\Nexus.exe"; IconFilename: "{app}\Nexus.exe"
