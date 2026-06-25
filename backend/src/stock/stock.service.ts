@@ -47,6 +47,7 @@ export class StockService {
         where: [
           { batch: { variant: { name: ILike(`%${search}%`) } } },
           { batch: { variant: { barcode: Like(`%${search}%`) } } },
+          { batch: { variant: { product: { name: ILike(`%${search}%`) } } } },
           { batch: { status: ILike(`%${status}%`) } },
           { batch: { stockQTYStatus: ILike(`%${stockStatus}%`) } },
         ],
@@ -232,46 +233,42 @@ export class StockService {
     });
     return stocks;
   }
-async getSellableStock(
-  page: number,
-  limit: number,
-  search?: string,
-) {
-  const query = this.stockRepository
-    .createQueryBuilder('stock')
-    .leftJoinAndSelect('stock.batch', 'batch')
-    .leftJoinAndSelect('batch.variant', 'variant')
-    .leftJoinAndSelect('batch.supplier', 'supplier')
-    .leftJoinAndSelect('variant.product', 'product')
-    .where('batch.status != :expired', {
-      expired: 'expired',
-    })
-    .andWhere('batch.stockQTYStatus != :empty', {
-      empty: 'empty',
-    });
+  async getSellableStock(page: number, limit: number, search?: string) {
+    const query = this.stockRepository
+      .createQueryBuilder('stock')
+      .leftJoinAndSelect('stock.batch', 'batch')
+      .leftJoinAndSelect('batch.variant', 'variant')
+      .leftJoinAndSelect('batch.supplier', 'supplier')
+      .leftJoinAndSelect('variant.product', 'product')
+      .where('batch.status != :expired', {
+        expired: 'expired',
+      })
+      .andWhere('batch.stockQTYStatus != :empty', {
+        empty: 'empty',
+      });
 
-  if (search) {
-    query.andWhere(
-      '(variant.name ILIKE :search OR variant.barcode ILIKE :search)',
-      {
-        search: `%${search}%`,
+    if (search) {
+      query.andWhere(
+        '(variant.name ILIKE :search OR variant.barcode ILIKE :search)',
+        {
+          search: `%${search}%`,
+        },
+      );
+    }
+
+    const [items, count] = await query
+      .skip((page - 1) * limit)
+      .take(limit)
+      .getManyAndCount();
+
+    return {
+      data: items,
+      meta: {
+        total: count,
+        page,
+        limit,
+        pages: Math.ceil(count / limit),
       },
-    );
+    };
   }
-
-  const [items, count] = await query
-    .skip((page - 1) * limit)
-    .take(limit)
-    .getManyAndCount();
-
-  return {
-    data: items,
-    meta: {
-      total: count,
-      page,
-      limit,
-      pages: Math.ceil(count / limit),
-    },
-  };
-}
 }

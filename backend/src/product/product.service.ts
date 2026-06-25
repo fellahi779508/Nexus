@@ -47,6 +47,7 @@ export class ProductService {
         where: [
           { name: ILike(`%${search}%`) },
           { category: { name: ILike(`%${search}%`) } },
+          { variants: { barcode: ILike(`%${search}%`) } },
         ],
         relations: ['category', 'variants.batches.supplier'],
         take: limit,

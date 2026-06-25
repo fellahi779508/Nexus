@@ -25,7 +25,7 @@ import {
   Printer,
 } from "lucide-react";
 import AddBatchModal from "@/components/batches/add-batch";
-import { Meta, Supplier } from "@/utils/types";
+import { Meta, Product, Supplier } from "@/utils/types";
 import BatchSelectOptions from "@/components/batches/batch-select-options";
 
 /* ── types ───────────────────────────────────────────────────────────────── */
@@ -72,6 +72,7 @@ type Variant = {
   flavor: string | null;
   createdAt: string;
   updatedAt: string;
+  product: Product;
 };
 
 /* ── helpers ─────────────────────────────────────────────────────────────── */
@@ -210,7 +211,9 @@ export default function VariantDetails() {
             </div>
             <div className={styles.heroMeta}>
               <p className={styles.eyebrow}>{t("hero.eyebrow")}</p>
-              <h1 className={styles.heroName}>{variant.name}</h1>
+              <h1 className={styles.heroName}>
+                {variant.product.name} - {variant.name}
+              </h1>
               <div className={styles.heroBadges}>
                 <span className={styles.badge}>
                   <Tag size={11} strokeWidth={2} />

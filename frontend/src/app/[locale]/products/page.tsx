@@ -84,6 +84,50 @@ export default function Products() {
       setLoading(false);
     }
   }, [page, debouncedSearch, t]);
+  const handleScannedItem = async (barcode: string) => {
+    console.log("Scanned Barcode:", barcode);
+    // Your logic here (e.g., fetch product, add to invoice)
+    setSearch(barcode);
+  };
+  useEffect(() => {
+    // If the toggle is false, don't set up the listener at all
+
+    let inputString = "";
+    let lastKeyTime = Date.now();
+    const timeout = 100; // ms threshold for scanner speed
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const currentTime = Date.now();
+
+      // Reset if the user is typing too slowly (human typing)
+      if (currentTime - lastKeyTime > timeout) {
+        inputString = "";
+      }
+
+      if (e.key === "Enter") {
+        if (inputString.length > 0) {
+          handleScannedItem(inputString);
+          inputString = ""; // Reset buffer
+        }
+        return;
+      }
+
+      // Capture printable single characters
+      if (e.key.length === 1) {
+        inputString += e.key;
+      }
+
+      lastKeyTime = currentTime;
+    };
+
+    // Attach listener globally
+    document.addEventListener("keydown", handleKeyDown);
+
+    // CLEANUP: This runs automatically when `isBarcodeToggled` changes to false
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   useEffect(() => {
     fetchProducts();

@@ -531,7 +531,7 @@ export default function Sale() {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isBarcodeToggled]); // Triggers whenever this state changes
+  }, [isBarcodeToggled]);
 
   return (
     <div className={styles.container}>

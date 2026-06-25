@@ -434,7 +434,10 @@ export class BatchService {
     search?: string,
   ) {
     const variantRepo = this.dataSource.getRepository(ProductVariant);
-    const variant = await variantRepo.findOne({ where: { id } });
+    const variant = await variantRepo.findOne({
+      where: { id },
+      relations: ['product'],
+    });
     if (!variant) {
       throw new NotFoundException('Variant not found');
     }
