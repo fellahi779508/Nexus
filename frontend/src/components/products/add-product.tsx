@@ -154,21 +154,19 @@ function Step1From({
     });
     if (result.status === 1) {
       setProductId(result.response.id);
-      toast.success(t("addProduct.toast.productCreated"));
+      alert(t("addProduct.toast.productCreated"));
       setStep(2);
       setSuccessProduct(true);
     } else {
       console.log(result.error);
-      toast.error(
-        (result.error as string) || t("addProduct.toast.unknownError"),
-      );
+      alert((result.error as string) || t("addProduct.toast.unknownError"));
     }
   }
   // verify the input fields if they are empty
   function fieldsVerifier() {
     let result = true;
     if (!postProduct?.name) {
-      toast.error(t("addProduct.toast.fieldsRequired.name"));
+      alert(t("addProduct.toast.fieldsRequired.name"));
       result = false;
     }
     return result;
@@ -187,9 +185,7 @@ function Step1From({
       setSuccessToast(true);
     } else {
       console.log(result.error);
-      toast.error(
-        (result.error as string) || t("addProduct.toast.unknownError"),
-      );
+      alert((result.error as string) || t("addProduct.toast.unknownError"));
     }
   }
   async function updateProduct() {
@@ -199,14 +195,12 @@ function Step1From({
       updatedAt: new Date().toISOString(),
     });
     if (result.status === 1) {
-      toast.success(t("updateProduct.toast.success"));
+      alert(t("updateProduct.toast.success"));
       setSuccessProduct(true);
       setModalOpen(false);
     } else {
       console.log(result.error);
-      toast.error(
-        (result.error as string) || t("addProduct.toast.unknownError"),
-      );
+      alert((result.error as string) || t("addProduct.toast.unknownError"));
     }
   }
 
@@ -675,7 +669,7 @@ export function Step2Form({
     ];
     const failed = checks.find(({ condition }) => condition);
     if (failed) {
-      toast.error(failed.message);
+      alert(failed.message);
       return false;
     }
     return true;
@@ -732,11 +726,11 @@ export function Step2Form({
   async function createVariant(variant: PostVarinat) {
     const response = await postVariant(variant);
     if (response.status === 1) {
-      toast.success(t("addProduct.toast.variantCreated"));
+      alert(t("addProduct.toast.variantCreated"));
       setSuccessToastMain(true);
       setModalOpen(false);
     } else {
-      toast.error(response.response ?? t("addProduct.toast.unknownError"));
+      alert(response.response ?? t("addProduct.toast.unknownError"));
     }
   }
 

@@ -14,6 +14,9 @@ import {
   Plus,
   ArrowRight,
   RefreshCcw,
+  List,
+  PersonStanding,
+  Phone,
 } from "lucide-react";
 import styles from "./suppliers.module.css";
 import ProductModal from "@/components/products/add-product";
@@ -184,19 +187,22 @@ export default function Suppliers() {
               >
                 <div className={styles.cardTop}>
                   <div className={styles.cardIcon}>
-                    <Package size={20} strokeWidth={1.5} />
+                    <List size={20} strokeWidth={1.5} />
                   </div>
                   <ArrowRight size={15} className={styles.cardArrow} />
                 </div>
 
                 <div className={styles.cardBody}>
-                  <h3 className={styles.cardName}>{supplier.name}</h3>
-                </div>
-
-                <div className={styles.cardFooter}>
-                  <span className={styles.cardId}>
-                    {t("supplierId", { id: supplier.id })}
-                  </span>
+                  <div className={styles.badge}>
+                    <PersonStanding />
+                    <h3 className={styles.cardName}>{supplier.name}</h3>
+                  </div>
+                  <div className={styles.badge}>
+                    <Phone />
+                    <h3 className={styles.cardName}>
+                      {supplier.phone ? supplier.phone : "-"}
+                    </h3>
+                  </div>
                 </div>
               </div>
             ))}

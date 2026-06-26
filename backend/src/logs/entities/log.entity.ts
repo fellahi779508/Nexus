@@ -27,7 +27,10 @@ export class Log {
   @Column({ nullable: true })
   quantity: number;
 
-  @ManyToOne(() => Client, (client) => client.logs, { nullable: true })
+  @ManyToOne(() => Client, (client) => client.logs, {
+    nullable: true,
+    onDelete: 'CASCADE',
+  })
   client: Client;
 
   @ManyToOne(() => Sale, (sale) => sale.logs, {

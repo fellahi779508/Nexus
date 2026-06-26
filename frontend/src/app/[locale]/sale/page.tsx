@@ -408,7 +408,6 @@ export default function Sale() {
       date: new Date().toISOString(),
     });
     if (res.status === 1) {
-      toast.success(t("successSale"));
       alert(t("successSale"));
       if (paperType) {
         await printSale(res.response.id, paperType);
@@ -416,7 +415,6 @@ export default function Sale() {
       fetchVariants();
       resetStatus();
     } else {
-      toast.error(t("errorSale"));
       alert(t("errorSale"));
     }
   }
@@ -453,7 +451,6 @@ export default function Sale() {
       date: new Date().toISOString(),
     });
     if (res.status === 1) {
-      toast.success(t("successSaleUpdate"));
       alert(t("successSaleUpdate"));
       if (paperType) {
         await printSale(res.response.id, paperType);
@@ -461,7 +458,6 @@ export default function Sale() {
       fetchVariants();
       resetStatus();
     } else {
-      toast.error(t("errorSaleUpdate"));
       alert(t("errorSaleUpdate"));
     }
   }

@@ -35,7 +35,7 @@ export default function VariantSelectOptions({
       setSuccessToast(true);
       setVariantSelectOptionsOpen(false);
     } else {
-      toast.error(t("variantOptions.deleteVariant.error"));
+      alert(t("variantOptions.deleteVariant.error"));
     }
   }
 

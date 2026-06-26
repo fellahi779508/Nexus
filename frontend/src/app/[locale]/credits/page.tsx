@@ -188,7 +188,11 @@ export default function CreditsPage() {
               entities.map((entity) => (
                 <tr
                   key={entity.id}
-                  onClick={() => router.push(`/clients/${entity.id}`)}
+                  onClick={() =>
+                    router.push(
+                      `${activeTab === "client" ? "/clients/" : "/suppliers/"}${entity.id}`,
+                    )
+                  }
                   className={styles.tr}
                 >
                   <td>#{entity.id}</td>

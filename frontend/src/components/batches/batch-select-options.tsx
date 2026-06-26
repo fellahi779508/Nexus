@@ -39,7 +39,7 @@ export default function BatchSelectOptions({
       setSuccessToast(true);
       handleOverlayClick();
     } else {
-      toast.error(res.error);
+      alert(res.error);
     }
   }
   return (

@@ -482,7 +482,6 @@ export default function Purchase() {
     });
 
     if (res.status === 1) {
-      toast.success(t("successPurchaseUpdate"));
       alert(t("successPurchaseUpdate"));
       if (paperType) {
         await printPurchase(res.response.id, paperType);
@@ -490,7 +489,6 @@ export default function Purchase() {
       fetchVariants();
       resetStatus();
     } else {
-      toast.error(t("errorPurchaseUpdate"));
       alert(t("errorPurchaseUpdate"));
     }
   }

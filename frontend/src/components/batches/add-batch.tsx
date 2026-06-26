@@ -43,7 +43,7 @@ export default function AddBatchModal({
   function fieldsVerifier(): boolean {
     // Required: quantity must be > 0
     if (!batch.quantity || batch.quantity <= 0) {
-      toast.error(
+      alert(
         t("quantityRequired") ||
           "Quantity is required and must be greater than 0",
       );
@@ -51,7 +51,7 @@ export default function AddBatchModal({
     }
     // Required: variantId must be valid (non-zero)
     if (!batch.variantId || batch.variantId <= 0) {
-      toast.error(t("variantRequired") || "Invalid variant");
+      alert(t("variantRequired") || "Invalid variant");
       return false;
     }
     // Optional: you can add more validations here (e.g., date order)
@@ -60,7 +60,7 @@ export default function AddBatchModal({
       batch.expirationDate &&
       batch.fabricationDate > batch.expirationDate
     ) {
-      toast.error(
+      alert(
         t("dateOrderError") ||
           "Fabrication date cannot be after expiration date",
       );
@@ -70,26 +70,24 @@ export default function AddBatchModal({
   }
 
   async function handleSubmit() {
-    console.log(batch);
-
     if (isUpdate) {
       const result = await updateBatchById(batchId!, batch!);
       if (result.status === 1) {
-        toast.success(t("successUpdate"));
+        alert(t("successUpdate"));
         setSuccessToast(true);
         setModalOpen(false);
       } else {
-        toast.error(t("errorUpdate"));
+        alert(t("errorUpdate"));
       }
     } else {
       if (!fieldsVerifier()) return;
       const result = await createBatch(batch!);
       if (result.status === 1) {
-        toast.success(t("successCreate"));
+        alert(t("successCreate"));
         setSuccessToast(true);
         setModalOpen(false);
       } else {
-        toast.error(t("errorCreate"));
+        alert(t("errorCreate"));
       }
     }
   }
