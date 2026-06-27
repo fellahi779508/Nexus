@@ -34,7 +34,7 @@ export default async function LocaleLayout({ children, params }: Props) {
               color: "var(--foreground)",
             }}
           >
-            Nexus v1.4.0 © 2026
+            Nexus v1.4.5 © 2026
           </p>
         </body>
       </NextIntlClientProvider>

@@ -1,6 +1,6 @@
 {
   "name": "Nexus",
-  "version": "1.4.0",
+  "version": "1.4.5",
   "main": "electron/main.js",
   "description": "Nexus Manager",
   "author": "Raouf Fellahi (DuSStQ)",
