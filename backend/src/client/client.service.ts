@@ -7,6 +7,8 @@ import { Client } from './entities/client.entity';
 import { CreditService } from 'src/credit/credit.service';
 import { Log } from 'src/logs/entities/log.entity';
 import { Actions, Reasons, Types } from 'src/utils/actions';
+import { Sale } from 'src/sale/entities/sale.entity';
+import { Credit } from 'src/credit/entities/credit.entity';
 
 @Injectable()
 export class ClientService {
@@ -93,14 +95,55 @@ export class ClientService {
   }
 
   async remove(id: number) {
+    // 1. Fetch the client and fail early if they don't exist
     const client = await this.findOne(id);
-    await this.clientRepository.remove(client!);
-    await this.dataSource.manager.save(Log, {
-      action: Actions.DELETE,
-      entityType: Types.CLIENT,
-      timestamp: new Date().toISOString(),
-    });
-    return 'done';
+    if (!client) {
+      throw new NotFoundException(`Client with ID ${id} not found`);
+    }
+
+    // 2. Wrap everything in a transaction to ensure data integrity
+    return await this.dataSource.manager.transaction(
+      async (transactionalEntityManager) => {
+        // Fetch sales belonging to this client using the transactional manager
+        const sales = await transactionalEntityManager.find(Sale, {
+          where: { client: { id: client.id } },
+          relations: ['credit', 'client'],
+        });
+
+        const creditsToDelete: any = [];
+        const salesToUpdate: any = [];
+
+        // 3. Process data in memory instead of hitting DB inside the loop
+        for (const sale of sales) {
+          if (sale.credit) {
+            sale.paid = sale.total; // FIXED: Changed '==' to '='
+
+            creditsToDelete.push(sale.credit);
+            salesToUpdate.push(sale);
+          }
+        }
+
+        // 4. Execute database changes in efficient batches
+        if (creditsToDelete.length > 0) {
+          await transactionalEntityManager.remove(Credit, creditsToDelete);
+        }
+        if (salesToUpdate.length > 0) {
+          await transactionalEntityManager.save(Sale, salesToUpdate);
+        }
+
+        // Remove the client
+        await transactionalEntityManager.remove(client);
+
+        // Save the activity log
+        await transactionalEntityManager.save(Log, {
+          action: Actions.DELETE,
+          entityType: Types.CLIENT,
+          timestamp: new Date().toISOString(),
+        });
+
+        return 'done';
+      },
+    );
   }
   async getCredits(
     page: number,

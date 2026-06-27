@@ -375,8 +375,9 @@
     "emptySearchSubtitle": "No results for \"{query}\"",
     "pageInfo": "Page {page} of {pages}",
     "totalTable": "Total per page",
-    "totalInventoryTable": "Total Inventory",
-    "totalEquityTable": "Total Equity",
+    "totalInventoryTable": "Selling Value",
+    "totalEquityTable": "Stock Value",
+    "totalProfitTable": "Potential Profit",
     "batchStatus": {
       "all": "All",
       "sellable": "Sellable",

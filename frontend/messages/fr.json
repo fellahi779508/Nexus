@@ -373,8 +373,10 @@
     "emptySearchSubtitle": "Aucun résultat pour \"{query}\"",
     "pageInfo": "Page {page} sur {pages}",
     "totalTable": "Total par page",
-    "totalInventoryTable": "Inventaire Total",
-    "totalEquityTable": "Équité Totale",
+    "totalInventoryTable": "Valeur de Vente du Stock",
+    "totalEquityTable": "Valeur du Stock",
+    "totalProfitTable": "Bénéfice Potentiel",
+
     "batchStatus": {
       "all": "Tous",
       "sellable": "Vendable",

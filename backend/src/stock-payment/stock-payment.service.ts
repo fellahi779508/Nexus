@@ -360,16 +360,18 @@ export class StockPaymentService {
   }
   async remove(id: number) {
     const stockPayment = await this.findOne(id);
-    const supplier = await this.datasource.manager.findOne(Supplier, {
-      where: { id: stockPayment.supplier.id },
-    });
-    if (supplier) {
-      supplier.creditTTC -= stockPayment.total - stockPayment.paid;
-      await this.datasource.manager.save(Supplier, supplier);
-    }
-    if (stockPayment.credit) {
-      stockPayment.supplier.creditTTC -= stockPayment.credit.amount;
-      await this.datasource.manager.save(stockPayment.supplier);
+    if (stockPayment.supplier) {
+      const supplier = await this.datasource.manager.findOne(Supplier, {
+        where: { id: stockPayment.supplier.id },
+      });
+      if (supplier) {
+        supplier.creditTTC -= stockPayment.total - stockPayment.paid;
+        await this.datasource.manager.save(Supplier, supplier);
+      }
+      if (stockPayment.credit) {
+        stockPayment.supplier.creditTTC -= stockPayment.credit.amount;
+        await this.datasource.manager.save(stockPayment.supplier);
+      }
     }
     await this.datasource.manager.save(Log, {
       action: Actions.DELETE,

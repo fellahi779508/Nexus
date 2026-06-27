@@ -45,6 +45,7 @@ export default function StockPage() {
   const [page, setPage] = useState(1);
   const [totalInventory, setTotalInventory] = useState(0);
   const [totalEquity, setTotalEquity] = useState(0);
+  const [profit, setProfit] = useState(0);
   const [meta, setMeta] = useState<Meta>({
     total: 0,
     page: 1,
@@ -75,6 +76,11 @@ export default function StockPage() {
     getInventoryValue("stockPurchase").then((response) => {
       if (response.status === 1) {
         setEquity(response.response.inventoryValue);
+      }
+    });
+    getInventoryValue("stockProfit").then((response) => {
+      if (response.status === 1) {
+        setProfit(response.response.inventoryValue);
       }
     });
   }, []);
@@ -481,7 +487,10 @@ export default function StockPage() {
                     {t("totalInventoryTable")} : {inventory.toFixed(2)}{" "}
                     {g("currency")}
                   </td>
-                  <td></td>
+                  <td className={styles.tdProfit}>
+                    {t("totalProfitTable")} : {profit.toFixed(2)}{" "}
+                    {g("currency")}
+                  </td>
                   <td></td>
                   <td></td>
                   <td></td>

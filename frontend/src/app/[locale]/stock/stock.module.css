@@ -300,6 +300,13 @@
   color: var(--foreground);
   vertical-align: middle;
   white-space: nowrap;
+  background-color: var(--warning-border);
+}
+.tdProfit {
+  padding: 11px 14px;
+  color: var(--foreground);
+  vertical-align: middle;
+  white-space: nowrap;
   background-color: var(--success-border);
 }
 .tdP {

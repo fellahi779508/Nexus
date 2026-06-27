@@ -375,6 +375,8 @@
     "totalTable": "الإجمالي للصفحة",
     "totalInventoryTable": "المخزون الإجمالي",
     "totalEquityTable": "الإجمالي  رأس المال",
+    "totalProfitTable": "الربح المتوقع",
+
     "batchStatus": {
       "all": "الكل",
       "sellable": "قابل للبيع",

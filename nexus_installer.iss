@@ -18,7 +18,7 @@ WizardStyle=modern
 
 ; Output Build Settings
 OutputDir=C:\Nexus-Distributable
-OutputBaseFilename=Nexus-Setup
+OutputBaseFilename=Nexus-Update
 Compression=lzma2/max
 SolidCompression=yes
 

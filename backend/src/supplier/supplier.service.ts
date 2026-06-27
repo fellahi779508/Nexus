@@ -8,6 +8,8 @@ import { DataSource, ILike, MoreThan, Repository } from 'typeorm';
 import { CreditService } from 'src/credit/credit.service';
 import { Actions, Types } from 'src/utils/actions';
 import { Log } from 'src/logs/entities/log.entity';
+import { StockPayment } from 'src/stock-payment/entities/stock-payment.entity';
+import { Credit } from 'src/credit/entities/credit.entity';
 
 @Injectable()
 export class SupplierService {
@@ -97,9 +99,59 @@ export class SupplierService {
   }
 
   async remove(id: number) {
+    // 1. Fetch the supplier and fail early if they don't exist
     const supplier = await this.findOne(id);
-    await this.supplierRepository.remove(supplier);
-    return 'success';
+    if (!supplier) {
+      throw new NotFoundException(`Supplier with ID ${id} not found`);
+    }
+
+    // 2. Wrap everything in a transaction to ensure data integrity
+    return await this.dataSource.manager.transaction(
+      async (transactionalEntityManager) => {
+        // Fetch purchases/supplies belonging to this supplier (Assuming entity is named 'Purchase' or 'Supply')
+        // We adjust the relations to match what a supplier handles (e.g., 'credit' or 'debt')
+        const purchases = await transactionalEntityManager.find(StockPayment, {
+          where: { supplier: { id: supplier.id } },
+          relations: ['credit', 'supplier'],
+        });
+
+        const creditsToDelete: any = [];
+        const purchasesToUpdate: any = [];
+
+        // 3. Process data in memory to avoid running DB queries inside a loop
+        for (const purchase of purchases) {
+          if (purchase.credit) {
+            purchase.paid = purchase.total; // Fix: Proper assignment
+
+            creditsToDelete.push(purchase.credit);
+            purchasesToUpdate.push(purchase);
+          }
+        }
+
+        // 4. Batch execute the database operations for speed
+        if (creditsToDelete.length > 0) {
+          await transactionalEntityManager.remove(Credit, creditsToDelete);
+        }
+        if (purchasesToUpdate.length > 0) {
+          await transactionalEntityManager.save(
+            StockPayment,
+            purchasesToUpdate,
+          );
+        }
+
+        // 5. Remove the supplier itself
+        await transactionalEntityManager.remove(supplier);
+
+        // 6. Log the action
+        await transactionalEntityManager.save(Log, {
+          action: Actions.DELETE,
+          entityType: Types.SUPPLIER,
+          timestamp: new Date().toISOString(),
+        });
+
+        return 'success';
+      },
+    );
   }
   async getCredits(
     page: number,

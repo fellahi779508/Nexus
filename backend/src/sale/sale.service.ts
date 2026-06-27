@@ -353,12 +353,15 @@ export class SaleService {
   }
   async remove(id: number) {
     const sale = await this.findOne(id);
-    const client = await this.datasource.manager.findOne(Client, {
-      where: { id: sale.client.id },
-    });
-    if (client) {
-      client.creditTTC -= sale.total - sale.paid;
-      await this.datasource.manager.save(Client, client);
+    if (sale.client) {
+      const client = await this.datasource.manager.findOne(Client, {
+        where: { id: sale.client.id },
+      });
+
+      if (client) {
+        client.creditTTC -= sale.total - sale.paid;
+        await this.datasource.manager.save(Client, client);
+      }
     }
 
     await this.datasource.manager.save(Log, {

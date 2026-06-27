@@ -102,8 +102,12 @@ export class ZakatService implements OnApplicationBootstrap {
         result += stock.quantity * stock.batch.variant.purchasePrice;
       }
       return result;
-    }
-    if (type === 'zakat') {
+    } else if (type === 'stockProfit') {
+      for (const stock of stocks) {
+        result += stock.quantity * stock.batch.variant.profit;
+      }
+      return result;
+    } else if (type === 'zakat') {
       for (const stock of stocks) {
         result += stock.quantity * stock.batch.variant.sellingPriceTTC;
       }
